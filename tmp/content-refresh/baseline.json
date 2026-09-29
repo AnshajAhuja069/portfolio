@@ -1,0 +1,8 @@
+{
+  "src/components/brand/IcebergStory.tsx": "ddbb2f1046af0b42a582df411628ba5720d0d2e98cabf8e5c7fb281687384bad",
+  "src/components/brand/IcebergStory.module.css": "fadc51c97c56453ee2535f67f67653a4184fb0ec775f373ebf1fcec328c195e7",
+  "src/components/work/WorkMotion.tsx": "4cae9c2c956eb395973a2a60316aa38f9e2e7e892fc5bdc7eb7ba1c94d829e51",
+  "src/components/case-study/CaseStudyMotion.tsx": "f73e292c0463127b102f09bb78faf48e44404087d953861265ec143b088bd4bd",
+  "src/components/hero/Hero.tsx": "5eba4b8a5e6d223f5efc810d68fc09a511d39d6ed59f6d3763eae0e4bf358111",
+  "public/resume/anshaj-ahuja-resume.pdf": "6a3e337eeaf0672f0f968657bdcbdae87bb2044ccda2c1c0f51bff349369eace"
+}

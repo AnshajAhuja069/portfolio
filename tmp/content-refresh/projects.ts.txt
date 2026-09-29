@@ -1,0 +1,676 @@
+/**
+ * Project + case-study content model.
+ *
+ * Everything shown on the homepage gallery and the /work/[slug] pages comes
+ * from here. To replace an illustrative mock with real work, change a
+ * `cover` or `media` entry from `kind: "mock"` to `kind: "image"` and put
+ * the file in /public/images/work/<slug>/ (see docs/asset-manifest.md).
+ *
+ * Accuracy rules (see docs/content-status.md):
+ * - No metrics, research, personas or team sizes unless supplied.
+ * - Every scope item carries its real status.
+ * - Backend work is never claimed.
+ */
+
+export type ItemStatus =
+  | "built" // designed and implemented
+  | "designed"
+  | "directed" // visual / UX direction
+  | "frontend-complete"
+  | "proposal"
+  | "planning";
+
+export const statusLabel: Record<ItemStatus, string> = {
+  built: "Designed & built",
+  designed: "Designed",
+  directed: "Design direction",
+  "frontend-complete": "Front end complete",
+  proposal: "Proposal",
+  planning: "Planning",
+};
+
+/** Illustrative screens drawn in code (src/components/mocks). */
+export type MockScreen =
+  | "chat-reply"
+  | "chat-actions"
+  | "server-nav"
+  | "onboarding-games"
+  | "game-hub"
+  | "trade-list"
+  | "trade-mobile";
+
+export type CoverComposition = "community" | "discovery" | "trading";
+
+export type ImageAsset = {
+  src: string;
+  width: number;
+  height: number;
+};
+
+export type Cover =
+  | {
+      kind: "mock";
+      composition: CoverComposition;
+      /** Background plate colour behind the layered screens. */
+      plate: string;
+      alt: string;
+    }
+  | {
+      kind: "image";
+      desktop: ImageAsset;
+      /** Optional art-directed crop for narrow screens. */
+      mobile?: ImageAsset;
+      plate?: string;
+      alt: string;
+    }
+  | {
+      /** Layered brand composition built from the real identity assets. */
+      kind: "identity";
+      alt: string;
+    };
+
+export type Media =
+  | {
+      kind: "mock";
+      screen: MockScreen;
+      frame: "phone" | "window";
+      caption: string;
+      alt: string;
+    }
+  | {
+      kind: "image";
+      image: ImageAsset;
+      caption: string;
+      alt: string;
+      /** Width in the figure grid (default "full"). */
+      layout?: "full" | "half" | "third";
+      /** Background behind small images. */
+      plate?: string;
+    }
+  | {
+      kind: "demo";
+      demo: "reply-composer";
+      caption: string;
+    }
+  | {
+      /** Scroll-driven explainer (full-bleed section). */
+      kind: "story";
+      story: "iceberg";
+      caption: string;
+    };
+
+export type ScopeItem = { label: string; status: ItemStatus; note?: string };
+
+export type Decision = {
+  title: string;
+  /** What the interface does. */
+  interface: string;
+  /** How it behaves for the person using it. */
+  behaviour: string;
+  status?: ItemStatus;
+};
+
+export type Project = {
+  slug: string;
+  order: number;
+  published: boolean;
+  title: string;
+  /** One sentence for the gallery. */
+  summary: string;
+  company: string;
+  workstream: string;
+  /** Short contribution line shown on the gallery. */
+  contribution: string;
+  disciplines: string[];
+  platforms: string[];
+  /** Short label for the cover band. */
+  band: string;
+  cover: Cover;
+  caseStudy: {
+    overview: string;
+    role: {
+      contribution: string;
+      collaborators: string;
+      status: string;
+    };
+    scope: ScopeItem[];
+    problem: string;
+    constraints: string[];
+    /** Labels for the two halves of each decision (default Interface / Behaviour). */
+    decisionLabels?: [string, string];
+    decisions: Decision[];
+    media: Media[];
+    implemented: { mine: string[]; team: string[] };
+    outcome: string[];
+    reflection: string;
+  };
+  next?: string;
+};
+
+export const projects: Project[] = [
+  {
+    slug: "community-servers",
+    order: 1,
+    published: true,
+    title: "Making communities easier to use",
+    summary:
+      "A refresh of Gamersberg’s community servers — chat, navigation, member lists and the composer — that keeps frequent actions close and states consistent across web and mobile.",
+    company: "Gamersberg",
+    workstream: "Community servers & mobile messaging",
+    contribution: "Interaction design + front-end build (web & React Native)",
+    disciplines: ["Interaction design", "Design systems", "Front-end"],
+    platforms: ["Web", "Mobile"],
+    band: "Communities · Messaging",
+    cover: {
+      kind: "mock",
+      composition: "community",
+      plate: "#0E93A6",
+      alt: "Illustrative composition of a community chat on desktop and a phone showing a reply attached to the message composer.",
+    },
+    caseStudy: {
+      overview:
+        "Community servers are where Gamersberg players talk — channels, members, messages and reactions. I designed and implemented a refresh of that experience, covering chat, navigation, member lists and the composer, plus the mobile interactions that make messaging feel quick.",
+      role: {
+        contribution:
+          "Interaction and visual design, and front-end implementation on web and React Native.",
+        collaborators: "The Gamersberg product and engineering team.",
+        status: "Designed and implemented",
+      },
+      scope: [
+        { label: "Chat and message actions", status: "built" },
+        { label: "Composer: reply, edit, attachments, emoji / GIF / stickers", status: "built" },
+        { label: "Server and channel navigation states", status: "built" },
+        { label: "Member lists", status: "built" },
+        { label: "Mobile gestures: swipe-to-reply, long-press menus, reactions", status: "built" },
+        { label: "Shared theme tokens and typography", status: "built" },
+        { label: "Local channel pinning", status: "built", note: "Saved on the device only." },
+      ],
+      problem:
+        "A community interface collects many small actions — reply, react, attach, jump back, switch channel. When each one lives somewhere different, or behaves differently from screen to screen, the product feels harder than it is.",
+      constraints: [
+        "Web and mobile needed to share one visual language.",
+        "Mobile gestures could not get in the way of normal scrolling.",
+        "The interface sat on top of backend services built by the wider engineering team.",
+      ],
+      decisions: [
+        {
+          title: "Keep the reply attached to the composer",
+          interface:
+            "Reply and edit states dock directly above the input, showing whose message you are answering and a short excerpt, with a single control to cancel.",
+          behaviour:
+            "The target message stays visible while you write. Editing uses the same slot with its own state, so reply and edit read as two modes of one control.",
+        },
+        {
+          title: "Put frequent actions one gesture away",
+          interface:
+            "Swipe a message to reply. Long-press for quick reactions and message actions, with an expanded reaction picker one step further.",
+          behaviour:
+            "The most common responses don’t need a trip into a menu, and the full set is still there when you want it.",
+        },
+        {
+          title: "One composer for everything you can send",
+          interface:
+            "Attachment controls and emoji, GIF and sticker access all start from the composer.",
+          behaviour:
+            "Sending media or a sticker begins in the same place as sending text.",
+        },
+        {
+          title: "Help people find their place again",
+          interface:
+            "A jump-to-latest control, unread states, and clear navigation states for servers and channels.",
+          behaviour:
+            "After scrolling back through history, one tap returns you to the newest messages.",
+        },
+        {
+          title: "Let people shape their own navigation",
+          interface:
+            "Long-press menus on servers and channels, and channel pinning.",
+          behaviour:
+            "Pinned channels are stored on the device, so they stay where you put them on that device — they are not synced across devices.",
+        },
+      ],
+      media: [
+        {
+          kind: "demo",
+          demo: "reply-composer",
+          caption:
+            "Interactive re-creation of swipe-to-reply and the attached reply state. Built for this portfolio — not production code.",
+        },
+        {
+          kind: "mock",
+          screen: "chat-actions",
+          frame: "phone",
+          caption: "Long-press opens quick reactions and message actions.",
+          alt: "Illustrative phone screen: a message is highlighted and a sheet shows a row of quick reactions above a list of message actions.",
+        },
+        {
+          kind: "mock",
+          screen: "server-nav",
+          frame: "window",
+          caption:
+            "Server rail, channel list with pinned and unread states, and the conversation.",
+          alt: "Illustrative desktop screen: a server rail on the left, a channel list with a pinned section and unread markers, and a chat conversation.",
+        },
+      ],
+      implemented: {
+        mine: [
+          "Interaction and visual design for chat, navigation, member lists and the composer.",
+          "Web and React Native interface implementation for the refresh.",
+          "Mobile messaging interactions: swipe-to-reply, long-press server/channel menus, quick and expanded reactions, reply and edit composer states, jump-to-latest.",
+          "Attachment controls and emoji / GIF / sticker access in the composer.",
+          "Profile transitions and local channel pinning.",
+          "Shared theme tokens and typography.",
+        ],
+        team: [
+          "Backend services behind the interface, including search, thread infrastructure and media-history endpoints.",
+        ],
+      },
+      outcome: [
+        "Reply and edit states live in one predictable place in the composer.",
+        "Reply and reactions are reachable from the message itself.",
+        "Navigation shows where you are across servers and channels.",
+        "Web and mobile draw from the same theme tokens and type scale.",
+      ],
+      reflection:
+        "Next, I’d look at which quick reactions people actually reach for and let that set the default row — and revisit pinning if syncing across devices becomes possible.",
+    },
+    next: "brand-identity",
+  },
+  {
+    slug: "brand-identity",
+    order: 2,
+    published: true,
+    title: "Giving Gamersberg an identity with depth",
+    summary:
+      "The Gamersberg logo and its mascot, Peak — built on an iceberg: a clean surface, real depth underneath, and an infinity mask for the identities gamers choose online.",
+    company: "Gamersberg",
+    workstream: "Brand identity, logo & mascot",
+    contribution: "Brand concept, logo and mascot (Peak)",
+    disciplines: ["Brand identity", "Visual design", "Character design"],
+    platforms: ["Web", "App", "App store"],
+    band: "Brand identity · Mascot",
+    cover: {
+      kind: "identity",
+      alt: "The Gamersberg logo — faceted iceberg peaks wearing a white infinity-shaped mask — above a waterline, with Peak the mascot holding a rocket.",
+    },
+    caseStudy: {
+      overview:
+        "Gamersberg needed an identity that felt like it belonged to players. I built it around one idea — an iceberg. What you see on the surface is clean and simple; underneath is the depth of research and care that goes into it. That idea became the logo, and the logo became Peak, the mascot.",
+      role: {
+        contribution:
+          "Brand concept, logo design and the mascot, Peak, with its poses; direction for app-store visuals.",
+        collaborators: "The Gamersberg team.",
+        status: "Created",
+      },
+      scope: [
+        { label: "Brand concept: Gamersberg as an iceberg", status: "designed" },
+        { label: "Logo: iceberg peaks and an infinity mask", status: "designed" },
+        { label: "Mascot: Peak", status: "designed" },
+        { label: "Peak poses: rocket, headset, controller, peeking", status: "designed" },
+        { label: "App-store visuals", status: "directed" },
+      ],
+      problem:
+        "A gaming platform competes for attention with the games themselves. The brand needed a mark with a story behind it — and a character players could recognise across the site, the app and the store.",
+      constraints: [
+        "One idea had to work as a small mark and as a full character.",
+        "The character had to be poseable for different moments: play, launches, small in-product touches.",
+        "It had to feel native to gaming culture, including the identities players build online.",
+      ],
+      decisionLabels: ["Form", "Meaning"],
+      decisions: [
+        {
+          title: "Start with an iceberg",
+          interface:
+            "Faceted iceberg peaks form the silhouette of the mark, in blues that run from deep navy to ice white.",
+          behaviour:
+            "What players see is the tip. Underneath is the deep research — most of the work sits below the waterline.",
+        },
+        {
+          title: "An infinity sign, worn as a mask",
+          interface:
+            "A white band across the face is an infinity sign shaped into a mask, with two eye openings.",
+          behaviour:
+            "Gamers build identities online; the mask is that identity. And infinity says there’s no ceiling — the sky is the limit.",
+        },
+        {
+          title: "Let the logo become a character",
+          interface:
+            "Peak takes the logo’s iceberg head and infinity mask and gives it a soft, rounded body.",
+          behaviour:
+            "The brand can show up as someone, not just something — and Peak carries the same story wherever it appears.",
+        },
+        {
+          title: "Pose Peak for the moments that matter",
+          interface:
+            "Peak holds a controller, wears a headset, launches a rocket and peeks over the edge of a card.",
+          behaviour:
+            "One character covers play, launches and playful product moments without redrawing the brand each time.",
+        },
+      ],
+      media: [
+        {
+          kind: "story",
+          story: "iceberg",
+          caption: "How the identity is built: the surface, the depth, the mask — and Peak.",
+        },
+        {
+          kind: "image",
+          image: { src: "/images/work/brand-identity/gamersberg-logo.png", width: 457, height: 408 },
+          alt: "The Gamersberg logo: three faceted iceberg peaks in light-to-deep blues, with a white infinity-shaped mask and two dark eye openings.",
+          caption: "The mark: iceberg peaks and an infinity mask.",
+          layout: "half",
+          plate: "#0a1b44",
+        },
+        {
+          kind: "image",
+          image: { src: "/images/work/brand-identity/peak-gaming.png", width: 507, height: 392 },
+          alt: "Two poses of Peak sitting: one wearing a headset with a microphone, one holding a game controller, both smiling behind the mask.",
+          caption: "Peak at play — headset and controller.",
+          layout: "half",
+          plate: "#281e3b",
+        },
+        {
+          kind: "image",
+          image: { src: "/images/work/brand-identity/peak-rocket.png", width: 408, height: 605 },
+          alt: "Peak standing with one hand on its hip, holding up a red toy rocket, smiling behind its infinity mask.",
+          caption: "Peak with a rocket — for launches and big moments.",
+          layout: "half",
+          plate: "#01103a",
+        },
+        {
+          kind: "image",
+          image: { src: "/images/work/brand-identity/peak-peek.png", width: 192, height: 242 },
+          alt: "Peak peeking over the edge of a dark interface card, hands resting on the edge.",
+          caption: "Peeking over a card edge — a small, playful UI moment.",
+          layout: "half",
+          plate: "#1a1328",
+        },
+      ],
+      implemented: {
+        mine: [
+          "The brand concept: Gamersberg as an iceberg.",
+          "The logo: faceted iceberg peaks with an infinity mask.",
+          "The mascot, Peak, and its poses.",
+          "Direction for app-store visuals.",
+        ],
+        team: ["Applying the identity across the product, together with the Gamersberg team."],
+      },
+      outcome: [
+        "A mark that carries a story: surface and depth, identity and no ceiling.",
+        "A mascot drawn from the same shapes as the logo.",
+        "A set of Peak poses ready for play, launches and in-product moments.",
+      ],
+      reflection:
+        "Next I’d build out Peak’s expression set — reactions for success, loading and empty states — so the character can do more of the product’s talking.",
+    },
+    next: "trading-platform",
+  },
+  {
+    // Unpublished — replaced in the gallery by the brand identity case study.
+    slug: "discovery-onboarding",
+    order: 5,
+    published: false,
+    title: "Helping players find where they belong",
+    summary:
+      "Onboarding, game selection and hub journeys that lead players from the games they play to the communities around them.",
+    company: "Gamersberg",
+    workstream: "Discovery, onboarding & game hubs",
+    contribution: "UX direction, onboarding UI build, hierarchy proposal",
+    disciplines: ["UX design", "Information architecture", "Front-end"],
+    platforms: ["Web", "Mobile"],
+    band: "Onboarding · Discovery",
+    cover: {
+      kind: "mock",
+      composition: "discovery",
+      plate: "#3D5AFE",
+      alt: "Illustrative composition of a game hub page on desktop and a phone showing a game-selection onboarding step.",
+    },
+    caseStudy: {
+      overview:
+        "Gamersberg spans many games. This work covers the first steps: picking your games during onboarding, finding hubs and communities for them, and making the homepage and landing pages easier to read. Each part is shown with its real status — not everything here shipped.",
+      role: {
+        contribution:
+          "UX direction for discovery journeys, front-end implementation of onboarding, and a homepage hierarchy proposal.",
+        collaborators: "The Gamersberg product and engineering team.",
+        status: "Mixed — see status per item",
+      },
+      scope: [
+        {
+          label: "Onboarding interface",
+          status: "frontend-complete",
+          note: "Backend integration was still required at the time.",
+        },
+        { label: "Game-selection interactions", status: "frontend-complete" },
+        { label: "Journeys from game hubs to communities, Rooms, discussions and giveaways", status: "designed" },
+        { label: "Homepage content hierarchy", status: "proposal" },
+        { label: "Landing and marketing pages", status: "directed" },
+      ],
+      problem:
+        "New players arrive with games in mind, not a map of the product. Hubs, communities, Rooms, discussions and giveaways all compete for attention in the first few screens.",
+      constraints: [
+        "The onboarding front end was completed ahead of its backend integration.",
+        "Discovery had to lead into destinations that already existed: hubs, communities, Rooms, discussions and giveaways.",
+        "Journeys had to work on both web and mobile.",
+      ],
+      decisions: [
+        {
+          title: "Start with the player’s games",
+          interface:
+            "An onboarding step for choosing the games you play, with a clear selected state on each game.",
+          behaviour:
+            "Each game toggles on tap, and the selection is visible at a glance before you continue.",
+          status: "frontend-complete",
+        },
+        {
+          title: "Route from games to people",
+          interface:
+            "Game hubs lead into the communities, Rooms, discussions and giveaways around that game.",
+          behaviour:
+            "Discovery follows the game you care about rather than a generic feed.",
+          status: "designed",
+        },
+        {
+          title: "Give the homepage one clear order",
+          interface:
+            "A proposed hierarchy for the homepage’s content blocks.",
+          behaviour:
+            "Presented as a proposal — it is not described here as shipped.",
+          status: "proposal",
+        },
+        {
+          title: "Say what Gamersberg is, quickly",
+          interface:
+            "Visual and UX direction for landing and marketing pages.",
+          behaviour:
+            "Pages lead with what you can do on Gamersberg before the details.",
+          status: "directed",
+        },
+      ],
+      media: [
+        {
+          kind: "mock",
+          screen: "onboarding-games",
+          frame: "phone",
+          caption: "Game selection during onboarding. Front end complete; backend integration pending at the time.",
+          alt: "Illustrative phone screen: a grid of game tiles, three of them marked as selected, with a continue button.",
+        },
+        {
+          kind: "mock",
+          screen: "game-hub",
+          frame: "window",
+          caption: "A game hub leading into communities, Rooms, discussions and giveaways.",
+          alt: "Illustrative desktop screen: a game hub header with tabs and cards for communities, rooms, discussions and giveaways.",
+        },
+      ],
+      implemented: {
+        mine: [
+          "Front-end implementation of the onboarding interface, including game-selection interactions.",
+          "Journey design connecting game discovery to communities, Rooms, discussions and giveaways.",
+          "A homepage content-hierarchy proposal.",
+          "Visual and UX direction for landing and marketing pages.",
+        ],
+        team: [
+          "Backend integration for onboarding.",
+          "Services behind hubs, communities and activities.",
+        ],
+      },
+      outcome: [
+        "Onboarding front end, including game selection, completed and ready for backend integration at the time.",
+        "Discovery journeys designed from game hubs into communities and activities.",
+        "Homepage hierarchy documented as a proposal.",
+      ],
+      reflection:
+        "The honest next step is to see onboarding fully connected, learn where people hesitate, and only then refine the homepage proposal.",
+    },
+    next: "trading-platform",
+  },
+  {
+    slug: "trading-platform",
+    order: 3,
+    published: true,
+    title: "Rebuilding the trading experience",
+    summary:
+      "A ground-up redesign and rebuild of Gamersberg’s dated trading interface, with reusable UI patterns and one visual language that carried into mobile.",
+    company: "Gamersberg",
+    workstream: "Trading platform redesign & rebuild",
+    contribution: "Redesign + front-end rebuild; patterns adapted for mobile",
+    disciplines: ["Product design", "Visual language", "Front-end"],
+    platforms: ["Web", "Mobile"],
+    band: "Trading · Visual language",
+    cover: {
+      kind: "mock",
+      composition: "trading",
+      plate: "#F2C14E",
+      alt: "Illustrative composition of a trading listing grid on desktop and a phone showing the same patterns in a mobile list.",
+    },
+    caseStudy: {
+      overview:
+        "Trading is where Gamersberg started, before it expanded into communities and content. Its interface had dated, so I redesigned and rebuilt it from the ground up — introducing reusable UI patterns and a cohesive visual language — and helped adapt the new web experience into the first mobile app flows.",
+      role: {
+        contribution:
+          "Redesign and front-end rebuild of the trading interface; help adapting it into the initial mobile flows.",
+        collaborators: "The Gamersberg product and engineering team.",
+        status: "Redesigned and rebuilt",
+      },
+      scope: [
+        { label: "Trading interface redesign", status: "built" },
+        { label: "Reusable UI patterns", status: "built" },
+        { label: "Cohesive visual language", status: "built" },
+        { label: "Initial mobile app flows and patterns", status: "designed", note: "Helped adapt the web experience." },
+      ],
+      problem:
+        "The trading interface had dated. Restyling it screen by screen would have kept the old structure and made every later feature harder to build.",
+      constraints: [
+        "A rebuild, not a reskin: patterns had to be reusable in later features.",
+        "The new web experience needed to translate into the first mobile app flows.",
+      ],
+      decisions: [
+        {
+          title: "Design patterns, not pages",
+          interface: "A set of reusable UI patterns for the trading screens.",
+          behaviour:
+            "New screens are assembled from the same parts, giving later releases a shared foundation.",
+        },
+        {
+          title: "One visual language",
+          interface:
+            "A cohesive visual language across the rebuilt interface — type, colour and components.",
+          behaviour: "The product reads as one system rather than a set of screens.",
+        },
+        {
+          title: "Web first, ready for mobile",
+          interface: "Web patterns adapted into the initial mobile app flows.",
+          behaviour:
+            "The first mobile flows reused the same structure and interface patterns as the web.",
+        },
+      ],
+      media: [
+        {
+          kind: "mock",
+          screen: "trade-list",
+          frame: "window",
+          caption: "Listing patterns on web.",
+          alt: "Illustrative desktop screen: filter chips above a grid of item cards.",
+        },
+        {
+          kind: "mock",
+          screen: "trade-mobile",
+          frame: "phone",
+          caption: "The same patterns adapted for the first mobile flows.",
+          alt: "Illustrative phone screen: a vertical list of item cards using the same card pattern as the web grid.",
+        },
+      ],
+      implemented: {
+        mine: [
+          "Redesign of the trading interface.",
+          "Front-end rebuild with reusable UI patterns.",
+          "The visual language carried into later work.",
+          "Help adapting the web experience into the initial mobile app flows.",
+        ],
+        team: [
+          "Backend and trading services.",
+          "Mobile app engineering beyond the initial flows and patterns.",
+        ],
+      },
+      outcome: [
+        "A rebuilt trading interface built on reusable patterns.",
+        "A visual language that later work across communities, messaging and content pages built on.",
+        "Initial mobile flows that share the web experience’s structure.",
+      ],
+      reflection:
+        "If I did it again, I’d document the pattern set as it grew — not only how to use each pattern, but why it exists — so later features could extend it with less guesswork.",
+    },
+    next: "community-servers",
+  },
+  {
+    // Draft — not published until contribution per area is confirmed.
+    slug: "participation-progression",
+    order: 4,
+    published: false,
+    title: "Designing participation and progression",
+    summary:
+      "Giveaways, quests, streaks, spin-wheel and profile experiences. Contribution per area still to be confirmed.",
+    company: "Gamersberg",
+    workstream: "Rewards & engagement",
+    contribution: "To be confirmed",
+    disciplines: ["Product design"],
+    platforms: ["Web", "Mobile"],
+    band: "Rewards · Profiles",
+    cover: {
+      kind: "mock",
+      composition: "discovery",
+      plate: "#171717",
+      alt: "Placeholder cover.",
+    },
+    caseStudy: {
+      overview: "Draft.",
+      role: { contribution: "To be confirmed", collaborators: "To be confirmed", status: "To be confirmed" },
+      scope: [
+        { label: "Giveaways", status: "planning" },
+        { label: "Quests", status: "planning" },
+        { label: "Streaks", status: "planning" },
+        { label: "Spin-wheel interfaces", status: "planning" },
+        { label: "Badges", status: "planning", note: "Implementation planning only." },
+      ],
+      problem: "Draft.",
+      constraints: [],
+      decisions: [],
+      media: [],
+      implemented: { mine: [], team: [] },
+      outcome: [],
+      reflection: "",
+    },
+  },
+];
+
+export const publishedProjects = projects
+  .filter((p) => p.published)
+  .sort((a, b) => a.order - b.order);
+
+export function getProject(slug: string) {
+  return publishedProjects.find((p) => p.slug === slug);
+}
+
+export function getProjectIndex(slug: string) {
+  return publishedProjects.findIndex((p) => p.slug === slug);
+}

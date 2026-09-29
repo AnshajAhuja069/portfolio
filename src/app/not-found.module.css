@@ -1,0 +1,46 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  min-height: 80svh;
+  padding-top: calc(var(--nav-h) + 12svh);
+  padding-bottom: 12svh;
+}
+
+.title {
+  font-size: clamp(3rem, 10vw, 9rem);
+  max-width: 12ch;
+}
+
+.lead {
+  max-width: 44ch;
+  font-size: var(--step-1);
+  color: var(--ink-2);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: none;
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+
+.list a {
+  display: inline-block;
+  padding: 8px 0;
+}
+
+.home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  text-decoration: none;
+}

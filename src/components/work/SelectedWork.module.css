@@ -1,0 +1,315 @@
+.work {
+  background: var(--ink);
+}
+
+/* Accent band continues the hero's colour field. */
+.intro {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.introInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 30ch);
+  align-items: end;
+  gap: 16px 48px;
+  padding-top: clamp(40px, 10svh, 120px);
+  padding-bottom: clamp(48px, 10svh, 128px);
+}
+
+.count {
+  grid-column: 1 / -1;
+}
+
+.title {
+  font-size: clamp(3.25rem, 11vw, 12rem);
+  color: var(--paper); /* ≥ 52px: large-text contrast on accent (≈ 3.3:1) */
+}
+
+.lead {
+  font-size: var(--step-1);
+  line-height: 1.45;
+  padding-bottom: 0.6em;
+  text-wrap: pretty;
+}
+
+.title {
+  will-change: transform;
+}
+
+/* ---------- Crossing tapes (straddle accent → ink) ---------- */
+
+.tapes {
+  position: relative;
+  height: clamp(110px, 13vw, 190px);
+  background: linear-gradient(to bottom, var(--accent) 50%, var(--ink) 50%);
+  overflow: hidden;
+}
+
+.tape {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  top: 50%;
+  padding-block: clamp(10px, 1.1vw, 16px);
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.6vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.tapeA {
+  top: 40%;
+  transform: translateY(-50%) rotate(-3deg);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.5);
+}
+
+.tapeB {
+  top: 62%;
+  transform: translateY(-50%) rotate(2.2deg);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.tapeTrack {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.tapeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding-right: 0.6em;
+}
+
+.tapeStar {
+  color: var(--accent);
+  font-size: 0.7em;
+}
+
+.tapeA .tapeStar {
+  color: var(--accent-bright);
+}
+
+/* ---------- Cursor pill ---------- */
+
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 40;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--accent-bright);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 12px 30px -10px rgb(0 0 0 / 0.5);
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .cursor {
+    display: inline-flex;
+  }
+
+  .coverLink {
+    cursor: none;
+  }
+}
+
+.gallery {
+  position: relative;
+  color: var(--paper);
+}
+
+.list {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(88px, 16svh, 200px);
+  padding-top: clamp(64px, 12svh, 140px);
+  padding-bottom: clamp(96px, 18svh, 220px);
+  list-style: none;
+}
+
+.feature {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: center;
+  column-gap: clamp(24px, 3vw, 56px);
+}
+
+.coverLink {
+  grid-column: 1 / span 8;
+  display: block;
+  cursor: pointer;
+}
+
+.meta {
+  grid-column: 9 / span 4;
+}
+
+.flip .coverLink {
+  grid-column: 5 / span 8;
+  grid-row: 1;
+}
+
+.flip .meta {
+  grid-column: 1 / span 4;
+  grid-row: 1;
+}
+
+.tilt {
+  position: relative;
+  border-radius: var(--radius-lg);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.band {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 78%;
+  padding: 9px 16px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.index {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--accent-bright); /* on ink ≈ 9.6:1 */
+}
+
+.company {
+  color: var(--paper-2);
+}
+
+.projectTitle {
+  font-size: var(--step-3);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.summary {
+  color: var(--paper-2);
+  text-wrap: pretty;
+}
+
+.facts {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin: 6px 0 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-on-dark);
+  font-size: var(--step--1);
+}
+
+.facts div {
+  display: grid;
+  grid-template-columns: 9.5em 1fr;
+  gap: 12px;
+}
+
+.facts dt {
+  color: var(--paper-2);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 20px 0 22px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.cta:hover {
+  background: var(--accent-bright);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 3px;
+}
+
+/* ---------- Tablet / mobile: vertical sequence ---------- */
+
+@media (max-width: 899.98px) {
+  .introInner {
+    grid-template-columns: 1fr;
+  }
+
+  .feature,
+  .flip {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .band {
+    top: auto;
+    bottom: 7%;
+  }
+
+  .index {
+    font-size: 3rem;
+  }
+
+  .facts div {
+    grid-template-columns: 8.5em 1fr;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1199.98px) {
+  .coverLink {
+    grid-column: 1 / span 7;
+  }
+  .meta {
+    grid-column: 8 / span 5;
+  }
+  .flip .coverLink {
+    grid-column: 6 / span 7;
+  }
+  .flip .meta {
+    grid-column: 1 / span 5;
+  }
+}

@@ -1,0 +1,54 @@
+/**
+ * Site-wide personal content. Edit copy and links here — no component or
+ * animation code needs to change. Source/status for each fact is tracked in
+ * docs/content-status.md.
+ */
+
+export const profile = {
+  name: "Anshaj Ahuja",
+  firstName: "Anshaj",
+  positioning: "Product Designer & UX Engineer",
+  location: "India",
+  email: "anshajahujaa@gmail.com",
+
+  links: {
+    linkedin: "https://www.linkedin.com/in/anshaj-ahuja-b528a11b6/",
+    github: "https://github.com/Anshajgamersberg",
+  },
+
+  /**
+   * Public resume. Set to `null` to hide every resume link on the site.
+   * The file lives in /public/resume/.
+   */
+  resume: {
+    href: "/resume/anshaj-ahuja-resume.pdf",
+    label: "Resume",
+  } as { href: string; label: string } | null,
+
+  hero: {
+    /** Each entry is one deliberate line of the headline. */
+    lines: ["Thoughtfully", "designed.", "Carefully", "built."],
+    intro:
+      "I’m Anshaj, a product designer and UX engineer. I lead visual direction and build the interfaces behind it — from the first flow to the final interaction.",
+    cue: "See selected work",
+  },
+
+  work: {
+    title: "Selected work",
+    intro:
+      "Three workstreams from Gamersberg, a gaming platform on web and mobile, where I led visual and UX direction and built interfaces across both.",
+  },
+
+  contact: {
+    heading: "Let’s connect.",
+    lead: "Have a product worth making better? Let’s talk.",
+  },
+
+  meta: {
+    title: "Anshaj Ahuja — Product Designer & UX Engineer",
+    description:
+      "Anshaj Ahuja is a product designer and UX engineer who designs product experiences and builds the interfaces behind them.",
+  },
+};
+
+export type Profile = typeof profile;

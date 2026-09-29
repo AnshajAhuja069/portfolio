@@ -1,0 +1,119 @@
+.cover {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--plate);
+  isolation: isolate;
+}
+
+/* Soft light on the plate so it doesn't read as a flat swatch. */
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(90% 70% at 18% 8%, rgb(255 255 255 / 0.22), transparent 60%),
+    radial-gradient(70% 60% at 100% 100%, rgb(0 0 0 / 0.18), transparent 70%);
+  pointer-events: none;
+}
+
+.back,
+.front {
+  position: absolute;
+}
+
+.back {
+  left: 6%;
+  top: 10%;
+  width: 74%;
+}
+
+.backTilt {
+  transform: perspective(2200px) rotateY(9deg) rotateX(3deg);
+  transform-origin: 0% 50%;
+}
+
+.front {
+  right: 6.5%;
+  top: 15%;
+  width: 23.5%;
+}
+
+/* Alternate the arrangement per project. */
+.discovery .back {
+  left: auto;
+  right: 6%;
+}
+
+.discovery .backTilt {
+  transform: perspective(2200px) rotateY(-9deg) rotateX(3deg);
+  transform-origin: 100% 50%;
+}
+
+.discovery .front {
+  right: auto;
+  left: 7%;
+  top: 18%;
+}
+
+.trading .back {
+  top: 16%;
+}
+
+.trading .front {
+  top: 9%;
+}
+
+.tag {
+  position: absolute;
+  z-index: 3;
+  top: 14px;
+  left: 14px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.imageCover {
+  aspect-ratio: auto;
+}
+
+.img {
+  width: 100%;
+  height: auto;
+}
+
+/* Mobile crop: taller plate, phone takes the lead, window bleeds off. */
+@media (max-width: 899.98px) {
+  .cover:not(.imageCover) {
+    aspect-ratio: 4 / 5;
+  }
+
+  .back,
+  .discovery .back,
+  .trading .back {
+    left: 7%;
+    right: auto;
+    top: 8%;
+    width: 130%;
+  }
+
+  .backTilt,
+  .discovery .backTilt {
+    transform: none;
+  }
+
+  .front,
+  .discovery .front,
+  .trading .front {
+    left: 27%;
+    right: auto;
+    top: 27%;
+    width: 46%;
+  }
+}

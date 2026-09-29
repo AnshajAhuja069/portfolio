@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/ansha/AppData/Local/Temp/claude/C--Users-ansha-Desktop-portfolio/923d2e8b-c654-4fa8-902b-c05526af842c/scratchpad/**)",
+      "Bash(sed -i 's#from \"playwright-core\"#from \"file:///C:/Users/ansha/Desktop/portfolio/node_modules/playwright-core/index.mjs\"#' shots.mjs)",
+      "Bash(node shots.mjs http://localhost:3000/ home 1440x900,390x844,360x740 0)",
+      "Bash(node montage.mjs mob-all.png mob-390x844-y0.png mob-390x844-y350.png mob-390x844-y1100.png mob-390x844-y1900.png mob-390x844-y5200.png)",
+      "Bash(node shots.mjs http://localhost:3000/work/community-servers cs1 1440x900,390x844 full)",
+      "Bash(sed -i 's/max-height:900px/max-height:${process.env.MH || 900}px/' montage.mjs)",
+      "Bash(node shots.mjs http://localhost:3000/work/community-servers cs1m 390x844 seg)",
+      "Bash(MH=1700 node montage.mjs cs1m-a.png cs1m-390-seg0.png cs1m-390-seg1.png cs1m-390-seg2.png cs1m-390-seg3.png)",
+      "Bash(MH=1700 node montage.mjs cs1m-b.png cs1m-390-seg4.png cs1m-390-seg5.png)",
+      "Bash(npm run *)",
+      "Bash(npx playwright *)",
+      "Bash(node shots.mjs http://localhost:3000/ vp 768x1024,1920x1080,1440x700,844x390,1024x768 0)",
+      "Bash(MH=700 node montage.mjs vp-a.png vp-768x1024-y0.png vp-1920x1080-y0.png vp-1440x700-y0.png)",
+      "Bash(MH=700 node montage.mjs vp-b.png vp-844x390-y0.png vp-1024x768-y0.png)",
+      "Bash(node focus.mjs)",
+      "Bash(MH=500 node montage.mjs focus-all.png focus-2.png focus-5.png focus-cta.png)",
+      "Bash(node mascot.mjs)",
+      "Bash(MH=420 node montage.mjs mascot-both.png mascot-hero.png mascot-contact.png)",
+      "PowerShell($c = Get-NetTCPConnection -LocalPort 3100 -State Listen -ErrorAction SilentlyContinue; if \\($c\\) { $c | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -Confirm:$false }; \"stopped $\\($c.OwningProcess\\)\" } else { \"none\" })"
+    ]
+  }
+}

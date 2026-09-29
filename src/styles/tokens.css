@@ -1,0 +1,80 @@
+/*
+ * Design tokens. Adjust colours, type and spacing here.
+ *
+ * Contrast (WCAG 2.x, computed):
+ *   ink  on paper   ≈ 16.0:1   any size
+ *   ink  on accent  ≈  4.9:1   any size (small text on accent is always ink)
+ *   paper on accent ≈  3.3:1   display type only (≥ 32px)
+ *   accent on ink   ≈  4.9:1   any size
+ *   accent-text on paper ≈ 5.0:1  small accent text on light backgrounds
+ *   accent-bright on ink / navy ≈ 9.6 / 8.9:1
+ *   paper on ink    ≈ 16.0:1   any size
+ *   ink-2 on paper  ≈  8.2:1   secondary text
+ *   paper-2 on ink  ≈  8.5:1   secondary text on dark
+ */
+
+:root {
+  --paper: #f5f2eb;
+  --paper-2: #b9b4aa;
+  --paper-3: #ebe6db;
+  --ink: #171717;
+  --ink-2: #4a4744;
+  --ink-3: #242322;
+  /* Teal. Chosen so both ink (small) and paper (display) text work on it. */
+  --accent: #0e93a6;
+  /* Darker teal for small text on paper. */
+  --accent-text: #0b7383;
+  /* Lighter teal for highlights on dark surfaces. */
+  --accent-bright: #3fd0d6;
+
+  /* Gamersberg identity palette (brand case study only). */
+  --gb-navy: #0a1b44;
+  --gb-deep: #06112e;
+  --gb-ice: #d8ecff;
+  --gb-blue: #2f6fe0;
+
+  --line: rgb(23 23 23 / 0.14);
+  --line-on-dark: rgb(245 242 235 / 0.16);
+
+  --font-display: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-text: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Type scale */
+  --step--1: clamp(0.8125rem, 0.78rem + 0.12vw, 0.875rem);
+  --step-0: clamp(0.975rem, 0.93rem + 0.2vw, 1.0625rem);
+  --step-1: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --step-2: clamp(1.375rem, 1.2rem + 0.8vw, 1.875rem);
+  --step-3: clamp(1.875rem, 1.5rem + 1.8vw, 3rem);
+  --step-4: clamp(2.5rem, 1.8rem + 3.6vw, 5rem);
+
+  /* Display headline: bounded by width *and* height so short viewports keep
+     four lines on screen. Tuned against the real glyph widths. */
+  /* "Thoughtfully" measures ≈ 5.3em wide in Archivo 600 at this tracking. */
+  --hero-size: min(15vw, 14svh);
+  --display-tracking: -0.045em;
+  --display-leading: 0.86;
+
+  /* Layout */
+  --gutter: clamp(16px, 3.4vw, 56px);
+  --maxw: 1760px;
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --nav-h: 64px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --hero-size: min(15vw, 17svh, 13.5rem);
+  }
+}
+
+@media (max-width: 899.98px) {
+  :root {
+    --hero-size: min(16.6vw, 16svh);
+    --nav-h: 60px;
+  }
+}

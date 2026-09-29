@@ -1,0 +1,133 @@
+.contact {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 7svh, 88px);
+  padding-top: clamp(96px, 18svh, 220px);
+  padding-bottom: clamp(64px, 12svh, 140px);
+}
+
+.headRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px clamp(16px, 3vw, 48px);
+}
+
+.heading {
+  font-size: clamp(3.4rem, 12.6vw, 15rem);
+  line-height: 0.88;
+}
+
+.mascot {
+  flex: none;
+  width: clamp(96px, 12vw, 230px);
+  margin-bottom: 0.4vw;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 28px 48px;
+}
+
+.lead {
+  grid-column: 1 / -1;
+  max-width: 28ch;
+  font-size: var(--step-2);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.emailRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+
+.email {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.14em;
+  overflow-wrap: anywhere;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.email:hover {
+  color: var(--ink-2);
+}
+
+.copyWrap {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.copy {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.copy:hover,
+.copy[data-state="copied"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.copyStatus {
+  font-size: var(--step--1);
+  color: var(--ink-2);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  list-style: none;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--paper-3);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.links a:hover {
+  background: var(--accent);
+}
+
+@media (max-width: 899.98px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+
+  .email {
+    font-size: var(--step-2);
+  }
+}

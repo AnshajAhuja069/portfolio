@@ -1,0 +1,123 @@
+/* The header itself must not create a stacking context (no position/z-index),
+   otherwise the wordmark's blend would be isolated from the page. */
+.nav {
+  --edge: calc(max(0px, (100% - var(--maxw)) / 2) + var(--gutter) - 8px);
+}
+
+.wordmark,
+.links {
+  position: fixed;
+  top: 10px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  border-radius: 999px;
+}
+
+/* ---------- Wordmark: negative (difference) pill ----------
+   White fill + black text under `difference`: the pill shows the inverse of
+   whatever is behind it and the text shows the surface itself, so it flips
+   on paper, ink, navy and imagery. Over mid-tone teal an inverse can't be
+   read (≈1.2:1), so SurfaceWatcher switches it to a solid ink pill there. */
+.wordmark {
+  left: var(--edge);
+  gap: 8px;
+  padding: 0 16px 0 14px;
+  background: #fff;
+  color: #000;
+  mix-blend-mode: difference;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    scale var(--dur-fast) var(--ease-out);
+}
+
+.wordmark:hover {
+  scale: 1.04;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  /* Under `difference` this shows as teal on paper. */
+  background: #e75f45;
+  flex: none;
+}
+
+/* White outline inverts too, so the ring is visible on any surface. */
+.wordmark:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+:global(html[data-nav-surface="accent"]) .wordmark {
+  mix-blend-mode: normal;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+:global(html[data-nav-surface="accent"]) .dot {
+  background: var(--accent-bright);
+}
+
+:global(html[data-nav-surface="accent"]) .wordmark:focus-visible {
+  outline-color: var(--paper);
+}
+
+/* ---------- Links: paper pill (readable everywhere) ---------- */
+
+.links {
+  right: var(--edge);
+  gap: 2px;
+  margin: 0;
+  padding: 0 4px;
+  list-style: none;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px rgb(23 23 23 / 0.06);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.link:hover {
+  background: var(--paper-3);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (max-width: 400px) {
+  .wordmark {
+    padding: 0 12px 0 11px;
+    font-size: 0.875rem;
+    gap: 6px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+  .link {
+    padding: 0 9px;
+    font-size: 0.875rem;
+  }
+}

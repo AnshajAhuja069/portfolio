@@ -1,0 +1,243 @@
+.story {
+  background:
+    radial-gradient(80% 50% at 80% 0%, rgb(47 111 224 / 0.25), transparent 70%),
+    linear-gradient(to bottom, var(--gb-navy), var(--gb-deep) 60%);
+  color: var(--paper);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(24px, 3vw, 56px);
+  padding-block: clamp(64px, 12svh, 140px) clamp(48px, 8svh, 96px);
+}
+
+.head {
+  grid-column: 1 / span 5;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 4svh;
+}
+
+.eyebrow {
+  color: var(--accent-bright);
+}
+
+.title {
+  font-size: clamp(2.6rem, 5.4vw, 5.5rem);
+  text-wrap: balance;
+}
+
+.caption {
+  max-width: 36ch;
+  color: #aac4ee; /* ≈ 9:1 on navy */
+}
+
+.steps {
+  grid-column: 1 / span 5;
+  grid-row: 2;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-height: 72svh;
+  max-width: 34rem;
+  transition: opacity 300ms var(--ease-out);
+}
+
+.live .step {
+  opacity: 0.55;
+}
+
+.live .step.active {
+  opacity: 1;
+}
+
+.kicker {
+  color: var(--accent-bright);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.body {
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: #d6e4fb;
+  text-wrap: pretty;
+}
+
+.stageCol {
+  grid-column: 6 / -1;
+  grid-row: 1 / span 2;
+}
+
+.stage {
+  position: sticky;
+  top: calc(var(--nav-h) + 5svh);
+  aspect-ratio: 600 / 520;
+  width: min(100%, calc((100svh - var(--nav-h) - 12svh) * 1.1538));
+  margin-left: auto;
+  overflow: hidden;
+  border-radius: 28px;
+  box-shadow:
+    0 0 0 1px rgb(160 210 255 / 0.14),
+    0 40px 80px -30px rgb(0 0 0 / 0.7);
+}
+
+.scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.gauge {
+  position: absolute;
+  right: 3%;
+  top: 44%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgb(6 17 46 / 0.7);
+  color: #d8ecff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  backdrop-filter: blur(6px);
+}
+
+.gaugeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  box-shadow: 0 0 0 4px rgb(63 208 214 / 0.25);
+}
+
+/* Final resting positions (no JS / reduced motion). GSAP animates from
+   the drawing into these. Waterline is at 50% of the stage height. */
+.logo {
+  position: absolute;
+  left: 8%;
+  top: 4.7%;
+  width: 44%;
+  filter: drop-shadow(0 18px 30px rgb(0 8 30 / 0.5));
+}
+
+.logo img,
+.peak img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.peak {
+  position: absolute;
+  left: 60%;
+  top: 11%;
+  width: 30%;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 1px rgb(160 210 255 / 0.2),
+    0 30px 60px -20px rgb(0 0 0 / 0.7);
+}
+
+/* ---------- Mobile: scene sticks under the nav, steps scroll beneath ---------- */
+
+@media (max-width: 899.98px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  .head,
+  .steps,
+  .stageCol {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .head {
+    order: 0;
+  }
+
+  .steps {
+    order: 2;
+  }
+
+  .stageCol {
+    order: 1;
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 2;
+    align-self: start;
+    margin-top: 28px;
+    padding-block: 8px 12px;
+    background: var(--gb-deep);
+  }
+
+  /* Soft edge where the steps slide under the sticky scene. */
+  .stageCol::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 36px;
+    background: linear-gradient(to bottom, var(--gb-deep), transparent);
+    pointer-events: none;
+  }
+
+  .stage {
+    position: relative;
+    top: auto;
+    width: min(100%, calc(42svh * 1.1538));
+    margin-inline: auto;
+    border-radius: 20px;
+  }
+
+  .step {
+    min-height: 58svh;
+  }
+
+  .gauge {
+    font-size: 0.6875rem;
+    padding: 4px 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stageCol {
+    position: static;
+  }
+
+  .stage {
+    position: relative;
+    top: auto;
+  }
+
+  .step {
+    min-height: 0;
+    padding-block: 28px;
+  }
+}

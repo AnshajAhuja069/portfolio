@@ -1,0 +1,104 @@
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ---------- 3D crystal (octahedron: short tip, long underwater mass) ----------
+   Geometry, with w = --w: equator radius r = w/2, face base L = r·√2,
+   base-midpoint distance d = r/√2. Top: height 0.5w → slant 0.612w, tilt
+   35.26°. Bottom: height 0.9w → slant 0.967w, tilt 21.45°. */
+
+.crystal {
+  position: absolute;
+  width: var(--w);
+  height: var(--w);
+  margin: calc(var(--w) * -0.5) 0 0 calc(var(--w) * -0.5);
+  perspective: calc(var(--w) * 7);
+  will-change: transform;
+}
+
+.glow {
+  position: absolute;
+  inset: -60%;
+  background: radial-gradient(closest-side, rgb(63 208 214 / 0.28), transparent 70%);
+}
+
+.body {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(-30deg) rotateX(14deg);
+}
+
+.face {
+  position: absolute;
+  left: calc(50% - var(--w) * 0.35355);
+  width: calc(var(--w) * 0.7071);
+  backface-visibility: visible;
+  opacity: 0.9;
+}
+
+.top {
+  top: calc(50% - var(--w) * 0.6124);
+  height: calc(var(--w) * 0.6124);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  transform-origin: 50% 100%;
+  transform: rotateY(calc(45deg + var(--k) * 90deg)) translateZ(calc(var(--w) * 0.35355)) rotateX(35.26deg);
+}
+
+.bottom {
+  top: 50%;
+  height: calc(var(--w) * 0.967);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: 50% 0;
+  transform: rotateY(calc(45deg + var(--k) * 90deg)) translateZ(calc(var(--w) * 0.35355)) rotateX(-21.45deg);
+  opacity: 0.82;
+}
+
+/* ---------- Contours ---------- */
+
+.contour {
+  position: absolute;
+  translate: -50% -50%;
+  overflow: visible;
+}
+
+.line,
+.index {
+  fill: none;
+  stroke: rgb(63 208 214 / 0.2);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.index {
+  stroke: rgb(63 208 214 / 0.42);
+  stroke-width: 1.4;
+}
+
+.label {
+  fill: rgb(170 230 236 / 0.75);
+  font-family: var(--font-text);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 899.98px) {
+  .crystal {
+    scale: 0.62;
+  }
+
+  .contour {
+    scale: 0.7;
+  }
+
+  .hideMobile {
+    display: none;
+  }
+}

@@ -1,0 +1,187 @@
+/* Waterline sits at 56% of the plate height (logo base rests on it). */
+.cover {
+  --water: 56%;
+  position: relative;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  isolation: isolate;
+  background:
+    linear-gradient(
+      to bottom,
+      #0b2257 0%,
+      #123d8a var(--water),
+      #0b2c63 var(--water),
+      #061636 80%,
+      #030a1f 100%
+    );
+}
+
+.stars {
+  position: absolute;
+  inset: 0 0 calc(100% - var(--water)) 0;
+  background:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgb(255 255 255 / 0.8), transparent),
+    radial-gradient(1px 1px at 28% 40%, rgb(255 255 255 / 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 64% 12%, rgb(255 255 255 / 0.7), transparent),
+    radial-gradient(1px 1px at 82% 34%, rgb(255 255 255 / 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 92% 16%, rgb(255 255 255 / 0.7), transparent),
+    radial-gradient(1px 1px at 47% 30%, rgb(255 255 255 / 0.5), transparent);
+  opacity: 0.8;
+}
+
+.glow {
+  position: absolute;
+  left: 8%;
+  top: 0;
+  width: 50%;
+  height: var(--water);
+  background: radial-gradient(60% 70% at 50% 70%, rgb(90 160 255 / 0.35), transparent 70%);
+}
+
+.depth {
+  position: absolute;
+  left: 13%;
+  width: 40%;
+  top: var(--water);
+  height: 52%;
+}
+
+.depth svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.waterline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--water);
+  height: 2px;
+  margin-top: -1px;
+  background: linear-gradient(90deg, transparent, rgb(190 228 255 / 0.75) 20%, rgb(190 228 255 / 0.75) 80%, transparent);
+  box-shadow: 0 0 18px rgb(120 190 255 / 0.55);
+}
+
+.gauge {
+  position: absolute;
+  right: 4%;
+  top: var(--water);
+  bottom: 6%;
+  width: 14px;
+  border-left: 1px dashed rgb(190 228 255 / 0.45);
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(190 228 255 / 0.5) 0 1px,
+    transparent 1px 12%
+  );
+  background-size: 8px 100%;
+  background-repeat: no-repeat;
+  color: rgb(214 236 255 / 0.85);
+  font-size: clamp(0.5625rem, 0.8vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gaugeTop,
+.gaugeBottom {
+  position: absolute;
+  right: 12px;
+  white-space: nowrap;
+}
+
+.gaugeTop {
+  top: -1.9em;
+}
+
+.gaugeBottom {
+  bottom: 0;
+}
+
+.logo {
+  position: absolute;
+  left: 15%;
+  width: 34%;
+  bottom: calc(100% - var(--water));
+  filter: drop-shadow(0 18px 30px rgb(0 10 40 / 0.45));
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.reflection {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  transform: scaleY(-1);
+  opacity: 0.16;
+  filter: blur(1.5px);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 55%);
+  mask-image: linear-gradient(to top, #000 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.card {
+  position: absolute;
+  right: 14%;
+  top: 11%;
+  width: 24%;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 1px rgb(160 210 255 / 0.18),
+    0 24px 50px -16px rgb(0 0 0 / 0.6);
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cardLabel {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgb(10 27 68 / 0.75);
+  color: #d8ecff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(6px);
+}
+
+@media (max-width: 899.98px) {
+  .cover {
+    aspect-ratio: 4 / 5;
+    --water: 50%;
+  }
+
+  .logo {
+    left: 7%;
+    width: 60%;
+  }
+
+  .depth {
+    left: 2%;
+    width: 70%;
+  }
+
+  .card {
+    right: 6%;
+    top: auto;
+    bottom: 5%;
+    width: 36%;
+  }
+
+  .gauge {
+    display: none;
+  }
+}

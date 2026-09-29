@@ -1,0 +1,40 @@
+import type { ReactNode } from "react";
+import s from "./mocks.module.css";
+
+export function PhoneFrame({ children, className, showStatusBar = true }: { children: ReactNode; className?: string; showStatusBar?: boolean }) {
+  return (
+    <div className={`${s.phone} ${className ?? ""}`}>
+      <div className={s.phoneScreen}>
+        {showStatusBar && <div className={s.statusBar}>
+          <span className={s.statusTime}>9:41</span>
+          <span className={s.notch} />
+          <span className={s.statusIcons}>
+            <i />
+            <i />
+            <i />
+          </span>
+        </div>}
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export function WindowFrame({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <div className={`${s.window} ${className ?? ""}`}>
+      <div className={s.windowBar}>
+        <i />
+        <i />
+        <i />
+        <span className={s.urlBar} />
+      </div>
+      <div className={s.windowBody}>{children}</div>
+    </div>
+  );
+}
+
+/** A rounded placeholder line standing in for text. */
+export function Bar({ w, tone = "muted" }: { w: number; tone?: "muted" | "strong" | "accent" }) {
+  return <span className={`${s.bar} ${s[`bar_${tone}`]}`} style={{ width: `${w}%` }} />;
+}
