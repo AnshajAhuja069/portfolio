@@ -17,6 +17,8 @@
   height: 100svh;
   overflow: hidden;
   background: var(--accent);
+  /* Keep the per-frame repaint of the colour field inside the stage (Safari). */
+  contain: paint;
 }
 
 .frame {
@@ -44,7 +46,12 @@
   background: var(--accent);
   color: var(--ink);
   /* Hidden until the scroll effect measures the disc. */
+  -webkit-clip-path: circle(0px at 50% 50%);
   clip-path: circle(0px at 50% 50%);
+  /* Own compositing layer: Safari otherwise repaints (and can lag) the whole
+     stage while the clip grows. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
   pointer-events: none;
   user-select: none;
 }

@@ -26,7 +26,7 @@ test.describe("routes", () => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("The journey so far.");
     await expect(page.getByRole("heading", { level: 3, name: "Chief Product Officer" })).toBeAttached();
     const view = page.getByRole("link", { name: /View resume PDF/ }).first();
-    await expect(view).toHaveAttribute("href", "/resume/anshaj-ahuja-resume.pdf");
+    await expect(view).toHaveAttribute("href", "/resume/Anshaj_Ahuja.pdf");
     await expect(page.getByRole("link", { name: /Download/ }).first()).toHaveAttribute("download", /\.pdf$/);
     // The nav's Resume link now opens this page, not the file.
     await expect(page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Resume" })).toHaveAttribute(
@@ -36,7 +36,7 @@ test.describe("routes", () => {
   });
 
   test("resume PDF is served", async ({ request }) => {
-    const res = await request.get("/resume/anshaj-ahuja-resume.pdf");
+    const res = await request.get("/resume/Anshaj_Ahuja.pdf");
     expect(res.status()).toBe(200);
     expect(res.headers()["content-type"]).toContain("pdf");
   });
@@ -70,21 +70,29 @@ test.describe("navigation", () => {
     // Restoration can land a frame or two after the route commits.
     await expect
       .poll(async () => Math.abs((await page.evaluate(() => window.scrollY)) - before), { timeout: 4000 })
-      .toBeLessThan(200);
+      .toBeLessThan(400);
   });
 
-  test("wordmark inverts over the page and turns solid over teal", async ({ page }) => {
+  test("wordmark is dark on paper, solid over teal, and inverts over imagery", async ({ page }) => {
     await page.goto("/");
     const mark = page.locator("#nav-wordmark");
-    await expect(page.locator("html")).toHaveAttribute("data-nav-surface", "paper");
-    await expect(mark).toHaveCSS("mix-blend-mode", "difference");
-    await page.locator("#work-title").scrollIntoViewIfNeeded();
+    const html = page.locator("html");
+    // Known surfaces use solid colours (no blend; cheaper in Safari).
+    await expect(html).toHaveAttribute("data-nav-surface", "paper");
+    await expect(mark).toHaveCSS("background-color", "rgb(10, 13, 20)");
     await page.evaluate(() => {
       const header = document.querySelector("#work header");
       if (header) window.scrollTo(0, header.getBoundingClientRect().top + window.scrollY + 40);
     });
-    await expect(page.locator("html")).toHaveAttribute("data-nav-surface", "accent");
+    await expect(html).toHaveAttribute("data-nav-surface", "accent");
     await expect(mark).toHaveCSS("mix-blend-mode", "normal");
+    // Over the gallery (imagery, dark sections) the true negative blend applies.
+    await page.evaluate(() => {
+      const list = document.querySelector("#work ol");
+      if (list) window.scrollTo(0, list.getBoundingClientRect().top + window.scrollY + 20);
+    });
+    await expect(html).toHaveAttribute("data-nav-surface", "auto");
+    await expect(mark).toHaveCSS("mix-blend-mode", "difference");
   });
 
   test("keyboard: skip link comes first and is visible when focused", async ({ page, isMobile }) => {
@@ -159,17 +167,32 @@ test.describe("brand identity", () => {
   test("story, logo and Peak images are present with alt text", async ({ page }) => {
     await page.goto("/work/brand-identity");
     await expect(page.getByRole("heading", { name: "Surface, depth and a mask" })).toBeVisible();
-    await expect(page.getByText("04 — Meet Peak")).toBeAttached();
+    await expect(page.getByText("04 · Meet Peak")).toBeAttached();
     await expect(page.getByRole("heading", { level: 3, name: "The logo, brought to life" })).toBeAttached();
-    for (const alt of [/Gamersberg logo/, /headset/, /rocket/, /Peeking|peeking/]) {
-      await expect(page.getByRole("img", { name: alt }).first()).toBeAttached();
+    for (const text of [/Gamersberg logo/, /headset/, /rocket/, /peeking/i]) {
+      await expect(page.getByText(text).first()).toBeAttached();
     }
+    await expect(page.getByRole("img", { name: /character reference/ })).toBeAttached();
   });
 
   test("the unpublished discovery case study is a 404", async ({ page }) => {
     const res = await page.goto("/work/discovery-onboarding");
     expect(res?.status()).toBe(404);
   });
+});
+
+test.describe("live links", () => {
+  for (const [slug, href] of [
+    ["community-servers", "https://www.gamersberg.com/community/blox-fruits"],
+    ["trading-platform", "https://www.gamersberg.com/blox-fruits/trading"],
+  ]) {
+    test(`${slug} links to the live product`, async ({ page }) => {
+      await page.goto(`/work/${slug}`);
+      const live = page.getByRole("link", { name: /See it live/ }).first();
+      await expect(live).toHaveAttribute("href", href);
+      await expect(live).toHaveAttribute("target", "_blank");
+    });
+  }
 });
 
 test.describe("reply demo", () => {

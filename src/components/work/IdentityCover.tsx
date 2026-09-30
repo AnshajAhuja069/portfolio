@@ -3,7 +3,7 @@ import { IcebergDepth } from "@/components/brand/IcebergArt";
 import s from "./IdentityCover.module.css";
 
 const LOGO = { src: "/images/work/brand-identity/gamersberg-logo.png", width: 457, height: 408 };
-const PEAK = { src: "/images/work/brand-identity/peak-rocket.png", width: 408, height: 605 };
+const PEAK = { src: "/images/work/brand-identity/peak-rocket.webp", width: 1030, height: 1527 };
 
 /**
  * Brand cover built from the real Gamersberg identity assets: the logo sits
@@ -20,7 +20,7 @@ export function IdentityCover({
   className?: string;
 }) {
   return (
-    <div className={`${s.cover} ${className ?? ""}`} role="img" aria-label={alt} data-cover>
+    <div className={`${s.cover} ${className ?? ""}`} role="img" aria-label={alt} data-cover data-surface="auto">
       <span className={s.stars} aria-hidden="true" />
       <span className={s.glow} aria-hidden="true" />
 
@@ -48,7 +48,7 @@ export function IdentityCover({
       </div>
 
       <div className={s.card} data-layer="front">
-        <Image src={PEAK.src} width={PEAK.width} height={PEAK.height} alt="" sizes="(max-width: 899px) 34vw, 18vw" />
+        <Image src={PEAK.src} width={PEAK.width} height={PEAK.height} alt="" quality={90} sizes="(max-width: 899px) 34vw, 18vw" />
         <span className={s.cardLabel}>Peak</span>
       </div>
     </div>

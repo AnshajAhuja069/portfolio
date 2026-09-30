@@ -21,7 +21,7 @@ export const profile = {
    * The file lives in /public/resume/.
    */
   resume: {
-    href: "/resume/anshaj-ahuja-resume.pdf",
+    href: "/resume/Anshaj_Ahuja.pdf",
     label: "Resume",
   } as { href: string; label: string } | null,
 
@@ -29,14 +29,14 @@ export const profile = {
     /** Each entry is one deliberate line of the headline. */
     lines: ["Thoughtfully", "designed.", "Carefully", "built."],
     intro:
-      "I’m Anshaj, a product designer and UX engineer. I shape how products look, work and feel — and build the interfaces that bring those decisions to life.",
+      "I’m Anshaj, a product designer and UX engineer. I shape how products look, work and feel, then build the interfaces that bring those decisions to life.",
     cue: "See selected work",
   },
 
   work: {
     title: "Selected work",
     intro:
-      "Three sides of my work at Gamersberg: community interactions, a distinctive brand, and tools for trading. From visual and UX direction to interfaces on web and mobile.",
+      "Three sides of my work at Gamersberg: the community, the brand and the trading tools. Each one runs from product and UX direction to the interfaces people use on web and mobile.",
   },
 
   contact: {
@@ -45,7 +45,7 @@ export const profile = {
   },
 
   meta: {
-    title: "Anshaj Ahuja — Product Designer & UX Engineer",
+    title: "Anshaj Ahuja · Product Designer & UX Engineer",
     description:
       "Product design and UX engineering by Anshaj Ahuja. Explore Gamersberg’s community interfaces, trading experience, and the identity behind its mascot, Peak.",
   },

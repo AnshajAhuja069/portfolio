@@ -514,3 +514,44 @@
     align-items: flex-start;
   }
 }
+
+/* ---------- Round 4 additions ---------- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin-bottom: 6px;
+}
+
+.chips li {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--paper-3);
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.chips li:first-child {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.decisionsSection {
+  border-top: 1px solid var(--line);
+  padding-block: clamp(40px, 8svh, 96px) clamp(48px, 10svh, 120px);
+}
+
+.labelInline {
+  position: static;
+  margin-bottom: clamp(8px, 2svh, 24px);
+}
+
+.reflection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 8px;
+}

@@ -58,7 +58,7 @@ export function Contact() {
   const { email, links, resume, contact } = profile;
 
   return (
-    <section ref={root} id="contact" className={s.contact} aria-labelledby="contact-title">
+    <section ref={root} id="contact" className={s.contact} aria-labelledby="contact-title" data-surface="paper">
       <div className={`container ${s.inner}`}>
         <div className={s.headRow}>
           <h2 id="contact-title" className={`display ${s.heading}`} data-split>

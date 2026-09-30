@@ -1,10 +1,9 @@
 /**
  * Resume content for the /resume journey page.
  *
- * Source: product_designer_ux_engineer.tex (the public PDF), plus the BCA
- * years from product_engineer.pdf. When you have an updated resume, edit
- * this file and replace public/resume/anshaj-ahuja-resume.pdf — the page
- * rebuilds itself from this data. Status notes: docs/content-status.md.
+ * Source: Anshaj_Ahuja.pdf (supplied 30 Sep 2026), which is also the
+ * downloadable file in public/resume/. When the resume changes, replace the
+ * PDF and update this file; the page rebuilds itself from this data.
  */
 
 export type JourneyStop = {
@@ -26,13 +25,13 @@ export type JourneyStop = {
 export const resume = {
   heading: "The journey so far.",
   summary:
-    "I connect product design with front-end implementation. At Gamersberg, my work spans the trading interface, community interactions and brand identity — shaping the experience and building the details people use.",
+    "Product designer and UX engineer bridging interface design and front-end implementation across web and mobile. I rebuilt Gamersberg’s trading interface and shaped its community, messaging and content experiences, working across Figma, React, Next.js and React Native to turn user flows into cohesive interfaces and reusable components.",
 
   journey: [
     {
       id: "bca",
       year: "2021",
-      period: "2021 – 2024",
+      period: "2021 to 2024",
       kind: "education",
       title: "Bachelor of Computer Applications (BCA)",
       org: "Christ University",
@@ -43,61 +42,60 @@ export const resume = {
     {
       id: "jai-kisan",
       year: "Feb ’24",
-      period: "Feb 2024 – Apr 2024",
+      period: "Feb 2024 to Apr 2024",
       kind: "work",
       title: "UI/UX Graphic Designer Intern",
       org: "Jai Kisan",
       place: "Bengaluru",
-      highlights: [
-        "Produced interface mockups and visual assets for fintech products while maintaining brand consistency.",
-      ],
+      highlights: ["Created interface mockups and visual assets for fintech products while keeping the brand consistent."],
       tags: ["Interface mockups", "Visual assets", "Fintech"],
     },
     {
       id: "benepik",
       year: "Aug ’24",
-      period: "Aug 2024 – Mar 2025",
+      period: "Aug 2024 to Mar 2025",
       kind: "work",
       title: "Associate UI/UX Designer",
       org: "Benepik Technologies",
       place: "Gurugram",
       highlights: [
-        "Redesigned legacy product screens with a focus on clearer interactions, responsive layouts and consistent visual patterns.",
-        "Collaborated with developers to turn UI designs into reusable components and connect screens to application data.",
+        "Redesigned legacy product screens and worked with developers on responsive components and application data integration.",
+        "Designed a spin-wheel interaction for a Hero FinCorp festive employee bonus event.",
       ],
-      tags: ["Legacy redesign", "Responsive layouts", "Components"],
+      tags: ["Legacy redesign", "Responsive components", "Interaction design"],
     },
     {
       id: "gb-ui",
       year: "Mar ’25",
-      period: "Mar 2025 – Jul 2025",
+      period: "Mar 2025 to Jul 2025",
       kind: "work",
-      title: "User Interface Engineer",
+      title: "Product Designer & UI Engineer",
       org: "Gamersberg",
       place: "Remote",
       highlights: [
-        "Redesigned and rebuilt Gamersberg’s trading interface, establishing reusable components and a visual foundation for later product work.",
-        "Mapped onboarding and discovery experiences and iterated on screens with product and engineering feedback.",
+        "Redesigned and rebuilt the trading platform’s outdated interface from the ground up, creating reusable UI components and a cohesive experience across key screens.",
+        "Helped establish the mobile app’s first interface, adapting the redesigned web flows and interactions for smaller screens.",
       ],
-      tags: ["Web UI", "Component patterns", "Onboarding"],
+      tags: ["Trading rebuild", "Reusable components", "Mobile app"],
       links: [{ label: "Trading rebuild", href: "/work/trading-platform" }],
     },
     {
       id: "gb-cpo",
       year: "Jul ’25",
-      period: "Jul 2025 – Present",
+      period: "Jul 2025 to present",
       kind: "work",
       title: "Chief Product Officer",
       org: "Gamersberg",
-      place: "Remote · Hyderabad",
+      place: "Remote",
       current: true,
       highlights: [
-        "Led visual and UX direction with the team across Gamersberg web and mobile, spanning game hubs, communities, giveaways, onboarding and marketing pages.",
-        "Created the Gamersberg logo and Peak mascot around an iceberg and infinity-mask concept; directed app-store visuals and shared product patterns.",
-        "Designed and implemented the community-server refresh: channel navigation, member lists, reply and edit states, reactions, and mobile message actions.",
-        "Worked with engineering to translate product ideas into actionable flows, screen specifications and iterative UI improvements.",
+        "Contributed product direction, UX design and hands-on UI implementation as the platform expanded into game communities, Rooms, discussions and rewards. Registered users grew from about 200K to 1.5M during my tenure, and the Android app passed 50K Google Play downloads.",
+        "Designed and implemented web and mobile interactions for community servers and messaging: channel navigation, reply and reaction flows, message actions, attachments and unread states.",
+        "Designed the CMS dashboard and reusable content templates that power game pages and connect tools, content and community destinations.",
+        "Created the Gamersberg logo and its mascot, Peak, around an iceberg and an infinity mask.",
+        "Worked with engineering to refine interaction details, test user flows and identify backend dependencies for search, content history and read state.",
       ],
-      tags: ["Visual & UX direction", "Brand identity", "Community refresh", "Web + mobile"],
+      tags: ["Product direction", "Community & messaging", "CMS", "Brand identity"],
       links: [
         { label: "Communities", href: "/work/community-servers" },
         { label: "Brand identity", href: "/work/brand-identity" },
@@ -107,16 +105,16 @@ export const resume = {
 
   skills: [
     {
-      group: "Product design",
-      items: ["Figma", "User flows", "Wireframes", "Prototyping", "Information architecture", "Visual identity"],
+      group: "Design",
+      items: ["Figma", "UI/UX design", "User flows", "Interface mockups", "Interaction design"],
     },
     {
-      group: "Design systems",
-      items: ["Components", "Typography", "Theme tokens", "Responsive design", "Accessibility"],
+      group: "Web & mobile",
+      items: ["React", "Next.js", "React Native", "Expo", "TypeScript", "JavaScript"],
     },
     {
-      group: "Implementation",
-      items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "React Native", "Expo"],
+      group: "UI & tools",
+      items: ["HTML", "CSS", "Tailwind CSS", "shadcn/ui", "Framer Motion", "Git", "GitHub", "Jotai"],
     },
   ],
 };

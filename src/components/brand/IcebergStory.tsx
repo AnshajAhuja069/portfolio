@@ -8,24 +8,24 @@ import s from "./IcebergStory.module.css";
 
 const STEPS = [
   {
-    kicker: "01 — The surface",
+    kicker: "01 · The surface",
     title: "What you see",
     body: "Gamersberg is an iceberg. What players meet is the surface: clean, simple and easy to love.",
   },
   {
-    kicker: "02 — The depth",
+    kicker: "02 · The depth",
     title: "What goes underneath",
-    body: "Most of an iceberg — about 90% — sits below the waterline. That’s the deep research and care behind every screen.",
+    body: "About 90% of an iceberg sits below the waterline. That’s where the deep research and care behind every screen lives.",
   },
   {
-    kicker: "03 — The mask",
+    kicker: "03 · The mask",
     title: "Infinity, worn as a mask",
-    body: "Gamers build identities online. The infinity sign becomes a mask for that identity — and says there’s no ceiling.",
+    body: "Gamers build identities online. The infinity sign becomes a mask for that identity, and a promise that there’s no ceiling.",
   },
   {
-    kicker: "04 — Meet Peak",
+    kicker: "04 · Meet Peak",
     title: "The logo, brought to life",
-    body: "Iceberg plus mask is the Gamersberg mark. Give it a body and you get Peak — the mascot who plays, launches and peeks into the product.",
+    body: "Iceberg plus mask is the Gamersberg mark. Give it a body and you get Peak, the mascot who plays, launches and peeks into the product.",
   },
 ];
 
@@ -123,7 +123,7 @@ export function IcebergStory({ caption }: { caption: string }) {
   );
 
   return (
-    <section ref={root} className={s.story} aria-labelledby="story-title">
+    <section ref={root} className={s.story} aria-labelledby="story-title" data-surface="auto">
       <div className={`container ${s.grid}`}>
         <header className={s.head}>
           <p className={`eyebrow ${s.eyebrow}`}>The idea</p>
@@ -228,9 +228,10 @@ export function IcebergStory({ caption }: { caption: string }) {
             </div>
             <div className={s.peak} data-peak>
               <Image
-                src="/images/work/brand-identity/peak-rocket.png"
-                width={408}
-                height={605}
+                src="/images/work/brand-identity/peak-rocket.webp"
+                width={1030}
+                height={1527}
+                quality={90}
                 alt=""
                 sizes="(max-width: 899px) 34vw, 18vw"
               />

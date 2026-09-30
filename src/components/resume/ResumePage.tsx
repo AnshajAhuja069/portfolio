@@ -24,7 +24,7 @@ export function ResumePage() {
   return (
     <ResumeMotion>
       {/* ---------- Header ---------- */}
-      <header className={`container ${s.head}`}>
+      <header className={`container ${s.head}`} data-surface="paper">
         <div className={s.headText}>
           <p className={`eyebrow ${s.eyebrow}`}>Resume · {profile.positioning}</p>
           <h1 className={`display ${s.title}`} data-split>
@@ -47,7 +47,7 @@ export function ResumePage() {
               Journey map
             </h2>
             <p className={s.journeyLead}>
-              Scroll the route — from studying computer applications to leading visual and UX direction at Gamersberg.
+              Scroll the route, from studying computer applications to shaping product and UX at Gamersberg.
             </p>
           </div>
 
@@ -85,7 +85,7 @@ export function ResumePage() {
       </section>
 
       {/* ---------- Toolkit ---------- */}
-      <section className={`container ${s.toolkit}`} aria-labelledby="toolkit-title">
+      <section className={`container ${s.toolkit}`} aria-labelledby="toolkit-title" data-surface="paper">
         <h2 id="toolkit-title" className={`display ${s.toolkitTitle}`} data-split>
           Toolkit
         </h2>

@@ -165,3 +165,11 @@ Giveaways, quests, streaks, spin-wheel, Gbucks, profiles, badges.
 - Final layered mascot art (see `asset-manifest.md`).
 - Your review of the generated resume PDF (or your own compiled PDF).
 - A domain, if/when you deploy (needed for canonical URLs and social previews).
+
+
+## Round 4 (30 Sep 2026)
+
+- Resume replaced by **Anshaj_Ahuja.pdf** (supplied). It resolves the title question: Mar to Jul 2025 is **Product Designer & UI Engineer**. The resume page follows it, including the CMS dashboard work, the Benepik spin-wheel for Hero FinCorp, and the platform growth figures (200K to 1.5M registered users, 50K+ Android downloads), which the resume states in your own words.
+- All em and en dashes removed from site copy, metadata and alt text (the PDF itself is unchanged).
+- Case studies now use your real screenshots; live links: gamersberg.com/community/blox-fruits and gamersberg.com/blox-fruits/trading.
+- Decision copy was tightened; rationale lines remain my wording, please read them in your voice.

@@ -30,7 +30,7 @@ export function CopyEmailButton({ email }: { email: string }) {
       </button>
       <span className={s.copyStatus} role="status" aria-live="polite">
         {state === "copied" && "Email address copied to clipboard."}
-        {state === "failed" && "Couldn’t copy — select the address to copy it."}
+        {state === "failed" && "Couldn’t copy. Select the address to copy it instead."}
       </span>
     </span>
   );

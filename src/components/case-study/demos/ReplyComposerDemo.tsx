@@ -21,7 +21,7 @@ type Message = {
 const INITIAL: Message[] = [
   { id: 1, name: "Mira", color: "#7c9cff", text: "Anyone up for a run tonight?" },
   { id: 2, name: "Kabir", color: "#f2c14e", text: "Queue opens at nine. I’m in." },
-  { id: 3, name: "Theo", color: "#5ad19a", text: "Same — bringing the new build." },
+  { id: 3, name: "Theo", color: "#5ad19a", text: "Same, bringing the new build." },
 ];
 
 const SWIPE_TRIGGER = 56;
@@ -74,7 +74,7 @@ export function ReplyComposerDemo() {
   return (
     <div className={s.demo}>
       <p className={s.hint} id="demo-hint">
-        Swipe a message to the right — or use <strong>Reply</strong> — then send.
+        Swipe a message to the right, or tap <strong>Reply</strong>, then send.
       </p>
       <div className={s.phone}>
         <div className={s.header}>

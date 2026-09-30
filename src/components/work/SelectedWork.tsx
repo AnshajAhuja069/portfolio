@@ -108,7 +108,7 @@ function WorkFeature({ project, index }: { project: Project; index: number }) {
         </span>
         <p className={`eyebrow ${s.company}`}>
           <span className="sr-only">Project {index + 1}: </span>
-          {project.company} — {project.workstream}
+          {project.company} · {project.workstream}
         </p>
         <h3 id={titleId} className={`display ${s.projectTitle}`} data-split>
           {project.title}

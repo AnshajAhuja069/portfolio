@@ -56,13 +56,13 @@ export function Cover({ cover, showTag = true, priority = false, className }: Pr
       role="img"
       aria-label={cover.alt}
       data-cover
-      data-surface={isAccentPlate(cover.plate) ? "accent" : undefined}
+      data-surface={isAccentPlate(cover.plate) ? "accent" : "auto"}
     >
       <div className={s.back} data-layer="back">
         <div className={s.backTilt}>
           <WindowFrame>
             {realScreens ? (
-              <Image {...cover.desktop} alt="" sizes="(max-width: 899px) 130vw, 48vw" priority={priority} style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "top", background: "#08080b" }} />
+              <Image {...cover.desktop} alt="" sizes="(max-width: 899px) 130vw, 62vw" quality={90} priority={priority} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "left top", background: "#08080b" }} />
             ) : <Back />}
           </WindowFrame>
         </div>
@@ -70,7 +70,7 @@ export function Cover({ cover, showTag = true, priority = false, className }: Pr
       <div className={s.front} data-layer="front">
         <PhoneFrame showStatusBar={!realScreens}>
           {realScreens ? (
-            <Image {...cover.mobile} alt="" sizes="(max-width: 899px) 46vw, 16vw" priority={priority} style={{ width: "100%", height: "100%", minHeight: 0, objectFit: "contain", objectPosition: "top", background: cover.composition === "community" ? "#101128" : "#08080b" }} />
+            <Image {...cover.mobile} alt="" sizes="(max-width: 899px) 46vw, 22vw" quality={90} priority={priority} style={{ width: "100%", height: "100%", minHeight: 0, objectFit: "cover", objectPosition: "top", background: cover.composition === "community" ? "#101128" : "#08080b" }} />
           ) : <Front />}
         </PhoneFrame>
       </div>

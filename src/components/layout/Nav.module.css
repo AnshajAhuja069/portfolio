@@ -57,6 +57,22 @@
   outline-offset: 3px;
 }
 
+:global(html[data-nav-surface="paper"]) .wordmark {
+  /* Same look as the inverted pill on paper, without a blend (cheaper to
+     render, especially in Safari while the hero animates). */
+  mix-blend-mode: normal;
+  background: #0a0d14;
+  color: var(--paper);
+}
+
+:global(html[data-nav-surface="paper"]) .dot {
+  background: var(--accent);
+}
+
+:global(html[data-nav-surface="paper"]) .wordmark:focus-visible {
+  outline-color: var(--ink);
+}
+
 :global(html[data-nav-surface="accent"]) .wordmark {
   mix-blend-mode: normal;
   background: var(--ink);

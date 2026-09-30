@@ -11,6 +11,9 @@ import { useGSAP } from "@gsap/react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
+  // iOS Safari resizes the viewport as its toolbar shows/hides; ignore those
+  // so scrubbed effects don't re-measure (and jump) mid-scroll.
+  ScrollTrigger.config({ ignoreMobileResize: true });
 }
 
 /** Shared media queries (keep in sync with docs/motion-spec.md). */

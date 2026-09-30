@@ -49,17 +49,17 @@ or run `npx playwright install chromium` and remove the `channel` option.
 | Background crystals / contours | `GALLERY_*` in `SelectedWork.tsx`, `JOURNEY_*` in `ResumePage.tsx` |
 | Page titles / descriptions | `profile.meta` and each project's `title` / `summary` |
 | Resume page (journey map, toolkit) | `src/content/resume.ts` |
-| Resume PDF content | `scripts/resume/resume.html`, then `npm run resume` |
-| Resume file (or drop in your own) | `public/resume/anshaj-ahuja-resume.pdf` — set `profile.resume` to `null` to hide every resume link |
+| Resume file (the download) | `public/resume/Anshaj_Ahuja.pdf` — set `profile.resume` to `null` to hide every resume link |
 | Hide or add a case study | `published` / `order` in `projects.ts` |
 
 Animation code never needs to change for content edits.
 
 ### Replacing illustrative mocks with real work
 
-The communities and trading visuals are **illustrative mocks drawn in code**,
-labelled that way on the page. The brand identity case study uses the real
-logo and Peak renders from `public/images/work/brand-identity/`. To use real screenshots, put files in
+All three case studies use real screens and artwork from
+`public/images/work/<slug>/` (WebP, quality 90; Android status bars cropped).
+Each decision can carry a `shot` (phone, browser or art frame) that the
+page pairs with it; `live` adds the "See it live" address bar and dock. To use real screenshots, put files in
 `public/images/work/<slug>/` and switch the project's `cover` (and any
 `media` entries) to `kind: "image"`. Full steps and sizes:
 [`docs/asset-manifest.md`](docs/asset-manifest.md).

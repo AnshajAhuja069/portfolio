@@ -51,6 +51,21 @@ export function CaseStudyMotion({ children }: { children: ReactNode }) {
       });
 
       mm.add(MQ.desktop, () => {
+        // The featured screen grows into place as it arrives.
+        const showcase = el.querySelector<HTMLElement>("[data-showcase]");
+        if (showcase) {
+          gsap.fromTo(
+            showcase,
+            { scale: 0.88, y: 60, transformOrigin: "50% 0%" },
+            {
+              scale: 1,
+              y: 0,
+              ease: "none",
+              scrollTrigger: { trigger: showcase, start: "top bottom", end: "top 20%", scrub: 0.5 },
+            },
+          );
+        }
+
         const preview = el.querySelector<HTMLElement>("[data-preview]");
         if (preview) {
           gsap.fromTo(
