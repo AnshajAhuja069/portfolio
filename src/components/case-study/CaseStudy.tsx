@@ -61,6 +61,30 @@ export function CaseStudy({ project, index }: { project: Project; index: number 
           </div>
         </div>
 
+        {/* Impact at scale */}
+        {project.impact && project.impact.length > 0 && (
+          <section className={`container ${s.impact}`} aria-labelledby="impact-title">
+            <div className={s.impactHead}>
+              <h2 id="impact-title" className={`eyebrow ${s.impactLabel}`}>
+                Impact at scale
+              </h2>
+              <p className={s.impactScope}>Gamersberg, during my tenure</p>
+            </div>
+            <ul className={s.impactRow} role="list" data-reveal>
+              {project.impact.map((st) => (
+                <li key={st.label} className={s.stat}>
+                  <span className={`display ${s.statValue}`}>
+                    {st.value}
+                    {st.unit && <span className={s.statUnit}>{st.unit}</span>}
+                  </span>
+                  <span className={`eyebrow ${s.statLabel}`}>{st.label}</span>
+                  <span className={s.statNote}>{st.note}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {/* Overview + role at a glance */}
         <Section id="overview" label="Overview">
           <p className={s.lede}>{cs.overview}</p>
@@ -140,11 +164,19 @@ export function CaseStudy({ project, index }: { project: Project; index: number 
                 g.kind === "shot" ? (
                   <figure
                     key={i}
-                    className={`${m.galleryItem} ${g.shot.frame !== "phone" ? m.galleryWide : ""}`}
+                    className={`${m.galleryItem} ${
+                      g.compact ? m.galleryCompact : g.shot.frame !== "phone" ? m.galleryWide : ""
+                    }`}
                   >
                     <DeviceShot
                       shot={g.shot}
-                      sizes={g.shot.frame === "phone" ? "300px" : "(max-width: 1760px) 94vw, 1650px"}
+                      sizes={
+                        g.shot.frame === "phone"
+                          ? "300px"
+                          : g.compact
+                            ? "(max-width: 600px) 94vw, 460px"
+                            : "(max-width: 1760px) 94vw, 1650px"
+                      }
                     />
                     <figcaption className={m.galleryCaption}>{g.caption}</figcaption>
                   </figure>

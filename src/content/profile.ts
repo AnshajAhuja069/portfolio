@@ -10,6 +10,7 @@ export const profile = {
   positioning: "Product Designer & UX Engineer",
   location: "India",
   email: "anshajahujaa@gmail.com",
+  phone: { display: "+91 89051 30393", href: "tel:+918905130393" },
 
   links: {
     linkedin: "https://www.linkedin.com/in/anshaj-ahuja-b528a11b6/",
@@ -30,7 +31,7 @@ export const profile = {
     lines: ["Thoughtfully", "designed.", "Carefully", "built."],
     intro:
       "I’m Anshaj, a product designer and UX engineer. I shape how products look, work and feel, then build the interfaces that bring those decisions to life.",
-    cue: "See selected work",
+    cue: "See 3 case studies",
   },
 
   work: {

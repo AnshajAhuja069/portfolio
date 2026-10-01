@@ -555,3 +555,89 @@
   gap: 10px;
   padding-top: 8px;
 }
+
+/* ---------- Impact at scale: an editorial row, no cards ---------- */
+
+.impact {
+  padding-bottom: clamp(56px, 10svh, 120px);
+}
+
+.impactHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.impactLabel {
+  color: var(--ink);
+}
+
+.impactScope {
+  font-size: var(--step--1);
+  color: var(--ink-2);
+}
+
+.impactRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 44px) 0;
+}
+
+.stat:first-child {
+  padding-left: 0;
+}
+
+.stat + .stat {
+  border-left: 1px solid var(--line);
+}
+
+.statValue {
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+}
+
+.statUnit {
+  color: var(--accent-text);
+}
+
+.statLabel {
+  color: var(--ink);
+}
+
+.statNote {
+  max-width: 30ch;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+@media (max-width: 699.98px) {
+  .impactRow {
+    grid-template-columns: 1fr;
+  }
+
+  .stat,
+  .stat:first-child {
+    padding: 28px 0;
+  }
+
+  .stat + .stat {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}

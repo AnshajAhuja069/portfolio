@@ -8,7 +8,8 @@
    server-rendered layout already has its final height). */
 .track {
   position: relative;
-  height: 190svh;
+  /* Shortened so the case studies arrive sooner (feedback: discoverability). */
+  height: 145svh;
 }
 
 .stage {
@@ -229,7 +230,7 @@
    so the colour field fills while the hero is held in view. */
 @media (max-width: 899.98px) and (min-height: 560px) and (prefers-reduced-motion: no-preference) {
   .track {
-    height: 180svh;
+    height: 140svh;
   }
 
   .stage {

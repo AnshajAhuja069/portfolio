@@ -96,6 +96,8 @@ export type Media =
       caption: string;
       /** "showcase": the large featured screen right after the overview. */
       placement?: "showcase" | "gallery";
+      /** In the gallery, sit beside phones instead of spanning the full width. */
+      compact?: boolean;
     }
   | {
       kind: "mock";
@@ -144,6 +146,8 @@ export type Project = {
   order: number;
   published: boolean;
   title: string;
+  /** Short name for quick links (e.g. the case-study index). */
+  short: string;
   /** One sentence for the gallery. */
   summary: string;
   company: string;
@@ -154,6 +158,12 @@ export type Project = {
   platforms: string[];
   /** Short label for the cover band. */
   band: string;
+  /**
+   * Impact at scale, shown once on the case study. Only broad, real numbers
+   * (users, downloads, platforms) from the resume; never feature counts.
+   * `unit` is the suffix drawn in the accent colour, e.g. "M" or "K+".
+   */
+  impact?: { value: string; unit?: string; label: string; note: string }[];
   /** Link to the live product, shown as "See it live". */
   live?: { href: string; label: string };
   cover: Cover;
@@ -188,14 +198,20 @@ export const projects: Project[] = [
     order: 1,
     published: true,
     title: "Making communities easier to use",
+    short: "Community servers",
+    impact: [
+      { value: "1.5", unit: "M", label: "Registered users", note: "Up from about 200K during my tenure." },
+      { value: "50", unit: "K+", label: "Google Play downloads", note: "On the Gamersberg Android app." },
+      { value: "3", label: "Platforms", note: "Web and Android today, with a Windows app on the Microsoft Store coming soon." },
+    ],
     summary:
-      "Conversations, channels and game tools in one place, with replies that keep their context and message actions within thumb’s reach on web and mobile.",
+      "Conversations, channels and game tools in one place, with replies that keep their context, message actions within thumb’s reach, and over 100 decorations that let players make their profile their own.",
     company: "Gamersberg",
     workstream: "Community servers & mobile messaging",
     contribution: "Interaction design and front-end build, web and React Native",
-    disciplines: ["Interaction design", "Design systems", "Front-end"],
+    disciplines: ["Interaction design", "Visual design", "Design systems", "Front-end"],
     platforms: ["Web", "Mobile"],
-    band: "Communities · Messaging",
+    band: "Communities · Messaging · Shop",
     live: { href: "https://www.gamersberg.com/community/blox-fruits", label: "gamersberg.com/community/blox-fruits" },
     cover: {
       kind: "screenshots",
@@ -207,7 +223,7 @@ export const projects: Project[] = [
     },
     caseStudy: {
       overview:
-        "A game community is more than a chat feed. Players jump between conversations, announcements and tools for the game they share. I designed and implemented Gamersberg’s community refresh on web and React Native, pairing clear navigation with the small interactions that keep a conversation moving.",
+        "A game community is more than a chat feed. Players jump between conversations, announcements and tools for the game they share. I designed and implemented Gamersberg’s community refresh on web and React Native, pairing clear navigation with the small interactions that keep a conversation moving. Around it, I created the identity layer players show off: more than 100 decoration items, the shop that sells them and the profile hover cards that wear them.",
       role: {
         contribution: "Interaction and visual design, and front-end implementation on web and React Native.",
         collaborators: "The Gamersberg product and engineering team.",
@@ -221,6 +237,9 @@ export const projects: Project[] = [
         { label: "Mobile gestures: swipe to reply, long-press menus, reactions", status: "built" },
         { label: "Shared theme tokens and typography", status: "built" },
         { label: "Local channel pinning", status: "built", note: "Saved on the device only." },
+        { label: "100+ decoration items: nameplates, avatar decorations and card frames", status: "built" },
+        { label: "Decoration shop with previews, prices, rarity and owned states", status: "built" },
+        { label: "Profile hover cards that show equipped decorations", status: "built" },
       ],
       problem:
         "Busy conversations lose context fast. Players needed to answer a specific message, react quickly, find the right channel and get back to the latest messages, all without losing their place in the conversation they were following.",
@@ -316,6 +335,33 @@ export const projects: Project[] = [
           kind: "shot",
           placement: "gallery",
           shot: {
+            src: `${CS}/shop.webp`,
+            width: 1894,
+            height: 971,
+            frame: "art",
+            plate: "#0b0a12",
+            alt: "The Gamersberg decoration shop with rows of nameplates and avatar decorations, each with a preview, price in gems, rarity, and Owned or Equipped tags.",
+          },
+          caption: "The decoration shop. I created more than 100 items, from nameplates to avatar decorations, each previewed at the same proportions members see, with price, rarity and owned states.",
+        },
+        {
+          kind: "shot",
+          placement: "gallery",
+          compact: true,
+          shot: {
+            src: `${CS}/hover-card.webp`,
+            width: 941,
+            height: 884,
+            frame: "art",
+            plate: "#0b0a12",
+            alt: "A profile hover card in an ornate purple frame, opened from the member list, showing the player’s decorated avatar, bio, Gamersberg stats and actions.",
+          },
+          caption: "Hover cards bring decorations into the conversation. Open a member and their frame, avatar decoration and stats come with them.",
+        },
+        {
+          kind: "shot",
+          placement: "gallery",
+          shot: {
             src: `${CS}/stock.webp`,
             width: 1080,
             height: 2304,
@@ -335,6 +381,7 @@ export const projects: Project[] = [
           "Interaction and visual design for chat, navigation, member lists and the composer.",
           "Web and React Native implementation of message and composer states, mobile gestures, channel controls and profile transitions.",
           "Shared theme tokens and typography across the refreshed interfaces.",
+          "More than 100 decoration items, the shop that presents them and the hover cards that display them across the community.",
           "Working with engineering to map the backend dependencies for search, content history and read state.",
         ],
         team: ["The backend services behind communities, including search, content history and read state."],
@@ -343,6 +390,7 @@ export const projects: Project[] = [
         "A reply keeps its context from the moment you pick a message to the moment you send.",
         "Every mobile message and channel action has one consistent entry point.",
         "Web and mobile share one visual foundation for navigation and messaging.",
+        "Decorations follow a player everywhere they appear: the member list, the hover card and the shop preview all match.",
       ],
       reflection:
         "Next, I’d focus on reliability in everyday moments: replying while the feed moves, jumping back to recent messages and keeping the composer predictable. Reaction defaults and synced pins should wait for evidence before the feature set grows.",
@@ -354,6 +402,7 @@ export const projects: Project[] = [
     order: 2,
     published: true,
     title: "Giving Gamersberg an identity with depth",
+    short: "Brand identity & Peak",
     summary:
       "An iceberg became a logo, and the logo became Peak. One silhouette and an infinity mask connect Gamersberg’s mark with a character built for play.",
     company: "Gamersberg",
@@ -488,6 +537,7 @@ export const projects: Project[] = [
     order: 5,
     published: false,
     title: "Helping players find where they belong",
+    short: "Discovery",
     summary: "Onboarding, game selection and hub journeys that lead players from the games they play to the communities around them.",
     company: "Gamersberg",
     workstream: "Discovery, onboarding & game hubs",
@@ -522,6 +572,7 @@ export const projects: Project[] = [
     order: 3,
     published: true,
     title: "Rebuilding the trading experience",
+    short: "Trading platform",
     summary:
       "A rebuilt trading interface that keeps offers, requests and item values in view, with patterns that carry from desktop browsing to mobile comparison.",
     company: "Gamersberg",
@@ -652,6 +703,7 @@ export const projects: Project[] = [
     order: 4,
     published: false,
     title: "Designing participation and progression",
+    short: "Rewards",
     summary: "Giveaways, quests, streaks, spin-wheel and profile experiences. Contribution per area still to be confirmed.",
     company: "Gamersberg",
     workstream: "Rewards & engagement",

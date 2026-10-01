@@ -13,8 +13,8 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 30ch);
   align-items: end;
   gap: 16px 48px;
-  padding-top: clamp(40px, 10svh, 120px);
-  padding-bottom: clamp(48px, 10svh, 128px);
+  padding-top: clamp(28px, 6svh, 80px);
+  padding-bottom: clamp(28px, 6svh, 72px);
 }
 
 .count {
@@ -313,3 +313,50 @@
     grid-column: 1 / span 5;
   }
 }
+
+
+/* Direct links to every case study, right where the work section starts. */
+.jump {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.jumpLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 16px 0 8px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.jumpLink:hover {
+  background: var(--ink-3);
+}
+
+.jumpLink:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.jumpNum {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+

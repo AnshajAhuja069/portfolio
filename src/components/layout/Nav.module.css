@@ -15,18 +15,17 @@
   border-radius: 999px;
 }
 
-/* ---------- Wordmark: negative (difference) pill ----------
-   White fill + black text under `difference`: the pill shows the inverse of
-   whatever is behind it and the text shows the surface itself, so it flips
-   on paper, ink, navy and imagery. Over mid-tone teal an inverse can't be
-   read (≈1.2:1), so SurfaceWatcher switches it to a solid ink pill there. */
+/* ---------- Wordmark ----------
+   A solid pill whose colours follow the surface underneath (dark on paper
+   and teal, light over dark sections and imagery). No blend modes, so
+   nothing shows through it. */
 .wordmark {
   left: var(--edge);
   gap: 8px;
   padding: 0 16px 0 14px;
-  background: #fff;
-  color: #000;
-  mix-blend-mode: difference;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px rgb(23 23 23 / 0.06);
   font-weight: 600;
   font-size: 0.9375rem;
   letter-spacing: -0.01em;
@@ -46,21 +45,16 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  /* Under `difference` this shows as teal on paper. */
-  background: #e75f45;
+  background: var(--accent);
   flex: none;
 }
 
-/* White outline inverts too, so the ring is visible on any surface. */
 .wordmark:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--ink);
   outline-offset: 3px;
 }
 
 :global(html[data-nav-surface="paper"]) .wordmark {
-  /* Same look as the inverted pill on paper, without a blend (cheaper to
-     render, especially in Safari while the hero animates). */
-  mix-blend-mode: normal;
   background: #0a0d14;
   color: var(--paper);
 }
@@ -74,7 +68,6 @@
 }
 
 :global(html[data-nav-surface="accent"]) .wordmark {
-  mix-blend-mode: normal;
   background: var(--ink);
   color: var(--paper);
 }

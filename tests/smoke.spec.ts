@@ -73,11 +73,10 @@ test.describe("navigation", () => {
       .toBeLessThan(400);
   });
 
-  test("wordmark is dark on paper, solid over teal, and inverts over imagery", async ({ page }) => {
+  test("wordmark is a solid pill on every surface (no blend)", async ({ page }) => {
     await page.goto("/");
     const mark = page.locator("#nav-wordmark");
     const html = page.locator("html");
-    // Known surfaces use solid colours (no blend; cheaper in Safari).
     await expect(html).toHaveAttribute("data-nav-surface", "paper");
     await expect(mark).toHaveCSS("background-color", "rgb(10, 13, 20)");
     await page.evaluate(() => {
@@ -86,13 +85,14 @@ test.describe("navigation", () => {
     });
     await expect(html).toHaveAttribute("data-nav-surface", "accent");
     await expect(mark).toHaveCSS("mix-blend-mode", "normal");
-    // Over the gallery (imagery, dark sections) the true negative blend applies.
+    // Over the gallery it turns light, still solid so nothing shows through.
     await page.evaluate(() => {
       const list = document.querySelector("#work ol");
       if (list) window.scrollTo(0, list.getBoundingClientRect().top + window.scrollY + 20);
     });
     await expect(html).toHaveAttribute("data-nav-surface", "auto");
-    await expect(mark).toHaveCSS("mix-blend-mode", "difference");
+    await expect(mark).toHaveCSS("mix-blend-mode", "normal");
+    await expect(mark).toHaveCSS("background-color", "rgb(245, 242, 235)");
   });
 
   test("keyboard: skip link comes first and is visible when focused", async ({ page, isMobile }) => {

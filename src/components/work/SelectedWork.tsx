@@ -36,6 +36,19 @@ export function SelectedWork() {
               {profile.work.title}
             </h2>
             <p className={s.lead}>{profile.work.intro}</p>
+            <ul className={s.jump} role="list" aria-label="Jump to a case study">
+              {publishedProjects.map((p, i) => (
+                <li key={p.slug}>
+                  <Link href={`/work/${p.slug}`} className={s.jumpLink} data-magnetic>
+                    <span className={s.jumpNum} aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {p.short}
+                    <ArrowRight />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </header>
 

@@ -55,7 +55,7 @@ export function Contact() {
     { scope: root },
   );
 
-  const { email, links, resume, contact } = profile;
+  const { email, phone, links, resume, contact } = profile;
 
   return (
     <section ref={root} id="contact" className={s.contact} aria-labelledby="contact-title" data-surface="paper">
@@ -78,6 +78,11 @@ export function Contact() {
             </a>
             <CopyEmailButton email={email} />
           </div>
+
+          <a className={s.phone} href={phone.href}>
+            <span className={`eyebrow ${s.phoneLabel}`}>Call</span>
+            {phone.display}
+          </a>
 
           <ul className={s.links} role="list">
             <li>

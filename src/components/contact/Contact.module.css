@@ -67,6 +67,31 @@
   color: var(--ink-2);
 }
 
+.phone {
+  grid-column: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+  justify-self: start;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.phone:hover {
+  color: var(--ink-2);
+}
+
+.phoneLabel {
+  font-family: var(--font-text, inherit);
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+}
+
 .copyWrap {
   display: inline-flex;
   flex-wrap: wrap;
@@ -99,6 +124,8 @@
 }
 
 .links {
+  grid-column: 2;
+  grid-row: 2 / span 2;
   display: flex;
   flex-wrap: wrap;
   gap: 4px 8px;
@@ -125,6 +152,15 @@
 @media (max-width: 899.98px) {
   .body {
     grid-template-columns: 1fr;
+  }
+
+  .links {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .phone {
+    font-size: var(--step-1);
   }
 
   .email {

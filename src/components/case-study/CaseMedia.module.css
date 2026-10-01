@@ -622,6 +622,15 @@
   width: 100%;
 }
 
+/* Artwork that sits in a row with the phones. */
+.galleryCompact {
+  width: min(460px, 100%);
+}
+
+.galleryCompact .art {
+  width: 100%;
+}
+
 .galleryItem .phone {
   --phone-w: min(290px, 70vw);
 }
