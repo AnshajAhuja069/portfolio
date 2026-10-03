@@ -229,18 +229,30 @@
 /* Tall phones: the same sticky choreography as desktop over a shorter track,
    so the colour field fills while the hero is held in view. */
 @media (max-width: 899.98px) and (min-height: 560px) and (prefers-reduced-motion: no-preference) {
+  /* The stage covers the large viewport (Safari's toolbar collapsed) so no
+     strip of the section behind shows through mid-scroll, while the content
+     is laid out in the small viewport so nothing hides under the toolbar.
+     55svh of scroll lets the circle grow over a swipe rather than pop. */
   .track {
-    height: 140svh;
+    height: calc(100vh + 55vh);
+    height: calc(100lvh + 55svh);
   }
 
   .stage {
     position: sticky;
     top: 0;
-    height: 100svh;
+    height: 100vh;
+    height: 100lvh;
   }
 
   .base {
     min-height: 100%;
+  }
+
+  .content {
+    flex: none;
+    height: 100vh;
+    height: 100svh;
   }
 }
 

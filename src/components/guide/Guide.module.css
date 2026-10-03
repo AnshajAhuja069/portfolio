@@ -1,0 +1,454 @@
+/* Mini Anshaj: fixed corner guide. Sits under the nav (50) and the
+   LiveDock (45, which moves aside while the guide is on). */
+.root {
+  position: fixed;
+  right: max(16px, calc((100% - var(--maxw)) / 2 + var(--gutter)));
+  bottom: 20px;
+  z-index: 44;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  pointer-events: none;
+}
+
+/* ---------- Sleeping tab (guide hidden) ---------- */
+
+.sleep {
+  position: fixed;
+  right: max(16px, calc((100% - var(--maxw)) / 2 + var(--gutter)));
+  bottom: 0;
+  z-index: 44;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  translate: 0 38%;
+  box-shadow:
+    0 0 0 2px var(--paper),
+    0 10px 24px -10px rgb(0 0 0 / 0.5);
+  transition: translate 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sleep img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.sleep:hover,
+.sleep:focus-visible {
+  translate: 0 -8px;
+}
+
+.sleep:focus-visible {
+  border-radius: 50%;
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 4px;
+}
+
+/* Little snore above his head */
+.zzz {
+  position: absolute;
+  right: -6px;
+  top: -14px;
+  color: var(--accent-text);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  animation: snore 2.4s ease-in-out infinite;
+}
+
+.zzz span {
+  position: relative;
+  top: -8px;
+  left: 1px;
+  font-size: 0.7em;
+}
+
+@keyframes snore {
+  50% {
+    opacity: 0.35;
+    translate: 3px -4px;
+  }
+}
+
+@media (max-width: 899.98px) {
+  .sleep {
+    right: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zzz {
+    animation: none;
+  }
+}
+
+/* ---------- Avatar ---------- */
+
+.avatar {
+  position: relative;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 3px var(--paper),
+    0 16px 34px -12px rgb(0 0 0 / 0.5);
+  opacity: 0;
+  translate: 0 90px;
+  scale: 0.6;
+  pointer-events: none;
+  transition:
+    opacity 220ms var(--ease-out),
+    translate 560ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    scale 560ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    rotate 560ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root[data-visible="true"] .avatar {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  pointer-events: auto;
+}
+
+/* First appearance: peeking up over the bottom edge, like Peak. */
+.root[data-visible="true"][data-peek="true"] .avatar {
+  translate: 0 46px;
+  rotate: -10deg;
+}
+
+.avatar:hover {
+  scale: 1.06;
+}
+
+/* Stay round (the global focus style sets a 4px radius); teal reads on
+   both paper and ink sections. */
+.avatar:focus-visible {
+  border-radius: 50%;
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 5px;
+}
+
+/* Reading progress ring (case studies) */
+.ring {
+  position: absolute;
+  inset: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  rotate: -90deg;
+  pointer-events: none;
+}
+
+.ringTrack,
+.ringFill {
+  fill: none;
+  stroke-width: 3;
+}
+
+.ringTrack {
+  stroke: rgb(23 23 23 / 0.12);
+}
+
+.ringFill {
+  stroke: var(--accent);
+  stroke-linecap: round;
+}
+
+/* ---------- Speech bubble (left of the avatar) ---------- */
+
+.bubble {
+  max-width: min(300px, calc(100vw - 120px));
+  margin-bottom: 8px;
+  padding: 12px 14px;
+  border-radius: 18px 18px 4px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.9375rem;
+  line-height: 1.42;
+  text-wrap: pretty;
+  box-shadow:
+    inset 0 0 0 1px rgb(245 242 235 / 0.14),
+    0 18px 36px -16px rgb(0 0 0 / 0.55);
+  pointer-events: auto;
+  transform-origin: 100% 100%;
+  animation: pop 360ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.bubble a {
+  color: var(--accent-bright);
+  font-weight: 600;
+}
+
+.step {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--paper-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.actions button {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgb(245 242 235 / 0.3);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--paper);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.actions .primary {
+  border-color: transparent;
+  background: var(--accent-bright);
+  color: var(--ink);
+}
+
+.actions button:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
+}
+
+/* ---------- Card (above the avatar) ---------- */
+
+.card {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 14px);
+  width: min(340px, calc(100vw - 32px));
+  padding: 18px;
+  border-radius: 22px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow:
+    inset 0 0 0 1px var(--line),
+    0 30px 60px -22px rgb(0 0 0 / 0.5);
+  pointer-events: auto;
+  transform-origin: 100% 100%;
+  animation: pop 320ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+.card:focus {
+  outline: none;
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.cardClose {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  margin: -4px -4px 0 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--paper-3);
+  color: var(--ink);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cardIntro {
+  margin-top: 8px;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.cardStat {
+  margin-top: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.cardStat :global(.display) {
+  color: var(--accent-text);
+  font-size: 1.6rem;
+  letter-spacing: -0.04em;
+}
+
+.cardChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+  list-style: none;
+}
+
+.cardChips a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px 0 6px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.chipNum {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  color: var(--ink);
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.cardList {
+  margin-top: 12px;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.cardList a,
+.cardList button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 46px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cardList a:hover,
+.cardList button:hover {
+  color: var(--accent-text);
+}
+
+.cardList svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.cardHide {
+  margin-top: 12px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.card a:focus-visible,
+.card button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    scale: 0.85;
+    translate: 0 8px;
+  }
+}
+
+/* ---------- Phones: smaller, card as a bottom sheet ---------- */
+
+@media (max-width: 899.98px) {
+  .root {
+    right: 14px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+  }
+
+  .root[data-visible="true"][data-peek="true"] .avatar {
+    translate: 0 38px;
+  }
+
+  .bubble {
+    max-width: calc(100vw - 100px);
+    font-size: 0.875rem;
+  }
+
+  /* The sheet covers the bubble area; keep one thing on screen. */
+  .root[data-open="true"] .bubble {
+    display: none;
+  }
+
+  .card {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(max(14px, env(safe-area-inset-bottom)) + 66px);
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar {
+    transition: opacity 120ms linear;
+  }
+
+  .bubble,
+  .card {
+    animation: none;
+  }
+}
+
+@media print {
+  .root,
+  .sleep {
+    display: none;
+  }
+}

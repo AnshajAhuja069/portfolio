@@ -4,6 +4,7 @@ import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { RouteFocus } from "@/components/layout/RouteFocus";
 import { Magnetic } from "@/components/layout/Magnetic";
+import { Guide } from "@/components/guide/Guide";
 import { profile } from "@/content/profile";
 import "./globals.css";
 
@@ -52,6 +53,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        {/* After the footer so the skip link and nav keep their tab order. */}
+        <Guide />
       </body>
     </html>
   );

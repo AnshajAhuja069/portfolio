@@ -1,10 +1,36 @@
 "use client";
 
-import { useId, useRef } from "react";
+import { useId, useImperativeHandle, useRef, type Ref } from "react";
 import { gsap, useGSAP, MQ } from "@/lib/gsap";
 import styles from "./Mascot.module.css";
 
+/** One-shot reactions the guide (or anything else) can trigger. */
+export type MascotAction =
+  | "wave"
+  | "wink"
+  | "nod"
+  | "blush"
+  | "lookAround"
+  | "surprised"
+  | "think"
+  | "yawn"
+  | "whoa"
+  | "dizzy";
+
+export type MascotHandle = {
+  /** Play a reaction; a new one finishes the previous one instantly. */
+  react: (action: MascotAction) => void;
+  /** Glance in a direction, each axis from -1 to 1. */
+  look: (dx: number, dy: number) => void;
+};
+
+const NOOP: MascotHandle = { react: () => {}, look: () => {} };
+
 export type MascotProps = {
+  /** Imperative handle for reactions (React 19 ref prop). */
+  ref?: Ref<MascotHandle>;
+  /** Built-in hover blush and tap nod. Off when a parent owns the clicks. */
+  interactive?: boolean;
   /** Final resting expression. */
   expression?: "neutral" | "smile";
   /** Follow the pointer with eyes/head (fine pointers only). */
@@ -24,6 +50,8 @@ export type MascotProps = {
  * swap this component for a GLB-based one with the same props.
  */
 export function Mascot({
+  ref,
+  interactive = true,
   expression = "neutral",
   track = true,
   greetOnView = false,
@@ -33,6 +61,18 @@ export function Mascot({
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const id = (name: string) => `m${uid}-${name}`;
   const url = (name: string) => `url(#${id(name)})`;
+
+  // Reactions live inside the GSAP context below (motion or reduced); the
+  // handle forwards to whichever implementation is current.
+  const api = useRef<MascotHandle>(NOOP);
+  useImperativeHandle(
+    ref,
+    () => ({
+      react: (a) => api.current.react(a),
+      look: (dx, dy) => api.current.look(dx, dy),
+    }),
+    [],
+  );
 
   useGSAP(
     () => {
@@ -46,14 +86,24 @@ export function Mascot({
       const [brows] = q("[data-part=brows]");
       const [mouth] = q("[data-part=mouth]");
       const [smile] = q("[data-part=smile]");
+      const [mouthO] = q("[data-part=mouth-o]");
+      const [eyeL] = q("[data-part=eye-l]");
+      const [hand] = q("[data-part=hand]");
+      const [orbit] = q("[data-part=orbit]");
       const blush = q("[data-part=blush]");
 
-      // Expression state shared by hover, tap and the greeting.
+      // Expression state shared by hover, tap, the greeting and reactions.
       let resting = expression === "smile" && !greetOnView;
       const setFace = (smiling: boolean, blushing: boolean, duration: number) => {
         gsap.to(mouth, { opacity: smiling ? 0 : 1, duration, overwrite: "auto" });
         gsap.to(smile, { opacity: smiling ? 1 : 0, duration, overwrite: "auto" });
+        gsap.to(mouthO, { opacity: 0, scale: 1, duration, overwrite: "auto" });
         gsap.to(blush, { opacity: blushing ? 0.6 : 0, duration: duration * 1.4, overwrite: "auto" });
+      };
+      /** Round "o" mouth for surprise and yawns. */
+      const setO = (scale: number, duration: number) => {
+        gsap.to([mouth, smile], { opacity: 0, duration, overwrite: "auto" });
+        gsap.to(mouthO, { opacity: 1, scale, duration, overwrite: "auto" });
       };
 
       const mm = gsap.matchMedia();
@@ -62,11 +112,26 @@ export function Mascot({
         // Static; still show the intended expression and allow a hover blush.
         resting = expression === "smile" || greetOnView;
         setFace(resting, false, 0);
+        // Reactions become instant face changes that settle back.
+        let reset: gsap.core.Tween | null = null;
+        api.current = {
+          react: (a) => {
+            reset?.kill();
+            if (a === "surprised" || a === "whoa" || a === "yawn") setO(1, 0);
+            else setFace(true, a === "blush" || a === "dizzy", 0);
+            reset = gsap.delayedCall(1.2, () => setFace(resting, false, 0));
+          },
+          look: () => {},
+        };
         const enter = () => setFace(true, true, 0);
         const leave = () => setFace(resting, false, 0);
-        el.addEventListener("pointerenter", enter);
-        el.addEventListener("pointerleave", leave);
+        if (interactive) {
+          el.addEventListener("pointerenter", enter);
+          el.addEventListener("pointerleave", leave);
+        }
         return () => {
+          reset?.kill();
+          api.current = NOOP;
           el.removeEventListener("pointerenter", enter);
           el.removeEventListener("pointerleave", leave);
         };
@@ -84,6 +149,10 @@ export function Mascot({
           gsap.set(follow, { svgOrigin: "100 150" });
           gsap.set(nod, { svgOrigin: "100 150" });
           gsap.set(eyes, { svgOrigin: "100 102" });
+          gsap.set(eyeL, { svgOrigin: "84 102" });
+          gsap.set(mouthO, { svgOrigin: "100 129" });
+          gsap.set(hand, { svgOrigin: "162 172" });
+          gsap.set(orbit, { svgOrigin: "100 96" });
           setFace(resting, false, 0);
 
           // --- Blink on a random timer (one reusable timeline + call).
@@ -128,6 +197,121 @@ export function Mascot({
             xTo(nx * 3);
             pxTo.forEach((f) => f(nx * 2.6));
             pyTo.forEach((f) => f(ny * 1.8));
+          };
+
+          // --- Reactions: each is a short timeline that ends back at rest,
+          // so finishing one early (progress 1) always leaves a clean face.
+          let current: gsap.core.Timeline | null = null;
+          const settle = (tl: gsap.core.Timeline, at?: number | string) =>
+            tl.add(() => setFace(resting, false, 0.35), at);
+          const glance = (x: number, y: number, d = 0.3) =>
+            gsap.to(pupils, { x: x * 2.6, y: y * 1.8, duration: d, ease: "power3.out", overwrite: "auto" });
+
+          const build: Record<MascotAction, () => gsap.core.Timeline> = {
+            wave: () => {
+              const tl = gsap.timeline();
+              tl.add(() => setFace(true, false, 0.2))
+                .to(hand, { y: 0, duration: 0.38, ease: "back.out(1.7)" }, 0)
+                .to(hand, { rotation: -16, duration: 0.15, repeat: 5, yoyo: true, ease: "sine.inOut" })
+                .to(hand, { rotation: 0, duration: 0.12 })
+                .to(hand, { y: 80, duration: 0.4, ease: "power2.in" }, "+=0.15");
+              return settle(tl);
+            },
+            wink: () => {
+              const tl = gsap.timeline();
+              tl.add(() => setFace(true, false, 0.15))
+                .to(eyeL, { scaleY: 0.1, duration: 0.08, ease: "power2.in" }, 0)
+                .to(eyeL, { scaleY: 1, duration: 0.14, ease: "power2.out" }, "+=0.38");
+              return settle(tl, "+=0.4");
+            },
+            nod: () => {
+              const tl = gsap.timeline();
+              tl.add(() => setFace(true, false, 0.2))
+                .to(nod, { rotation: 5, y: 3, duration: 0.22, ease: "power2.out" }, 0)
+                .to(nod, { rotation: 0, y: 0, duration: 0.45, ease: "power2.inOut" })
+                .to(nod, { rotation: 4, y: 2, duration: 0.2, ease: "power2.out" })
+                .to(nod, { rotation: 0, y: 0, duration: 0.45, ease: "power2.inOut" });
+              return settle(tl, "+=0.3");
+            },
+            blush: () => {
+              const tl = gsap.timeline();
+              tl.add(() => setFace(true, true, 0.25))
+                .to(nod, { rotation: -4, duration: 0.3, ease: "power2.out" }, 0)
+                .to(nod, { rotation: 0, duration: 0.5, ease: "power2.inOut" }, 1.1);
+              return settle(tl, 1.4);
+            },
+            lookAround: () => {
+              const tl = gsap.timeline();
+              tl.add(() => glance(-1, 0, 0.25))
+                .to(follow, { rotation: -3, duration: 0.3, ease: "power2.out" }, 0)
+                .add(() => glance(1, 0, 0.3), 0.6)
+                .to(follow, { rotation: 3, duration: 0.35, ease: "power2.inOut" }, 0.6)
+                .add(() => glance(0, 0, 0.3), 1.25)
+                .to(follow, { rotation: 0, duration: 0.3, ease: "power2.inOut" }, 1.25);
+              return settle(tl, 1.6);
+            },
+            surprised: () => {
+              const tl = gsap.timeline();
+              tl.add(() => setO(1, 0.12))
+                .to(brows, { y: -4, duration: 0.15, ease: "back.out(2)" }, 0)
+                .to(eyes, { scaleY: 1.18, duration: 0.15, ease: "back.out(2)" }, 0)
+                .to(brows, { y: 0, duration: 0.35, ease: "power2.inOut" }, 0.9)
+                .to(eyes, { scaleY: 1, duration: 0.3, ease: "power2.inOut" }, 0.9);
+              return settle(tl, 1);
+            },
+            think: () => {
+              const tl = gsap.timeline();
+              tl.add(() => setFace(false, false, 0.2))
+                .add(() => glance(0.8, -1, 0.35), 0)
+                .to(nod, { rotation: -5, duration: 0.4, ease: "power2.out" }, 0)
+                .to(brows, { y: -2, rotation: -3, svgOrigin: "100 92", duration: 0.35 }, 0)
+                .to(nod, { rotation: 0, duration: 0.45, ease: "power2.inOut" }, 1.3)
+                .to(brows, { y: 0, rotation: 0, duration: 0.35 }, 1.3)
+                .add(() => glance(0, 0, 0.3), 1.3);
+              return settle(tl, 1.6);
+            },
+            yawn: () => {
+              const tl = gsap.timeline();
+              tl.add(() => setO(1.5, 0.4))
+                .to(eyes, { scaleY: 0.3, duration: 0.4, ease: "power2.inOut" }, 0)
+                .to(nod, { rotation: -3, y: -2, duration: 0.5, ease: "power2.out" }, 0)
+                .to(eyes, { scaleY: 1, duration: 0.3, ease: "power2.out" }, 1.4)
+                .to(nod, { rotation: 0, y: 0, duration: 0.4, ease: "power2.inOut" }, 1.4);
+              return settle(tl, 1.4);
+            },
+            whoa: () => {
+              const tl = gsap.timeline();
+              tl.add(() => setO(1.1, 0.1))
+                .to(nod, { rotation: -6, y: -3, duration: 0.14, ease: "power2.out" }, 0)
+                .to(brows, { y: -4, duration: 0.14 }, 0)
+                .to(nod, { rotation: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, 0.4)
+                .to(brows, { y: 0, duration: 0.3 }, 0.45);
+              return settle(tl, 0.75);
+            },
+            dizzy: () => {
+              const tl = gsap.timeline();
+              tl.add(() => setFace(false, true, 0.2))
+                .to(orbit, { opacity: 1, duration: 0.2 }, 0)
+                .to(orbit, { rotation: 720, duration: 1.8, ease: "power1.inOut" }, 0)
+                .to(nod, { rotation: 8, duration: 0.22, repeat: 5, yoyo: true, ease: "sine.inOut" }, 0)
+                .to(eyes, { scaleY: 0.45, duration: 0.2 }, 0)
+                .to(eyes, { scaleY: 1, duration: 0.3 }, 1.6)
+                .to(nod, { rotation: 0, duration: 0.3 }, 1.5)
+                .to(orbit, { opacity: 0, duration: 0.3 }, 1.6)
+                .set(orbit, { rotation: 0 });
+              return settle(tl, 1.8);
+            },
+          };
+
+          api.current = {
+            react: (a) => {
+              current?.progress(1).kill();
+              current = build[a]();
+            },
+            look: (dx, dy) => {
+              pxTo.forEach((f) => f(gsap.utils.clamp(-1, 1, dx) * 2.6));
+              pyTo.forEach((f) => f(gsap.utils.clamp(-1, 1, dy) * 1.8));
+            },
           };
 
           let visible = false;
@@ -188,13 +372,17 @@ export function Mascot({
               blushTimer = gsap.delayedCall(1.4, () => setFace(resting, false, 0.4));
             }
           };
-          el.addEventListener("pointerenter", onEnter);
-          el.addEventListener("pointerleave", onLeave);
-          el.addEventListener("pointerdown", onTap);
+          if (interactive) {
+            el.addEventListener("pointerenter", onEnter);
+            el.addEventListener("pointerleave", onLeave);
+            el.addEventListener("pointerdown", onTap);
+          }
 
           return () => {
             stop();
             blushTimer?.kill();
+            current?.kill();
+            api.current = NOOP;
             io.disconnect();
             document.removeEventListener("visibilitychange", onVisibility);
             el.removeEventListener("pointerenter", onEnter);
@@ -204,7 +392,7 @@ export function Mascot({
         },
       );
     },
-    { scope: root, dependencies: [expression, track, greetOnView] },
+    { scope: root, dependencies: [expression, track, greetOnView, interactive] },
   );
 
   const smiling = expression === "smile" && !greetOnView;
@@ -312,25 +500,24 @@ export function Mascot({
               <path d="M73 93 C79 89.4 87 88.8 93 91.3" />
               <path d="M107 91.3 C113 88.8 121 89.4 127 93" />
             </g>
-            {/* Eyes (group scales on blink) */}
+            {/* Eyes (group scales on blink; the left eye alone winks) */}
             <g data-part="eyes">
-              <ellipse cx="84" cy="102" rx="6.4" ry="3.7" fill="#f6eee4" />
-              <ellipse cx="116" cy="102" rx="6.4" ry="3.7" fill="#f6eee4" />
-              <g data-part="pupil">
-                <circle cx="84" cy="102" r="3" fill="#2a1b14" />
-                <circle cx="85" cy="101" r="0.85" fill="#fff" />
+              <g data-part="eye-l">
+                <ellipse cx="84" cy="102" rx="6.4" ry="3.7" fill="#f6eee4" />
+                <g data-part="pupil">
+                  <circle cx="84" cy="102" r="3" fill="#2a1b14" />
+                  <circle cx="85" cy="101" r="0.85" fill="#fff" />
+                </g>
+                <path d="M77.4 100.6 C81 97.4 87 97.4 90.6 100.6" fill="none" stroke="#3a2518" strokeWidth="1.7" strokeLinecap="round" />
               </g>
-              <g data-part="pupil">
-                <circle cx="116" cy="102" r="3" fill="#2a1b14" />
-                <circle cx="117" cy="101" r="0.85" fill="#fff" />
+              <g data-part="eye-r">
+                <ellipse cx="116" cy="102" rx="6.4" ry="3.7" fill="#f6eee4" />
+                <g data-part="pupil">
+                  <circle cx="116" cy="102" r="3" fill="#2a1b14" />
+                  <circle cx="117" cy="101" r="0.85" fill="#fff" />
+                </g>
+                <path d="M109.4 100.6 C113 97.4 119 97.4 122.6 100.6" fill="none" stroke="#3a2518" strokeWidth="1.7" strokeLinecap="round" />
               </g>
-              <path
-                d="M77.4 100.6 C81 97.4 87 97.4 90.6 100.6 M109.4 100.6 C113 97.4 119 97.4 122.6 100.6"
-                fill="none"
-                stroke="#3a2518"
-                strokeWidth="1.7"
-                strokeLinecap="round"
-              />
             </g>
             {/* Nose: bridge shadow + tip */}
             <path d="M97.6 105 C96.8 110.5 95.6 114 96.6 116.6" fill="none" stroke="#c48a64" strokeWidth="1.6" strokeLinecap="round" opacity="0.55" />
@@ -360,7 +547,27 @@ export function Mascot({
               strokeLinecap="round"
               opacity={smiling ? 1 : 0}
             />
+            {/* Round mouth for surprise and yawns (hidden at rest) */}
+            <ellipse data-part="mouth-o" cx="100" cy="129" rx="3.4" ry="4.2" fill="#7a3b30" opacity="0" />
             <path d="M95.5 133.2 C98.5 134.3 101.5 134.3 104.5 133.2" fill="none" stroke="#e8b491" strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
+          </g>
+
+          {/* Waving hand: parked below the disc until a wave */}
+          <g data-part="hand" transform="translate(0 80)">
+            <path d="M151 214 L155 168 C156 160 168 160 169 168 L173 214 Z" fill={url("sweater")} />
+            <ellipse cx="152" cy="150" rx="2.8" ry="5.6" fill={url("face")} transform="rotate(-38 152 150)" />
+            <ellipse cx="156" cy="139" rx="2.6" ry="6.4" fill={url("face")} />
+            <ellipse cx="161" cy="137" rx="2.6" ry="6.8" fill={url("face")} />
+            <ellipse cx="166" cy="138" rx="2.6" ry="6.4" fill={url("face")} />
+            <ellipse cx="170.5" cy="141.5" rx="2.4" ry="5.4" fill={url("face")} />
+            <ellipse cx="162" cy="153" rx="9.4" ry="10" fill={url("face")} />
+          </g>
+
+          {/* Tiny icebergs that orbit when he gets dizzy */}
+          <g data-part="orbit" opacity="0" fill="#e6f7fb" stroke="#0b6f80" strokeWidth="1.2" strokeLinejoin="round">
+            <path d="M95 44 L100 33 L106 44 Z" />
+            <path d="M146 132 L151 121 L157 132 Z" />
+            <path d="M44 132 L49 121 L55 132 Z" />
           </g>
         </g>
       </svg>

@@ -200,7 +200,7 @@ export const projects: Project[] = [
     title: "Making communities easier to use",
     short: "Community servers",
     impact: [
-      { value: "1.5", unit: "M", label: "Registered users", note: "Up from about 200K during my tenure." },
+      { value: "1.5", unit: "M", label: "Registered users", note: "Up from about 150K during my tenure." },
       { value: "50", unit: "K+", label: "Google Play downloads", note: "On the Gamersberg Android app." },
       { value: "3", label: "Platforms", note: "Web and Android today, with a Windows app on the Microsoft Store coming soon." },
     ],

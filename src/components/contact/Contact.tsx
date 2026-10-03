@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { profile } from "@/content/profile";
-import { Mascot } from "@/components/mascot/Mascot";
+import { TalkingMascot } from "@/components/guide/TalkingMascot";
+import { guide } from "@/content/guide";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
 import { CopyEmailButton } from "./CopyEmailButton";
 import s from "./Contact.module.css";
@@ -64,8 +65,16 @@ export function Contact() {
           <h2 id="contact-title" className={`display ${s.heading}`} data-split>
             {contact.heading}
           </h2>
-          <div className={s.mascot} data-contact-mascot>
-            <Mascot greetOnView />
+          <div className={s.mascot} data-contact-mascot data-guide-away>
+            <TalkingMascot
+              id="contact"
+              variant="contact"
+              greetOnView
+              onView={guide.contact.onView}
+              onViewDelay={900}
+              clicks={guide.contact.clicks}
+              end={{ selector: "footer", text: guide.contact.end }}
+            />
           </div>
         </div>
 

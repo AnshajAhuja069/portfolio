@@ -1,0 +1,101 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Typography is reset: this can sit inside the giant hero headline. */
+.bubble {
+  position: absolute;
+  z-index: 3;
+  width: max-content;
+  max-width: min(260px, 62vw);
+  padding: 10px 13px;
+  border-radius: 16px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-align: left;
+  text-transform: none;
+  white-space: normal;
+  text-wrap: pretty;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgb(245 242 235 / 0.14),
+    0 18px 36px -16px rgb(0 0 0 / 0.5);
+  animation: pop 360ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Phones: beside the mascot, in the empty space to its right, so the
+   headings stay readable. */
+.hero,
+.contact {
+  top: 50%;
+  left: calc(100% + 10px);
+  transform: translateY(-50%);
+  border-top-left-radius: 4px;
+  transform-origin: 0 50%;
+}
+
+.hero {
+  max-width: 38vw;
+  font-size: 0.8125rem;
+}
+
+.contact {
+  max-width: min(240px, 58vw);
+}
+
+/* Very narrow phones: less room beside the disc. */
+.bubble[data-tight="true"] {
+  padding: 8px 10px;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 900px) {
+  /* Beside the hero disc, in the space after "built." */
+  .hero {
+    top: auto;
+    bottom: 55%;
+    left: calc(100% + 14px);
+    max-width: min(260px, 62vw);
+    font-size: 0.9375rem;
+    transform: none;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 4px;
+    transform-origin: 0 100%;
+  }
+
+  /* Above the contact mascot, growing to the left. */
+  .contact {
+    top: auto;
+    bottom: calc(100% + 10px);
+    left: auto;
+    right: 0;
+    max-width: min(260px, 62vw);
+    transform: none;
+    border-top-left-radius: 16px;
+    border-bottom-right-radius: 4px;
+    transform-origin: 100% 100%;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    scale: 0.85;
+    translate: 0 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    animation: none;
+  }
+}

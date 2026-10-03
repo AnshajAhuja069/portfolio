@@ -89,7 +89,7 @@ export const resume = {
       place: "Remote",
       current: true,
       highlights: [
-        "Contributed product direction, UX design and hands-on UI implementation as the platform expanded into game communities, Rooms, discussions and rewards. Registered users grew from about 200K to 1.5M during my tenure, and the Android app passed 50K Google Play downloads.",
+        "Contributed product direction, UX design and hands-on UI implementation as the platform expanded into game communities, Rooms, discussions and rewards. Registered users grew from about 150K to 1.5M during my tenure, and the Android app passed 50K Google Play downloads.",
         "Designed and implemented web and mobile interactions for community servers and messaging: channel navigation, reply and reaction flows, message actions, attachments and unread states.",
         "Designed the CMS dashboard and reusable content templates that power game pages and connect tools, content and community destinations.",
         "Created the Gamersberg logo and its mascot, Peak, around an iceberg and an infinity mask.",

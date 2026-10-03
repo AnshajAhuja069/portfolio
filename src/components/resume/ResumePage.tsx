@@ -33,7 +33,7 @@ export function ResumePage() {
           <p className={s.summary}>{resume.summary}</p>
           {pdf && <PdfActions pdf={pdf} />}
         </div>
-        <div className={s.headMascot}>
+        <div className={s.headMascot} data-guide-away>
           <Mascot />
         </div>
       </header>
@@ -54,7 +54,7 @@ export function ResumePage() {
           <div className={s.map} data-map>
             <div className={s.spine} aria-hidden="true">
               <span className={s.spineFill} data-spine-fill />
-              <span className={s.traveler} data-traveler>
+              <span className={s.traveler} data-traveler data-guide-away>
                 <Mascot track={false} />
               </span>
             </div>

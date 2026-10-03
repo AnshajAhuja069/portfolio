@@ -1,4 +1,5 @@
 import { profile } from "@/content/profile";
+import { GuideRestore } from "@/components/guide/GuideRestore";
 import styles from "./Footer.module.css";
 
 export function Footer() {
@@ -8,7 +9,9 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {profile.name} · {profile.location}
         </p>
-        <p className={styles.small}>Built with Next.js and GSAP.</p>
+        <p className={styles.small}>
+          Built with Next.js and GSAP. <GuideRestore className={styles.restore} />
+        </p>
       </div>
     </footer>
   );

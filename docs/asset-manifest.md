@@ -83,6 +83,10 @@ x=100:
 | `pupil` (×2) | Iris/pupil for each eye | Pointer follow (±2.6px) |
 | `mouth` / `smile` | Neutral and smiling mouth paths | Cross-fade at the contact section and on hover |
 | `blush` (×2) | Cheek ellipses, hidden by default | Hover (mouse) or tap (touch) |
+| `eye-l`, `eye-r` | Each eye (white, pupil, lid line) inside `eyes` | Wink (left eye `scaleY` around 84,102) |
+| `mouth-o` | Round mouth, hidden by default | Surprised, whoa, yawn |
+| `hand` | Sleeve and raised hand, parked 80px below the disc | Wave (rotates around 162,172) |
+| `orbit` | Three tiny icebergs around the head, hidden | 10-click "dizzy" easter egg |
 
 Peak (the Gamersberg mascot) is separate from this site mascot and only
 appears in the brand identity case study.

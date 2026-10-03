@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { profile } from "@/content/profile";
-import { Mascot } from "@/components/mascot/Mascot";
+import { TalkingMascot } from "@/components/guide/TalkingMascot";
+import { guide } from "@/content/guide";
 import { gsap, useGSAP, ScrollTrigger, MQ } from "@/lib/gsap";
 import styles from "./Hero.module.css";
 
@@ -85,7 +86,7 @@ export function Hero() {
 
       // Desktop and tall phones: the stage is sticky (CSS), so the field fills
       // while the hero is held in view.
-      mm.add(`${MQ.desktop}, ${MQ.mobileTall}`, () => {
+      mm.add({ desktop: MQ.desktop, phone: MQ.mobileTall }, (ctx) => {
         const tl = gsap.timeline({
           defaults: { ease: "none" },
           onUpdate: updateSurface,
@@ -93,7 +94,9 @@ export function Hero() {
             trigger: track,
             start: "top top",
             end: "bottom bottom",
-            scrub: 0.6,
+            // Lighter smoothing on touch: iOS momentum scrolling already
+            // smooths, and a long catch-up reads as a lag after the flick.
+            scrub: ctx.conditions?.phone ? 0.3 : 0.6,
             invalidateOnRefresh: true,
           },
         });
@@ -180,8 +183,14 @@ function HeroLayer({ variant }: { variant: "base" | "overlay" }) {
                 {last && (
                   <span className={styles.discSlot} aria-hidden="true">
                     {isBase && (
-                      <span className={styles.disc} data-hero-disc>
-                        <Mascot />
+                      <span className={styles.disc} data-hero-disc data-guide-away>
+                        <TalkingMascot
+                          id="hero"
+                          variant="hero"
+                          onView={guide.hero.onView}
+                          clicks={guide.hero.clicks}
+                          quietAfter={40}
+                        />
                       </span>
                     )}
                   </span>

@@ -157,6 +157,18 @@ screens (landscape) keep the unpinned scrub.
 - Links/buttons: colour/underline transitions 180ms `cubic-bezier(.22,1,.36,1)`.
 - Focus: 2px outline, 3px offset, always visible, never animated.
 
+### 18. Mini Anshaj, the guide (`src/components/guide/`)
+- Corner companion (bottom right, z 44). Hidden while any `[data-guide-away]` mascot (hero disc, contact, resume) is at least 35% visible, so there is never a second copy on screen; he pops in with a spring when the hero disc leaves.
+- First visit ever: peeks up from the bottom edge (Peak's peeking pose), waves, offers the tour. Later visits: one short welcome back per session, linking the last case study viewed.
+- Click: a new reaction each time from `guide.reactions` (never the same twice); 3, 6 and 10 clicks escalate (10 = dizzy with orbiting icebergs). The first click opens the card; mouse spam keeps it open, a keyboard press toggles it, Esc closes and returns focus.
+- Section bubbles: once per section per visit, at least 8s apart, 3s quiet after a click, none while the card or tour is open, at most 2 automatic bubbles per page on phones. Fade after 4.5s; `aria-hidden` (the card holds the same info). Requested bubbles are announced through a polite live region.
+- Ambient: pupils glance with the scroll direction, "whoa" on flicks over 4200px/s, yawn after 25s idle, wave at the page end. Case studies get a reading progress ring around the avatar (runs with reduced motion too).
+- Tour: 5 homepage steps (`guide.tour`), each scrolls its target into view (instant under reduced motion). Started from another page it navigates home first.
+- Reduced motion: no peek, spring or spin; reactions become instant face changes.
+- Hero and Contact mascots are `TalkingMascot`s: clicks play a reaction and a rotating line; the hero nudges once after 2.2s (gone on first scroll), Contact says the handover line on view and a closing line when the footer arrives. Automatic lines respect "Hide me"; clicks always answer. Bubbles measure the space beside the mascot and narrow themselves so they never touch the screen edge.
+- Hidden guide: a small sleeping tab (face + "zz") peeks from the bottom-right corner; tapping it (or the footer link) brings him back with "I'm back. Did you miss me?".
+- Copy lives in `src/content/guide.ts`. "Hide me" is stored in localStorage; the footer shows "Bring back the guide".
+
 ## Navigation readability
 The links pill stays paper-coloured (ink text, ≈ 16:1) everywhere. The name
 pill uses the negative blend described in §14.
