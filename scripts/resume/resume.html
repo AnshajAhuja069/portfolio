@@ -1,150 +1,95 @@
-<!doctype html>
 <!--
-  Public resume source. Content mirrors product_designer_ux_engineer.tex
-  (supplied 28 Sep 2026) with the phone number removed.
-  Build: npm run resume  →  public/resume/anshaj-ahuja-resume.pdf
-  Replace the PDF with your own compiled version at any time.
+  Public resume source. Content mirrors Anshaj_Ahuja_Resume_BCG.tex (13 Oct 2026).
+  Build: npm run resume  ->  public/resume/Anshaj_Ahuja.pdf
+  Keep src/content/resume.ts in step with this file.
 -->
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Anshaj Ahuja — Resume</title>
-    <style>
-      @page {
-        size: A4;
-        margin: 0;
-      }
-      :root {
-        --ink: #203650;
-      }
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        padding: 19.8mm 19.8mm;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 10.6pt;
-        line-height: 1.32;
-        color: #111;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      header {
-        text-align: center;
-        margin-bottom: 6pt;
-      }
-      h1 {
-        margin: 0 0 4pt;
-        font-size: 20pt;
-        font-weight: 700;
-      }
-      .contact span + span::before {
-        content: " | ";
-      }
-      h2 {
-        margin: 11pt 0 5pt;
-        padding-bottom: 2pt;
-        border-bottom: 0.6pt solid var(--ink);
-        color: var(--ink);
-        font-size: 12.5pt;
-        font-weight: 700;
-      }
-      .role {
-        margin-top: 6pt;
-        break-inside: avoid;
-      }
-      .role-head {
-        display: flex;
-        justify-content: space-between;
-        font-weight: 700;
-      }
-      .role-head span:last-child {
-        font-weight: 400;
-      }
-      .role-place {
-        font-size: 9.6pt;
-        margin-bottom: 2pt;
-      }
-      ul {
-        margin: 2pt 0 0;
-        padding-left: 15pt;
-      }
-      li {
-        margin-bottom: 2pt;
-      }
-      p {
-        margin: 0;
-      }
-      .skills p + p {
-        margin-top: 1pt;
-      }
-      .edu {
-        display: flex;
-        justify-content: space-between;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>Anshaj Ahuja</h1>
-      <p class="contact">
-        <span><a href="mailto:anshajahujaa@gmail.com">anshajahujaa@gmail.com</a></span><span>India</span><span><a href="https://www.linkedin.com/in/anshaj-ahuja-b528a11b6/">LinkedIn</a></span><span><a href="https://github.com/Anshajgamersberg">GitHub</a></span>
-      </p>
-    </header>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Anshaj Ahuja Resume</title>
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Helvetica, Arial, sans-serif; color: #000; width: 210mm; padding: 13mm 14mm 10mm; font-size: 10.4pt; line-height: 1.32; }
+a { color: inherit; }
+.head { display: flex; justify-content: space-between; align-items: flex-start; }
+.name { font-size: 25pt; font-weight: 700; line-height: 1.05; }
+.role { font-weight: 700; font-size: 10pt; margin-top: 3px; }
+.links { margin-top: 3px; }
+.right { text-align: right; }
+.right .loc { margin-top: 4px; }
+.right .contact { margin-top: 30px; }
+h2 { font-variant: small-caps; font-weight: 400; font-size: 13.5pt; color: #0000ff; border-bottom: 0.6pt solid #000; margin: 9px 0 4px; padding-bottom: 1px; }
+.summary { font-size: 10pt; }
+.skills { padding-left: 4mm; }
+.skill { display: grid; grid-template-columns: 31mm 4mm 1fr; font-size: 10.4pt; margin: 1px 0; }
+.skill b { font-weight: 700; }
+.job { padding-left: 4mm; margin-top: 4px; }
+.row { display: flex; justify-content: space-between; }
+.row b { font-weight: 700; }
+.sub { font-style: italic; font-size: 9.6pt; }
+ul { margin: 2px 0 2px 7mm; padding-right: 3mm; }
+li { font-size: 9.7pt; margin: 1px 0; }
+</style></head>
+<body>
+<div class="head">
+  <div>
+    <div class="name">Anshaj Ahuja</div>
+    <div class="role">Frontend Developer &amp; UX Engineer</div>
+    <div class="links"><a href="https://www.linkedin.com/in/anshaj-ahuja-b528a11b6/">LinkedIn</a> | <a href="https://github.com/Anshajgamersberg">GitHub</a> | <a href="https://portfolioanshaj.vercel.app/">Portfolio</a></div>
+  </div>
+  <div class="right">
+    <div class="loc">Rajasthan, India</div>
+    <div class="contact"><a href="mailto:anshajahujaa@gmail.com">anshajahujaa@gmail.com</a> | +91 89051 30393</div>
+  </div>
+</div>
 
-    <h2>Product Designer / UX Engineer</h2>
-    <p>
-      Product designer and UX engineer who leads visual direction and builds the interfaces behind it. Shaped
-      Gamersberg's identity and experiences across its website, game hubs and mobile app, from onboarding to
-      community interactions.
-    </p>
+<h2>Professional Summary</h2>
+<p class="summary">Frontend Developer and UX Engineer building responsive web and mobile applications with React, Next.js, React Native and TypeScript. Rebuilt Gamersberg's trading frontend, implemented its community messaging interactions and built its CMS dashboard. Turn product requirements into reusable components, API specifications and integrated interfaces, working closely with backend engineers on scope and delivery. Use Claude and Codex in day-to-day development.</p>
 
-    <h2>Experience</h2>
-    <div class="role">
-      <div class="role-head"><span>Chief Product Officer | Gamersberg</span><span>Jul 2025 – Present</span></div>
-      <p class="role-place">Remote | Hyderabad</p>
-      <ul>
-        <li>Led visual and UX direction with the team across Gamersberg web and mobile, spanning game hubs, communities, giveaways, onboarding and marketing pages.</li>
-        <li>Directed the product identity, mascot and app-store visuals while building consistent patterns for content, utility tools and social features.</li>
-        <li>Designed and implemented a community-server refresh covering chat, navigation, member lists, composers and mobile interaction states.</li>
-        <li>Worked with engineering to translate product ideas into actionable flows, screen specifications and iterative UI improvements.</li>
-      </ul>
-    </div>
-    <div class="role">
-      <div class="role-head"><span>User Interface Engineer | Gamersberg</span><span>Mar 2025 – Jul 2025</span></div>
-      <p class="role-place">Remote</p>
-      <ul>
-        <li>Designed and built the early Gamersberg web UI, establishing reusable component patterns and the visual foundation for later releases.</li>
-        <li>Mapped onboarding and discovery experiences and iterated on screens with product and engineering feedback.</li>
-      </ul>
-    </div>
-    <div class="role">
-      <div class="role-head"><span>Associate UI/UX Designer | Benepik Technologies</span><span>Aug 2024 – Mar 2025</span></div>
-      <p class="role-place">Gurugram</p>
-      <ul>
-        <li>Redesigned legacy product screens with a focus on clearer interactions, responsive layouts and consistent visual patterns.</li>
-        <li>Collaborated with developers to turn UI designs into reusable components and connect screens to application data.</li>
-      </ul>
-    </div>
-    <div class="role">
-      <div class="role-head"><span>UI/UX Graphic Designer Intern | Jai Kisan</span><span>Feb 2024 – Apr 2024</span></div>
-      <p class="role-place">Bengaluru</p>
-      <ul>
-        <li>Produced interface mockups and visual assets for fintech products while maintaining brand consistency.</li>
-      </ul>
-    </div>
+<h2>Technical Skills</h2>
+<div class="skills">
+  <div class="skill"><b>Frontend</b><span>:</span><span>React, Next.js, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS, shadcn/ui, Framer Motion</span></div>
+  <div class="skill"><b>Mobile</b><span>:</span><span>React Native, Expo</span></div>
+  <div class="skill"><b>Engineering</b><span>:</span><span>Reusable components, responsive UI, REST API integration, Jotai, API requirement specs, Lighthouse performance audits, Git, GitHub</span></div>
+  <div class="skill"><b>Design &amp; Tools</b><span>:</span><span>Figma, user flows, interaction design; AI-assisted development with Claude and Codex</span></div>
+</div>
 
-    <h2>Technical Skills</h2>
-    <div class="skills">
-      <p><strong>Product design:</strong> Figma, user flows, wireframes, prototyping, information architecture, visual identity</p>
-      <p><strong>Design systems:</strong> components, typography, theme tokens, responsive design, accessibility</p>
-      <p><strong>Implementation:</strong> React, Next.js, TypeScript, Tailwind CSS, React Native, Expo</p>
-    </div>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><b>Chief Product Officer</b><span>Jul 2025 – Present</span></div>
+  <div class="row sub"><span>Gamersberg · Hands-on frontend and UX delivery</span><span>Remote</span></div>
+  <ul>
+    <li>Implemented responsive community and messaging interfaces across web and React Native, covering channel navigation, replies, reactions, message actions, attachments and unread states.</li>
+    <li>Designed and built the CMS dashboard and reusable content templates for game pages, including the interface and content logic, and specified the backend APIs it required.</li>
+    <li>Translated product requirements into technical documentation for engineering: specified API endpoints and data needs and planned feature architecture for message search, content history and read-state synchronisation.</li>
+    <li>Ran Lighthouse and other performance audits on web interfaces and documented findings and recommendations in reports for the engineering team.</li>
+    <li>Led product and UX direction across game communities, Rooms, discussions and rewards. During my tenure, registered users grew from about 200K to 1.5M and the Android app passed 50K Google Play downloads.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><b>Product Designer &amp; UI Engineer</b><span>Mar 2025 – Jul 2025</span></div>
+  <div class="row sub"><span>Gamersberg</span><span>Remote</span></div>
+  <ul>
+    <li>Rebuilt the trading platform's legacy frontend around reusable components and responsive layouts for offers, requests and item comparison.</li>
+    <li>Adapted web layouts and interaction patterns into the mobile app's first interface.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><b>Associate UI/UX Designer</b><span>Aug 2024 – Mar 2025</span></div>
+  <div class="row sub"><span>Benepik Technologies</span><span>Gurugram</span></div>
+  <ul>
+    <li>Redesigned legacy product screens and collaborated with developers on responsive components and application data integration.</li>
+    <li>Designed a spin-wheel interaction for a Hero FinCorp festive employee bonus event.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><b>UI/UX Graphic Designer Intern</b><span>Feb 2024 – Apr 2024</span></div>
+  <div class="row sub"><span>Jai Kisan</span><span>Bengaluru</span></div>
+  <ul><li>Created interface mockups and visual assets for fintech products.</li></ul>
+</div>
 
-    <h2>Education</h2>
-    <p class="edu"><span><strong>Bachelor of Computer Applications (BCA)</strong> | Christ University, Bengaluru</span><span>2024</span></p>
-  </body>
-</html>
+<h2>Education</h2>
+<div class="job">
+  <div class="row"><b>Christ University</b><span>Bengaluru</span></div>
+  <div class="row sub"><span>Bachelor of Computer Applications (BCA)</span><span>2021 – 2024</span></div>
+</div>
+</body></html>

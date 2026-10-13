@@ -1,4 +1,4 @@
-// Prints scripts/resume/resume.html to public/resume/anshaj-ahuja-resume.pdf
+// Prints scripts/resume/resume.html to public/resume/Anshaj_Ahuja.pdf (the served file)
 // using an installed Chromium-based browser (Microsoft Edge by default).
 //   npm run resume
 //   RESUME_BROWSER_CHANNEL=chrome npm run resume
@@ -10,7 +10,7 @@ import path from "node:path";
 const root = path.dirname(fileURLToPath(import.meta.url));
 const src = path.join(root, "resume", "resume.html");
 const outDir = path.join(root, "..", "public", "resume");
-const out = path.join(outDir, "anshaj-ahuja-resume.pdf");
+const out = path.join(outDir, "Anshaj_Ahuja.pdf");
 
 mkdirSync(outDir, { recursive: true });
 const browser = await chromium.launch({ channel: process.env.RESUME_BROWSER_CHANNEL ?? "msedge" });

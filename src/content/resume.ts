@@ -1,7 +1,7 @@
 /**
  * Resume content for the /resume journey page.
  *
- * Source: Anshaj_Ahuja.pdf (supplied 30 Sep 2026), which is also the
+ * Source: Anshaj_Ahuja_Resume_BCG.tex (supplied 13 Oct 2026), which is also the
  * downloadable file in public/resume/. When the resume changes, replace the
  * PDF and update this file; the page rebuilds itself from this data.
  */
@@ -25,7 +25,7 @@ export type JourneyStop = {
 export const resume = {
   heading: "The journey so far.",
   summary:
-    "Product designer and UX engineer bridging interface design and front-end implementation across web and mobile. I rebuilt Gamersberg’s trading interface and shaped its community, messaging and content experiences, working across Figma, React, Next.js and React Native to turn user flows into cohesive interfaces and reusable components.",
+    "Frontend developer and UX engineer building responsive web and mobile applications with React, Next.js, React Native and TypeScript. I rebuilt Gamersberg’s trading frontend, implemented its community messaging interactions and built its CMS dashboard, turning product requirements into reusable components, API specifications and integrated interfaces with the backend team.",
 
   journey: [
     {
@@ -73,8 +73,8 @@ export const resume = {
       org: "Gamersberg",
       place: "Remote",
       highlights: [
-        "Redesigned and rebuilt the trading platform’s outdated interface from the ground up, creating reusable UI components and a cohesive experience across key screens.",
-        "Helped establish the mobile app’s first interface, adapting the redesigned web flows and interactions for smaller screens.",
+        "Rebuilt the trading platform’s legacy frontend around reusable components and responsive layouts for offers, requests and item comparison.",
+        "Adapted web layouts and interaction patterns into the mobile app’s first interface.",
       ],
       tags: ["Trading rebuild", "Reusable components", "Mobile app"],
       links: [{ label: "Trading rebuild", href: "/work/trading-platform" }],
@@ -89,13 +89,14 @@ export const resume = {
       place: "Remote",
       current: true,
       highlights: [
-        "Contributed product direction, UX design and hands-on UI implementation as the platform expanded into game communities, Rooms, discussions and rewards. Registered users grew from about 150K to 1.5M during my tenure, and the Android app passed 50K Google Play downloads.",
-        "Designed and implemented web and mobile interactions for community servers and messaging: channel navigation, reply and reaction flows, message actions, attachments and unread states.",
-        "Designed the CMS dashboard and reusable content templates that power game pages and connect tools, content and community destinations.",
+        "Implemented responsive community and messaging interfaces across web and React Native: channel navigation, replies, reactions, message actions, attachments and unread states.",
+        "Designed and built the CMS dashboard and reusable content templates for game pages, including the interface and content logic, and specified the backend APIs it required.",
+        "Translated product requirements into technical documentation for engineering, specifying API endpoints and data needs and planning feature architecture for message search, content history and read-state sync.",
+        "Ran Lighthouse and other performance audits on web interfaces and documented findings and recommendations for the engineering team.",
+        "Led product and UX direction across game communities, Rooms, discussions and rewards. Registered users grew from about 200K to 1.5M during my tenure, and the Android app passed 50K Google Play downloads.",
         "Created the Gamersberg logo and its mascot, Peak, around an iceberg and an infinity mask.",
-        "Worked with engineering to refine interaction details, test user flows and identify backend dependencies for search, content history and read state.",
       ],
-      tags: ["Product direction", "Community & messaging", "CMS", "Brand identity"],
+      tags: ["Frontend delivery", "Community & messaging", "CMS", "API specs", "Brand identity"],
       links: [
         { label: "Communities", href: "/work/community-servers" },
         { label: "Brand identity", href: "/work/brand-identity" },
@@ -105,16 +106,16 @@ export const resume = {
 
   skills: [
     {
-      group: "Design",
-      items: ["Figma", "UI/UX design", "User flows", "Interface mockups", "Interaction design"],
+      group: "Frontend",
+      items: ["React", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3", "Tailwind CSS", "shadcn/ui", "Framer Motion"],
     },
     {
-      group: "Web & mobile",
-      items: ["React", "Next.js", "React Native", "Expo", "TypeScript", "JavaScript"],
+      group: "Mobile & engineering",
+      items: ["React Native", "Expo", "REST API integration", "Jotai", "API requirement specs", "Lighthouse audits", "Git", "GitHub"],
     },
     {
-      group: "UI & tools",
-      items: ["HTML", "CSS", "Tailwind CSS", "shadcn/ui", "Framer Motion", "Git", "GitHub", "Jotai"],
+      group: "Design & tools",
+      items: ["Figma", "User flows", "Interaction design", "Claude", "Codex"],
     },
   ],
 };

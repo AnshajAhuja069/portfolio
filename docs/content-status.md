@@ -39,7 +39,7 @@ Sources
 | LinkedIn | linkedin.com/in/anshaj-ahuja-b528a11b6 | U | Corrected by you on 29 Sep 2026 (resumes had an older URL) |
 | GitHub | github.com/Anshajgamersberg | U | Corrected by you on 29 Sep 2026 (resumes had an older URL) |
 | Phone | **not published** | — | present in R1/R2; removed from the public resume PDF |
-| Positioning | Product Designer & UX Engineer | S | R1 heading, B |
+| Positioning | Frontend Developer & UX Engineer (hero cycles: Frontend Developer, UX Engineer, Product Designer) | S | R1 heading, B |
 
 ## 2. Hero and site copy
 
@@ -173,3 +173,11 @@ Giveaways, quests, streaks, spin-wheel, Gbucks, profiles, badges.
 - All em and en dashes removed from site copy, metadata and alt text (the PDF itself is unchanged).
 - Case studies now use your real screenshots; live links: gamersberg.com/community/blox-fruits and gamersberg.com/blox-fruits/trading.
 - Decision copy was tightened; rationale lines remain my wording, please read them in your voice.
+
+## 13 Oct 2026: engineering repositioning (BCG X referral)
+
+- Resume replaced by **Anshaj_Ahuja_Resume_BCG.tex** (supplied). Served PDF rebuilt from `scripts/resume/resume.html` via `npm run resume`.
+- Registered-user baseline confirmed as **200K** (the portfolio previously said 150K).
+- Confirmed by Anshaj: built the CMS (interface, content logic) and specified its backend APIs; wrote API endpoint and data specs and planned feature architecture, but did not build APIs; ran Lighthouse and other performance audits and wrote reports.
+- Case-study order is now Community → Trading → Brand. Community and Trading gained a "How I built it" section (`caseStudy.engineering`).
+- Confirmed by Anshaj (13 Oct): trading component reuse across list, grid and calculator; trading validation across breakpoints with the team; community gestures tuned to coexist with scrolling.

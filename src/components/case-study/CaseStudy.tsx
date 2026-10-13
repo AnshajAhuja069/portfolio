@@ -195,6 +195,29 @@ export function CaseStudy({ project, index }: { project: Project; index: number 
       )}
 
       <div className={s.case} data-surface="paper">
+        {/* Engineering view */}
+        {cs.engineering && (
+          <Section id="engineering" label="How I built it">
+            <ul className={s.stack} role="list" aria-label="Stack">
+              {cs.engineering.stack.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
+            <ul className={s.engGrid} role="list">
+              {cs.engineering.points.map((p) => (
+                <li key={p.title}>
+                  <h3>{p.title}</h3>
+                  <p>{p.body}</p>
+                </li>
+              ))}
+            </ul>
+            <div className={s.validation}>
+              <h3 className={s.splitTitle}>How it was checked</h3>
+              <p>{cs.engineering.validation}</p>
+            </div>
+          </Section>
+        )}
+
         {/* Scope and ownership */}
         <Section id="ownership" label="Scope & ownership">
           <ul className={s.scope} role="list" aria-label="Scope and status of each part">

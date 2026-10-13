@@ -250,6 +250,7 @@ export function Guide() {
       targets.push(["#impact-title", "impact", sec.impact]);
       targets.push(["#decisions-title", "decisions", sec.decisions]);
       targets.push(["#gallery-title", "gallery", sec.gallery[slug] ?? sec.gallery.default]);
+      targets.push(["#engineering-title", "engineering", sec.engineering]);
       targets.push(["#outcome-title", "outcome", sec.outcome]);
     }
     const byEl = new Map<Element, [string, string | undefined]>();

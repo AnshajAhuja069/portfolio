@@ -7,7 +7,9 @@
 export const profile = {
   name: "Anshaj Ahuja",
   firstName: "Anshaj",
-  positioning: "Product Designer & UX Engineer",
+  positioning: "Frontend Developer & UX Engineer",
+  /** The hero eyebrow cycles through these, in order. The first is the lead role. */
+  roles: ["Frontend Developer", "UX Engineer", "Product Designer"],
   location: "India",
   email: "anshajahujaa@gmail.com",
   phone: { display: "+91 89051 30393", href: "tel:+918905130393" },
@@ -30,14 +32,14 @@ export const profile = {
     /** Each entry is one deliberate line of the headline. */
     lines: ["Thoughtfully", "designed.", "Carefully", "built."],
     intro:
-      "I’m Anshaj, a product designer and UX engineer. I shape how products look, work and feel, then build the interfaces that bring those decisions to life.",
+      "I’m Anshaj, a frontend developer and UX engineer with a product designer’s eye. I build responsive web and mobile interfaces in React, Next.js and React Native, and shape how they look, work and feel.",
     cue: "See 3 case studies",
   },
 
   work: {
     title: "Selected work",
     intro:
-      "Three sides of my work at Gamersberg: the community, the brand and the trading tools. Each one runs from product and UX direction to the interfaces people use on web and mobile.",
+      "Three sides of my work at Gamersberg: the community and the trading tools I built on web and mobile, and the brand behind them. Each one shows what I implemented, what the team owned and how it was checked.",
   },
 
   contact: {
@@ -46,9 +48,9 @@ export const profile = {
   },
 
   meta: {
-    title: "Anshaj Ahuja · Product Designer & UX Engineer",
+    title: "Anshaj Ahuja · Frontend Developer & UX Engineer",
     description:
-      "Product design and UX engineering by Anshaj Ahuja. Explore Gamersberg’s community interfaces, trading experience, and the identity behind its mascot, Peak.",
+      "Frontend development and UX engineering by Anshaj Ahuja. Explore Gamersberg’s community and messaging interfaces, the trading rebuild, and the identity behind its mascot, Peak.",
   },
 };
 

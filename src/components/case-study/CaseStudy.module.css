@@ -641,3 +641,61 @@
     border-top: 1px solid var(--line);
   }
 }
+
+/* ---------- How I built it ---------- */
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+}
+
+.stack li {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.8125rem;
+}
+
+.engGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.engGrid li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  background: var(--paper-3);
+}
+
+.engGrid h3 {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.engGrid p {
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.validation {
+  max-width: 62ch;
+  padding-left: 16px;
+  border-left: 2px solid var(--accent);
+}
+
+@media (max-width: 899.98px) {
+  .engGrid {
+    grid-template-columns: 1fr;
+  }
+}

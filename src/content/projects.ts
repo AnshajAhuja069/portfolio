@@ -182,6 +182,15 @@ export type Project = {
     decisions: Decision[];
     media: Media[];
     implemented: { mine: string[]; team: string[] };
+    /**
+     * "How I built it": the engineering view. Only what is confirmed; no
+     * invented tests, metrics or backend work.
+     */
+    engineering?: {
+      stack: string[];
+      points: { title: string; body: string }[];
+      validation: string;
+    };
     outcome: string[];
     reflection: string;
   };
@@ -200,7 +209,7 @@ export const projects: Project[] = [
     title: "Making communities easier to use",
     short: "Community servers",
     impact: [
-      { value: "1.5", unit: "M", label: "Registered users", note: "Up from about 150K during my tenure." },
+      { value: "1.5", unit: "M", label: "Registered users", note: "Up from about 200K during my tenure." },
       { value: "50", unit: "K+", label: "Google Play downloads", note: "On the Gamersberg Android app." },
       { value: "3", label: "Platforms", note: "Web and Android today, with a Windows app on the Microsoft Store coming soon." },
     ],
@@ -373,7 +382,8 @@ export const projects: Project[] = [
         {
           kind: "demo",
           demo: "reply-composer",
-          caption: "Try it: swipe a message to the right, or use Reply. A re-creation built for this portfolio, not production code.",
+          caption:
+            "Try it: swipe a message to the right, or use Reply. A re-creation built for this portfolio in React and TypeScript, not production code. Pointer events drive the swipe past a fixed threshold, and the reply target is held in state and copied into the sent message, so its context survives scrolling.",
         },
       ],
       implemented: {
@@ -382,9 +392,32 @@ export const projects: Project[] = [
           "Web and React Native implementation of message and composer states, mobile gestures, channel controls and profile transitions.",
           "Shared theme tokens and typography across the refreshed interfaces.",
           "More than 100 decoration items, the shop that presents them and the hover cards that display them across the community.",
-          "Working with engineering to map the backend dependencies for search, content history and read state.",
+          "Documenting the API endpoints and data needs for search, content history and read state, and agreeing them with engineering.",
         ],
         team: ["The backend services behind communities, including search, content history and read state."],
+      },
+      engineering: {
+        stack: ["React", "Next.js", "React Native", "TypeScript", "REST APIs"],
+        points: [
+          {
+            title: "One composer, several states",
+            body: "Reply and edit share the slot above the input, each with its own state and a single cancel. The reply target is kept with the draft, so it stays visible after the original message scrolls out of view.",
+          },
+          {
+            title: "Gestures that don’t fight scrolling",
+            body: "Swipe-to-reply and long-press menus had to sit alongside normal vertical scrolling on mobile, so the gestures were tuned to trigger on deliberate movement while the feed scrolls as usual.",
+          },
+          {
+            title: "Built around backend dependencies",
+            body: "Search, content history and read state depended on backend services. I documented the API endpoints and data each screen needed, and built unread markers and jump-to-latest around that contract.",
+          },
+          {
+            title: "One foundation for web and mobile",
+            body: "Shared theme tokens and typography keep web and React Native consistent, so navigation and messaging read the same on every screen.",
+          },
+        ],
+        validation:
+          "Checked user flows with the product and engineering team, and ran Lighthouse and other performance audits, documenting findings and recommendations in reports for engineering.",
       },
       outcome: [
         "A reply keeps its context from the moment you pick a message to the moment you send.",
@@ -395,11 +428,11 @@ export const projects: Project[] = [
       reflection:
         "Next, I’d focus on reliability in everyday moments: replying while the feed moves, jumping back to recent messages and keeping the composer predictable. Reaction defaults and synced pins should wait for evidence before the feature set grows.",
     },
-    next: "brand-identity",
+    next: "trading-platform",
   },
   {
     slug: "brand-identity",
-    order: 2,
+    order: 3,
     published: true,
     title: "Giving Gamersberg an identity with depth",
     short: "Brand identity & Peak",
@@ -529,7 +562,7 @@ export const projects: Project[] = [
       reflection:
         "The next step is to test where Peak adds clarity as well as personality, for example acknowledging success or guiding an empty state. A consistent expression set would keep those moments tied to the same character.",
     },
-    next: "trading-platform",
+    next: "community-servers",
   },
   {
     // Unpublished: replaced in the gallery by the brand identity case study.
@@ -569,7 +602,7 @@ export const projects: Project[] = [
   },
   {
     slug: "trading-platform",
-    order: 3,
+    order: 2,
     published: true,
     title: "Rebuilding the trading experience",
     short: "Trading platform",
@@ -687,6 +720,29 @@ export const projects: Project[] = [
         ],
         team: ["Backend and trading services, including value data.", "Mobile app engineering beyond the initial interface."],
       },
+      engineering: {
+        stack: ["React", "Next.js", "TypeScript", "REST APIs", "Responsive CSS"],
+        points: [
+          {
+            title: "A small set of reusable parts",
+            body: "Offer and Request groups, item tiles, value totals and trader ratings were built as reusable components and composed into the list view, the card grid and the calculator, instead of each screen drawing its own version.",
+          },
+          {
+            title: "One structure, every screen size",
+            body: "On narrow screens the same Offer and Request groups stack vertically, with the actions kept at the bottom of each listing, so the layout adapts without changing how a trade is read.",
+          },
+          {
+            title: "Presenting data the team owns",
+            body: "Item values and trade data come from the team’s trading services. The interface’s job is to present them consistently: totals per side, price and demand in the calculator, then a verdict and the difference.",
+          },
+          {
+            title: "Handling incomplete trades",
+            body: "The calculator still gives a clear answer when one side is empty: an offer against an empty request reads as a loss, with the difference shown, rather than an empty or broken result.",
+          },
+        ],
+        validation:
+          "Reviewed the rebuilt screens with the product and engineering team across desktop and mobile breakpoints before they replaced the old interface.",
+      },
       outcome: [
         "A rebuilt web interface with one shared structure for reading and comparing trades.",
         "Reusable patterns that later shaped communities, messaging and content pages.",
@@ -695,7 +751,7 @@ export const projects: Project[] = [
       reflection:
         "If I did it again, I’d document the pattern set as it grew, recording why each pattern exists as well as how to use it, so later features could extend it with less guesswork.",
     },
-    next: "community-servers",
+    next: "brand-identity",
   },
   {
     // Draft: not published until contribution per area is confirmed.

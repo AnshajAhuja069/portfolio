@@ -221,3 +221,49 @@ test.describe("reply demo", () => {
     await expect(page.getByRole("button", { name: "Cancel reply to Theo" })).toBeVisible();
   });
 });
+
+test.describe("engineering positioning", () => {
+  test("hero role switches between the three titles and reads them all once", async ({ page }) => {
+    await page.goto("/");
+    const cycler = page.locator("[data-hero-base] [data-role-cycler]");
+    await expect(page.locator("[data-hero-base] .sr-only").first()).toHaveText(
+      "Frontend Developer, UX Engineer, Product Designer",
+    );
+    const active = cycler.locator('[data-state="active"]');
+    await expect(active).toHaveText("Frontend Developer");
+    await expect(active).toHaveText("UX Engineer", { timeout: 6000 });
+    // The clipped overlay shows the same role as the base layer.
+    await expect(page.locator('[data-hero-overlay] [data-role-cycler] [data-state="active"]')).toHaveText(
+      "UX Engineer",
+    );
+  });
+
+  test("reduced motion keeps the lead role", async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: "reduce" });
+    const page = await ctx.newPage();
+    await page.goto("/");
+    await page.waitForTimeout(3200);
+    await expect(page.locator('[data-hero-base] [data-role-cycler] [data-state="active"]')).toHaveText(
+      "Frontend Developer",
+    );
+    await ctx.close();
+  });
+
+  test("engineering case studies explain how they were built; brand does not", async ({ page }) => {
+    for (const slug of ["community-servers", "trading-platform"]) {
+      await page.goto(`/work/${slug}`);
+      await expect(page.getByRole("heading", { level: 2, name: "How I built it" })).toBeAttached();
+      await expect(page.getByRole("heading", { level: 3, name: "How it was checked" })).toBeAttached();
+    }
+    await page.goto("/work/brand-identity");
+    await expect(page.getByRole("heading", { level: 2, name: "How I built it" })).toHaveCount(0);
+  });
+
+  test("engineering work leads the gallery and the user baseline is 200K", async ({ page }) => {
+    await page.goto("/");
+    const ids = await page.locator("[id^='project-']").evaluateAll((els) => els.map((e) => e.id));
+    expect(ids.slice(0, 3)).toEqual(["project-community-servers", "project-trading-platform", "project-brand-identity"]);
+    await page.goto("/work/community-servers");
+    await expect(page.getByText("Up from about 200K during my tenure.")).toBeAttached();
+  });
+});

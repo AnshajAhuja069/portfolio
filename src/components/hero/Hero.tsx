@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { profile } from "@/content/profile";
 import { TalkingMascot } from "@/components/guide/TalkingMascot";
 import { guide } from "@/content/guide";
+import { RoleCycler } from "./RoleCycler";
 import { gsap, useGSAP, ScrollTrigger, MQ } from "@/lib/gsap";
 import styles from "./Hero.module.css";
 
@@ -149,7 +150,7 @@ export function Hero() {
 
 function HeroLayer({ variant }: { variant: "base" | "overlay" }) {
   const isBase = variant === "base";
-  const { hero, positioning, location, name } = profile;
+  const { hero, roles, location, name } = profile;
   const Heading = isBase ? "h1" : "p";
 
   return (
@@ -167,11 +168,12 @@ function HeroLayer({ variant }: { variant: "base" | "overlay" }) {
           <span className={styles.sep} aria-hidden="true">
             /
           </span>
-          <span>{positioning}</span>
+          <span>{location}</span>
           <span className={styles.sep} aria-hidden="true">
             /
           </span>
-          <span>{location}</span>
+          {/* Last, so the slot's spare width (sized to the longest role) is never visible. */}
+          <RoleCycler roles={roles} announce={isBase} />
         </p>
 
         <Heading id={isBase ? "hero-title" : undefined} className={`display ${styles.headline}`}>

@@ -69,7 +69,8 @@ export const guide = {
       "trading-platform": "Rebuilt from zero. The old one is in a better place now.",
     } as Record<string, string>,
     impact: "Numbers first, because recruiters asked nicely.",
-    decisions: "These are the calls I'd defend in any design review.",
+    decisions: "These are the calls I'd defend in any design or code review.",
+    engineering: "The engineering bit: what I built, what the team owned, how we checked it.",
     gallery: {
       default: "More screens, fewer words. Enjoy.",
       "community-servers": "Try the reply demo down here, it's real code.",
@@ -100,7 +101,7 @@ export const guide = {
   tour: [
     { target: "#hero-title", line: "This is the short version of me: thoughtful design, carefully built." },
     { target: "#work [aria-label='Jump to a case study']", line: "Three case studies. Start anywhere, they're all real, shipped work." },
-    { target: "#project-community-servers", line: "Each one walks through the problem, the calls I made and what shipped." },
+    { target: "#project-community-servers", line: "Each one walks through the problem, the calls I made, how I built it and what shipped." },
     {
       target: "#project-community-servers",
       line: users

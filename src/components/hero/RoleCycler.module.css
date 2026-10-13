@@ -1,0 +1,36 @@
+.root {
+  display: inline-flex;
+}
+
+/* All roles share one cell: the slot is as wide as the longest role. */
+.slot {
+  display: inline-grid;
+  overflow: hidden;
+  /* Room for descenders inside the clip. */
+  padding-block: 0.08em;
+  margin-block: -0.08em;
+}
+
+.role {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(70%);
+}
+
+.role[data-state="active"] {
+  opacity: 1;
+  transform: none;
+}
+
+.role[data-state="prev"] {
+  transform: translateY(-70%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .role {
+    transition:
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.35s ease;
+  }
+}
