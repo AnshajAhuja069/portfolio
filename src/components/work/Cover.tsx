@@ -46,6 +46,9 @@ export function Cover({ cover, showTag = true, priority = false, className }: Pr
   if (cover.kind === "identity") {
     return <IdentityCover alt={cover.alt} priority={priority} className={className} />;
   }
+  if (cover.kind === "dashboard") {
+    return <DashboardCover cover={cover} priority={priority} className={className} />;
+  }
 
   const { Back, Front } = COMPOSITIONS[cover.composition];
   const realScreens = cover.kind === "screenshots";
@@ -79,6 +82,42 @@ export function Cover({ cover, showTag = true, priority = false, className }: Pr
           Illustrative mock
         </span>
       )}
+    </div>
+  );
+}
+
+/** Real desktop screens of an internal tool: one window behind, one in front. */
+function DashboardCover({
+  cover,
+  priority,
+  className,
+}: {
+  cover: Extract<CoverData, { kind: "dashboard" }>;
+  priority: boolean;
+  className?: string;
+}) {
+  const fill = { width: "100%", height: "100%", objectFit: "cover", objectPosition: "left top", background: "#0d0d10" } as const;
+  return (
+    <div
+      className={`${s.cover} ${s.dashboard} ${className ?? ""}`}
+      style={{ "--plate": cover.plate } as CSSProperties}
+      role="img"
+      aria-label={cover.alt}
+      data-cover
+      data-surface={isAccentPlate(cover.plate) ? "accent" : "auto"}
+    >
+      <div className={s.back} data-layer="back">
+        <div className={s.backTilt}>
+          <WindowFrame>
+            <Image {...cover.back} alt="" sizes="(max-width: 899px) 120vw, 56vw" quality={90} priority={priority} style={fill} />
+          </WindowFrame>
+        </div>
+      </div>
+      <div className={s.front} data-layer="front">
+        <WindowFrame>
+          <Image {...cover.front} alt="" sizes="(max-width: 899px) 70vw, 34vw" quality={90} priority={priority} style={fill} />
+        </WindowFrame>
+      </div>
     </div>
   );
 }

@@ -19,8 +19,8 @@ const GALLERY_CONTOURS: ContourSpec[] = [
   { x: 0, y: 80, size: 560, rings: 10, seed: 4.1, labels: ["−20 m", "−60 m"], hideOnMobile: true },
 ];
 
-const TAPE_A = ["Product design", "UX engineering", "Brand identity", "Interaction design", "Design systems"];
-const TAPE_B = ["Figma", "User flows", "Prototyping", "React", "Next.js", "React Native", "TypeScript"];
+const TAPE_A = ["Product engineering", "UX engineering", "Requirements & specs", "Interaction design", "Design systems"];
+const TAPE_B = ["React", "Next.js", "React Native", "TypeScript", "Figma", "API integration", "Release readiness"];
 
 export function SelectedWork() {
   const count = publishedProjects.length;

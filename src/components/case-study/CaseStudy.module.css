@@ -180,6 +180,7 @@
 }
 
 .badge[data-status="frontend-complete"],
+.badge[data-status="specified"],
 .badge[data-status="designed"],
 .badge[data-status="directed"] {
   background: transparent;

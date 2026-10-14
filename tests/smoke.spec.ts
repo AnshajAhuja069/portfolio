@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const SLUGS = ["community-servers", "brand-identity", "trading-platform"];
+const SLUGS = ["community-servers", "cms-dashboard", "brand-identity", "trading-platform"];
 
 test.describe("routes", () => {
   test("home and every case study load with one h1", async ({ page }) => {
@@ -112,7 +112,7 @@ test.describe("layout", () => {
     test(`no horizontal overflow at ${width}px`, async ({ page, isMobile }) => {
       test.skip(isMobile, "widths are set explicitly");
       await page.setViewportSize({ width, height: 900 });
-      for (const path of ["/", "/resume", `/work/${SLUGS[1]}`]) {
+      for (const path of ["/", "/resume", `/work/${SLUGS[1]}`, `/work/${SLUGS[2]}`]) {
         await page.goto(path);
         const { sw, iw } = await page.evaluate(() => ({
           sw: document.documentElement.scrollWidth,
@@ -227,10 +227,10 @@ test.describe("engineering positioning", () => {
     await page.goto("/");
     const cycler = page.locator("[data-hero-base] [data-role-cycler]");
     await expect(page.locator("[data-hero-base] .sr-only").first()).toHaveText(
-      "Frontend Developer, UX Engineer, Product Designer",
+      "Product Engineer, UX Engineer, Product Designer",
     );
     const active = cycler.locator('[data-state="active"]');
-    await expect(active).toHaveText("Frontend Developer");
+    await expect(active).toHaveText("Product Engineer");
     await expect(active).toHaveText("UX Engineer", { timeout: 6000 });
     // The clipped overlay shows the same role as the base layer.
     await expect(page.locator('[data-hero-overlay] [data-role-cycler] [data-state="active"]')).toHaveText(
@@ -244,13 +244,13 @@ test.describe("engineering positioning", () => {
     await page.goto("/");
     await page.waitForTimeout(3200);
     await expect(page.locator('[data-hero-base] [data-role-cycler] [data-state="active"]')).toHaveText(
-      "Frontend Developer",
+      "Product Engineer",
     );
     await ctx.close();
   });
 
   test("engineering case studies explain how they were built; brand does not", async ({ page }) => {
-    for (const slug of ["community-servers", "trading-platform"]) {
+    for (const slug of ["community-servers", "cms-dashboard", "trading-platform"]) {
       await page.goto(`/work/${slug}`);
       await expect(page.getByRole("heading", { level: 2, name: "How I built it" })).toBeAttached();
       await expect(page.getByRole("heading", { level: 3, name: "How it was checked" })).toBeAttached();
@@ -262,8 +262,83 @@ test.describe("engineering positioning", () => {
   test("engineering work leads the gallery and the user baseline is 200K", async ({ page }) => {
     await page.goto("/");
     const ids = await page.locator("[id^='project-']").evaluateAll((els) => els.map((e) => e.id));
-    expect(ids.slice(0, 3)).toEqual(["project-community-servers", "project-trading-platform", "project-brand-identity"]);
+    expect(ids.slice(0, 4)).toEqual([
+      "project-community-servers",
+      "project-cms-dashboard",
+      "project-trading-platform",
+      "project-brand-identity",
+    ]);
     await page.goto("/work/community-servers");
     await expect(page.getByText("Up from about 200K during my tenure.")).toBeAttached();
+  });
+});
+
+test.describe("positioning, sharing and search", () => {
+  test("how I work shows the three disciplines, data line and roles", async ({ page }) => {
+    await page.goto("/");
+    const section = page.locator("#approach");
+    await expect(section.getByRole("heading", { level: 2 })).toHaveText("Product, design and code in one loop.");
+    for (const name of ["Product", "Design", "Engineering"]) {
+      await expect(section.getByRole("heading", { level: 3, name, exact: true })).toBeAttached();
+    }
+    await expect(section).toContainText("Working knowledge of SQL (PostgreSQL)");
+    await expect(section).toContainText("Chief Product Officer");
+    await expect(section.getByRole("link", { name: /Full journey and resume/ })).toHaveAttribute("href", "/resume");
+  });
+
+  test("the h1 is only the headline", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("[data-visible]").waitFor({ state: "attached" });
+    const text = await page.locator("h1").evaluate((h) => (h.textContent ?? "").replace(/\s+/g, " ").trim());
+    expect(text).toBe("Thoughtfully designed. Carefully built.");
+  });
+
+  test("home and case studies carry Open Graph, Twitter and canonical tags", async ({ page }) => {
+    for (const path of ["/", "/work/community-servers", "/resume"]) {
+      await page.goto(path);
+      await expect(page.locator('meta[property="og:title"]'), path).toHaveCount(1);
+      await expect(page.locator('meta[property="og:image"]'), path).toHaveCount(1);
+      await expect(page.locator('meta[name="twitter:card"]'), path).toHaveAttribute("content", "summary_large_image");
+      await expect(page.locator('link[rel="canonical"]'), path).toHaveAttribute(
+        "href",
+        `https://portfolioanshaj.vercel.app${path === "/" ? "" : path}`,
+      );
+    }
+    await page.goto("/");
+    const ld = await page.locator('script[type="application/ld+json"]').textContent();
+    expect(JSON.parse(ld ?? "{}")).toMatchObject({ "@type": "Person", name: "Anshaj Ahuja" });
+  });
+
+  test("sitemap, robots and the share image are served", async ({ request }) => {
+    const sitemap = await request.get("/sitemap.xml");
+    expect(sitemap.ok()).toBe(true);
+    const xml = await sitemap.text();
+    for (const slug of ["community-servers", "cms-dashboard", "trading-platform", "brand-identity"]) expect(xml).toContain(`/work/${slug}`);
+    expect(xml).not.toContain("discovery-onboarding");
+    expect((await request.get("/robots.txt")).ok()).toBe(true);
+    const og = await request.get("/opengraph-image");
+    expect(og.headers()["content-type"]).toContain("image/png");
+  });
+
+  test("resume toolkit labels data and cloud as working knowledge", async ({ page }) => {
+    await page.goto("/resume");
+    const toolkit = page.locator("[aria-labelledby='toolkit-title']");
+    await expect(toolkit.getByRole("heading", { level: 3, name: "Data & cloud" })).toBeAttached();
+    await expect(toolkit).toContainText("Working knowledge, alongside backend engineers");
+  });
+});
+
+test.describe("cms case study", () => {
+  test("is second in the gallery and separates built from specified work", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("list", { name: "Jump to a case study" }).getByRole("link").nth(1)).toContainText(
+      "CMS dashboard",
+    );
+    await page.goto("/work/cms-dashboard");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Building the CMS behind Gamersberg");
+    const scope = page.getByRole("list", { name: "Scope and status of each part" });
+    await expect(scope.getByText("Specified for engineering")).toHaveCount(1);
+    await expect(scope.getByText("Backend APIs for every module")).toBeVisible();
+    await expect(page.locator('img[src*="/images/work/cms/"], img[srcset*="cms"]').first()).toBeAttached();
   });
 });

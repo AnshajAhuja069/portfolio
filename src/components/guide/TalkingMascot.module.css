@@ -32,6 +32,10 @@
   animation: pop 360ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+.bubble[data-line]::before {
+  content: attr(data-line);
+}
+
 /* Phones: beside the mascot, in the empty space to its right, so the
    headings stay readable. */
 .hero,

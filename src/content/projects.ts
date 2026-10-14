@@ -17,11 +17,13 @@ export type ItemStatus =
   | "designed"
   | "directed" // visual / UX direction
   | "frontend-complete"
+  | "specified" // requirements and API contract written by me, built by the team
   | "proposal"
   | "planning";
 
 export const statusLabel: Record<ItemStatus, string> = {
   built: "Designed & built",
+  specified: "Specified for engineering",
   designed: "Designed",
   directed: "Design direction",
   "frontend-complete": "Front end complete",
@@ -75,6 +77,14 @@ export type Cover =
   | {
       /** Layered brand composition built from the real identity assets. */
       kind: "identity";
+      alt: string;
+    }
+  | {
+      /** Two real desktop screens: a large window behind, a smaller one in front. */
+      kind: "dashboard";
+      back: ImageAsset;
+      front: ImageAsset;
+      plate: string;
       alt: string;
     };
 
@@ -200,8 +210,172 @@ export type Project = {
 const CS = "/images/work/community-servers";
 const TP = "/images/work/trading-platform";
 const BI = "/images/work/brand-identity";
+const CMS = "/images/work/cms";
+
+/** CMS screenshots supplied by Anshaj on 14 Oct 2026 (work email masked). */
+const CMS_SHOTS = {
+  pages: { src: `${CMS}/pages.webp`, width: 1919, height: 994 },
+  media: { src: `${CMS}/media.webp`, width: 1919, height: 998 },
+  data: { src: `${CMS}/data-registry.webp`, width: 1918, height: 995 },
+  widgets: { src: `${CMS}/widgets.webp`, width: 1915, height: 981 },
+  store: { src: `${CMS}/store.webp`, width: 1915, height: 997 },
+  rooms: { src: `${CMS}/rooms.webp`, width: 1913, height: 996 },
+};
+const CMS_URL = "dashboard.gamersberg.com";
 
 export const projects: Project[] = [
+  {
+    slug: "cms-dashboard",
+    order: 2,
+    published: true,
+    title: "Building the CMS behind Gamersberg",
+    short: "CMS dashboard",
+    summary:
+      "An internal dashboard where the team manages game pages, data collections, media, shop items, rooms and widgets, organised by game and traceable through audit logs.",
+    company: "Gamersberg",
+    workstream: "Content management system (internal tool)",
+    contribution: "Planning, dashboard design and page templates; front end with the team; API specs",
+    disciplines: ["Product planning", "Information architecture", "Front-end", "API specs"],
+    platforms: ["Web (internal)"],
+    band: "CMS · Internal tool",
+    cover: {
+      kind: "dashboard",
+      back: CMS_SHOTS.pages,
+      front: CMS_SHOTS.store,
+      plate: "#3D5AFE",
+      alt: "The Gamersberg CMS: the Pages screen with a card for each game, and in front, the Store screen listing cosmetic products with slot, rarity, price and status.",
+    },
+    caseStudy: {
+      overview:
+        "Every game on Gamersberg needs pages, item data, images, shop items and room settings, and all of them change often. I helped plan a content management system with leadership, designed its dashboard, and worked with the team on the front end, where I built the reusable page templates and parts of the content logic. I also specified the backend APIs it needed. The result is one internal tool, organised by game, where each area keeps its own record of what changed.",
+      role: {
+        contribution:
+          "Planning with leadership, the dashboard’s design, the reusable page templates and parts of the content logic; specifying the backend APIs. The front end was a team build.",
+        collaborators: "Gamersberg leadership and the backend engineering team.",
+        status: "Designed, built with the team, in use",
+      },
+      scope: [
+        { label: "Pages organised by game, with headless pages and interlinks", status: "designed", note: "Front end built with the team." },
+        { label: "Reusable page templates for game content", status: "built" },
+        { label: "Data registry: a collection per game, moderation and audit log", status: "designed", note: "Front end built with the team." },
+        { label: "Media library: folders per game, grid and list views, CSV file manager", status: "designed", note: "Front end built with the team." },
+        { label: "Store: cosmetic products by slot, collection, rarity, price and status", status: "designed", note: "Front end built with the team." },
+        { label: "Rooms setup for game rooms and custom rooms", status: "designed", note: "Front end built with the team." },
+        { label: "Widget manager for the stock and trading widgets", status: "designed", note: "Front end built with the team." },
+        { label: "Backend APIs for every module", status: "specified", note: "Built by the backend team." },
+      ],
+      problem:
+        "Game content touches every part of the product: pages, item data, images, shop items and room settings, for many games at once. The team needed one place to manage all of it, where every game follows the same structure, updates can happen without touching the product’s code, and every change can be traced.",
+      constraints: [
+        "Many games, each with its own pages, data, media and settings, so everything had to be organised by game first.",
+        "Updates had to be possible without a code change, so structure comes from templates, collections and forms.",
+        "Backend services and storage sit with the engineering team; the dashboard is built against the APIs I specified.",
+      ],
+      decisions: [
+        {
+          title: "Treat game data as collections",
+          interface:
+            "The data registry holds one collection per game, each showing its entity count and last update, with tabs for moderation and an audit log.",
+          behaviour:
+            "Structured data lives in one predictable place per game. Updates can be moderated before they go live, and every change is tracked.",
+          shot: { ...CMS_SHOTS.data, frame: "browser", url: `${CMS_URL}/data-registry`, alt: "The Data Registry with a card per game collection, such as Adopt Me with 1752 entities and Blade Ball with 4321, plus Collections, Moderation and Audit Log tabs." },
+        },
+        {
+          title: "Keep media next to the game it belongs to",
+          interface:
+            "The media library groups assets into a folder per game, with grid and list views, a CSV file manager and its own audit log.",
+          behaviour:
+            "With more than 19,000 assets, a file is found by game first, and its name, game, size and upload date are visible before it is opened.",
+          shot: { ...CMS_SHOTS.media, frame: "browser", url: `${CMS_URL}/media`, alt: "The Media Library with game folders on the left and a grid of character renders, each labelled with file name, game, size and date, over 979 pages." },
+        },
+        {
+          title: "Make shop items data, not code",
+          interface:
+            "Each store product has a slot (avatar decoration, nameplate, profile effect or profile frame), a collection, a rarity, a gem price and a status, filterable by slot.",
+          behaviour:
+            "Cosmetics like the decorations in the community case study are added, priced and switched on or off from the dashboard.",
+          shot: { ...CMS_SHOTS.store, frame: "browser", url: `${CMS_URL}/store`, alt: "The Store products table listing avatar decorations such as Galaxy Aurora and Jester with collection, rarity, gem price and Active status." },
+        },
+        {
+          title: "Configure live features in place",
+          interface:
+            "Rooms setup lists configurable games and custom rooms beside a configuration panel for media, categories and settings.",
+          behaviour:
+            "Room settings are published from the dashboard, and non-game rooms such as Anime sit in the same list as game rooms.",
+          shot: { ...CMS_SHOTS.rooms, frame: "browser", url: `${CMS_URL}/rooms`, alt: "Rooms Setup with a list of configurable games such as adopt-me and blox-fruits, a Custom Rooms list with Anime, and an empty configuration deck." },
+        },
+      ],
+      media: [
+        {
+          kind: "shot",
+          placement: "showcase",
+          shot: {
+            ...CMS_SHOTS.pages,
+            frame: "browser",
+            url: `${CMS_URL}/pages`,
+            alt: "The CMS Pages screen: a sidebar of modules and a grid of game cards, each with its icon, slug and page count, plus a Headless group for pages not tied to a game.",
+          },
+          caption:
+            "Everything starts from the game. Pages, data, media and rooms all open on the same kind of game list, so whatever you need to change, you find the game first.",
+        },
+        {
+          kind: "shot",
+          placement: "gallery",
+          shot: {
+            ...CMS_SHOTS.widgets,
+            frame: "browser",
+            url: `${CMS_URL}/widgets`,
+            alt: "The Widget Manager with active Stock and Trading widgets, each opening its own configuration.",
+          },
+          caption: "The widget manager. The stock and trading widgets are configured independently, each from its own card.",
+        },
+      ],
+      implemented: {
+        mine: [
+          "Planning the CMS with leadership: its modules and how content is organised by game.",
+          "Design of the dashboard: navigation, game lists, collections, media library, store, rooms and widgets.",
+          "Front-end work alongside the team: the reusable page templates and parts of the content logic.",
+          "Specifying the backend APIs each module needs, and agreeing them with engineering.",
+        ],
+        team: [
+          "The front end of the dashboard modules, built together with the team.",
+          "The backend services, APIs, storage and access control behind the CMS.",
+        ],
+      },
+      engineering: {
+        stack: ["Next.js", "React", "REST APIs"],
+        points: [
+          {
+            title: "One pattern for every module",
+            body: "Pages, data, media and rooms share one shape: pick a game, then work inside it. Cards, filters, tabs and search are reused across modules instead of each screen inventing its own.",
+          },
+          {
+            title: "Templates instead of one-off pages",
+            body: "Game pages are built from reusable templates, so every game’s pages follow the same structure and a new game starts from a known layout.",
+          },
+          {
+            title: "Built against a specified contract",
+            body: "I specified the endpoints and data each module needed and the backend team built them. The interface, built with the team, works from that contract, including empty collections, entity counts and active or inactive states.",
+          },
+          {
+            title: "Every change leaves a trail",
+            body: "Pages, media and the data registry each keep an audit log, collection updates can be moderated, and the dashboard has a Bin, so changes stay traceable.",
+          },
+        ],
+        validation:
+          "In use by the Gamersberg team: assets are uploaded and collections updated through it, and changes are recorded in each module’s audit log.",
+      },
+      outcome: [
+        "One place to manage pages, data, media, shop items, rooms and widgets for every game.",
+        "Every game follows the same structure, from its pages to its data collections.",
+        "Changes are traceable through audit logs and moderation.",
+        "Shop cosmetics and room settings change from the dashboard instead of in code.",
+      ],
+      reflection:
+        "Next, I’d look at where editors spend their time in the dashboard, and document each page template’s purpose alongside how to use it, so new games and new editors get started faster.",
+    },
+    next: "trading-platform",
+  },
   {
     slug: "community-servers",
     order: 1,
@@ -428,11 +602,11 @@ export const projects: Project[] = [
       reflection:
         "Next, I’d focus on reliability in everyday moments: replying while the feed moves, jumping back to recent messages and keeping the composer predictable. Reaction defaults and synced pins should wait for evidence before the feature set grows.",
     },
-    next: "trading-platform",
+    next: "cms-dashboard",
   },
   {
     slug: "brand-identity",
-    order: 3,
+    order: 4,
     published: true,
     title: "Giving Gamersberg an identity with depth",
     short: "Brand identity & Peak",
@@ -602,7 +776,7 @@ export const projects: Project[] = [
   },
   {
     slug: "trading-platform",
-    order: 2,
+    order: 3,
     published: true,
     title: "Rebuilding the trading experience",
     short: "Trading platform",

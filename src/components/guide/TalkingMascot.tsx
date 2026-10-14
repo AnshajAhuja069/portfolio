@@ -129,8 +129,16 @@ export function TalkingMascot({ id, onView, onViewDelay = 2200, clicks, end, qui
     <div ref={wrap} className={s.wrap} onClick={onClick}>
       <Mascot ref={face} interactive={false} greetOnView={greetOnView} />
       {line && (
-        <span ref={bubble} className={`${s.bubble} ${s[variant]}`} aria-hidden="true" key={line}>
-          {line}
+        // The hero mascot sits inside the h1, so its line is drawn from
+        // data-line in CSS and never becomes part of the heading's text.
+        <span
+          ref={bubble}
+          className={`${s.bubble} ${s[variant]}`}
+          aria-hidden="true"
+          key={line}
+          data-line={variant === "hero" ? line : undefined}
+        >
+          {variant === "hero" ? null : line}
         </span>
       )}
     </div>

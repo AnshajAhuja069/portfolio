@@ -246,6 +246,7 @@ export function Guide() {
     if (pathname === "/") {
       targets.push(["#work-title", "work", sec.work]);
       publishedProjects.forEach((p) => targets.push([`#project-${p.slug}`, `project-${p.slug}`, sec.project[p.slug]]));
+      targets.push(["#approach-title", "approach", sec.approach]);
     } else if (isCase && slug) {
       targets.push(["#impact-title", "impact", sec.impact]);
       targets.push(["#decisions-title", "decisions", sec.decisions]);

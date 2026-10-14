@@ -63,11 +63,11 @@ test.describe("guide", () => {
     await page.goto("/");
     await pastHero(page);
     await page.getByRole("button", { name: "Show me around" }).click();
-    await expect(page.getByText("1 / 5", { exact: true })).toBeVisible();
+    await expect(page.getByText("1 / 6", { exact: true })).toBeVisible();
     await page.getByRole("button", { name: "Next" }).click();
-    await expect(page.getByText("2 / 5", { exact: true })).toBeVisible();
+    await expect(page.getByText("2 / 6", { exact: true })).toBeVisible();
     await page.getByRole("button", { name: "Skip" }).click();
-    await expect(page.getByText(/\d \/ 5/)).toHaveCount(0);
+    await expect(page.getByText(/\d \/ 6/)).toHaveCount(0);
   });
 
   test("hide persists and the footer brings him back", async ({ page }) => {
@@ -89,7 +89,8 @@ test.describe("guide", () => {
     await page.goto("/");
     await page.locator("[data-visible]").waitFor({ state: "attached" });
     await page.locator("[data-hero-disc]").click();
-    await expect(page.getByText("Hi! Yes, I'm clickable. Everything here is.")).toBeVisible();
+    // The hero line is drawn from data-line so it stays out of the h1's text.
+    await expect(page.locator(`[data-hero-disc] [data-line="Hi! Yes, I'm clickable. Everything here is."]`)).toBeVisible();
     await page.locator("[data-contact-mascot]").scrollIntoViewIfNeeded();
     await page.locator("[data-contact-mascot]").click();
     await expect(page.getByText(/Email works|The real me|Go on, say hi|handing you over/).first()).toBeVisible();
@@ -99,7 +100,7 @@ test.describe("guide", () => {
     await page.goto("/");
     await page.locator("[data-visible]").waitFor({ state: "attached" });
     await page.locator("[data-hero-disc]").click();
-    const bubble = page.getByText("Hi! Yes, I'm clickable. Everything here is.");
+    const bubble = page.locator(`[data-hero-disc] [data-line="Hi! Yes, I'm clickable. Everything here is."]`);
     await expect(bubble).toBeVisible();
     const right = await bubble.evaluate((e) => e.getBoundingClientRect().left + (e as HTMLElement).offsetWidth);
     const width = await page.evaluate(() => document.documentElement.clientWidth);

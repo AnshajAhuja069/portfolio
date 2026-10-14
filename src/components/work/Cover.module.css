@@ -65,6 +65,19 @@
   top: 9%;
 }
 
+/* Dashboard: a wide window behind, a smaller one overlapping bottom right. */
+.dashboard .back {
+  top: 9%;
+  width: 72%;
+}
+
+.dashboard .front {
+  top: auto;
+  right: 5%;
+  bottom: 9%;
+  width: 50%;
+}
+
 .tag {
   position: absolute;
   z-index: 3;
@@ -115,5 +128,16 @@
     right: auto;
     top: 27%;
     width: 46%;
+  }
+
+  .dashboard .back {
+    width: 118%;
+  }
+
+  .dashboard .front {
+    left: 24%;
+    top: auto;
+    bottom: 10%;
+    width: 72%;
   }
 }

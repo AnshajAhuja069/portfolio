@@ -93,6 +93,7 @@ export function ResumePage() {
           {resume.skills.map((g) => (
             <div key={g.group} className={s.group}>
               <h3 className={s.groupTitle}>{g.group}</h3>
+              {g.note && <p className={s.groupNote}>{g.note}</p>}
               <ul className={s.chips} role="list">
                 {g.items.map((item) => (
                   <li key={item} className={s.chip} data-chip>

@@ -1,5 +1,8 @@
 <!--
-  Public resume source. Content mirrors Anshaj_Ahuja_Resume_BCG.tex (13 Oct 2026).
+  Public resume source (general Product Engineer version). Facts follow
+  src/content/resume.ts: anshaj_product.pdf + Amex GRC .tex (14 Oct 2026),
+  the BCG resume and facts confirmed in chat. Tailored versions may change
+  emphasis, never titles, dates or employers.
   Build: npm run resume  ->  public/resume/Anshaj_Ahuja.pdf
   Keep src/content/resume.ts in step with this file.
 -->
@@ -8,7 +11,7 @@
 <style>
 @page { size: A4; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Helvetica, Arial, sans-serif; color: #000; width: 210mm; padding: 13mm 14mm 10mm; font-size: 10.4pt; line-height: 1.32; }
+body { font-family: Helvetica, Arial, sans-serif; color: #000; width: 210mm; padding: 12mm 14mm 8mm; font-size: 10.4pt; line-height: 1.28; }
 a { color: inherit; }
 .head { display: flex; justify-content: space-between; align-items: flex-start; }
 .name { font-size: 25pt; font-weight: 700; line-height: 1.05; }
@@ -17,10 +20,10 @@ a { color: inherit; }
 .right { text-align: right; }
 .right .loc { margin-top: 4px; }
 .right .contact { margin-top: 30px; }
-h2 { font-variant: small-caps; font-weight: 400; font-size: 13.5pt; color: #0000ff; border-bottom: 0.6pt solid #000; margin: 9px 0 4px; padding-bottom: 1px; }
+h2 { font-variant: small-caps; font-weight: 400; font-size: 13.5pt; color: #0000ff; border-bottom: 0.6pt solid #000; margin: 7px 0 3px; padding-bottom: 1px; }
 .summary { font-size: 10pt; }
 .skills { padding-left: 4mm; }
-.skill { display: grid; grid-template-columns: 31mm 4mm 1fr; font-size: 10.4pt; margin: 1px 0; }
+.skill { display: grid; grid-template-columns: 36mm 4mm 1fr; font-size: 10.4pt; margin: 1px 0; }
 .skill b { font-weight: 700; }
 .job { padding-left: 4mm; margin-top: 4px; }
 .row { display: flex; justify-content: space-between; }
@@ -33,7 +36,7 @@ li { font-size: 9.7pt; margin: 1px 0; }
 <div class="head">
   <div>
     <div class="name">Anshaj Ahuja</div>
-    <div class="role">Frontend Developer &amp; UX Engineer</div>
+    <div class="role">Product Engineer &amp; UX Engineer</div>
     <div class="links"><a href="https://www.linkedin.com/in/anshaj-ahuja-b528a11b6/">LinkedIn</a> | <a href="https://github.com/Anshajgamersberg">GitHub</a> | <a href="https://portfolioanshaj.vercel.app/">Portfolio</a></div>
   </div>
   <div class="right">
@@ -43,26 +46,28 @@ li { font-size: 9.7pt; margin: 1px 0; }
 </div>
 
 <h2>Professional Summary</h2>
-<p class="summary">Frontend Developer and UX Engineer building responsive web and mobile applications with React, Next.js, React Native and TypeScript. Rebuilt Gamersberg's trading frontend, implemented its community messaging interactions and built its CMS dashboard. Turn product requirements into reusable components, API specifications and integrated interfaces, working closely with backend engineers on scope and delivery. Use Claude and Codex in day-to-day development.</p>
+<p class="summary">Product and UX engineer, currently Chief Product Officer at Gamersberg (1.5M+ registered users). Translate business needs into requirements and technical documentation, design the experience, and build responsive web and mobile interfaces in React, Next.js, React Native and TypeScript. Rebuilt Gamersberg's trading frontend, implemented its community messaging and designed its CMS dashboard with the team.</p>
 
-<h2>Technical Skills</h2>
+<h2>Skills</h2>
 <div class="skills">
-  <div class="skill"><b>Frontend</b><span>:</span><span>React, Next.js, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS, shadcn/ui, Framer Motion</span></div>
-  <div class="skill"><b>Mobile</b><span>:</span><span>React Native, Expo</span></div>
-  <div class="skill"><b>Engineering</b><span>:</span><span>Reusable components, responsive UI, REST API integration, Jotai, API requirement specs, Lighthouse performance audits, Git, GitHub</span></div>
-  <div class="skill"><b>Design &amp; Tools</b><span>:</span><span>Figma, user flows, interaction design; AI-assisted development with Claude and Codex</span></div>
+  <div class="skill"><b>Product &amp; Delivery</b><span>:</span><span>Requirements analysis, technical documentation, API requirement specs, prioritisation, cross-functional coordination, testing and release readiness, process standardisation</span></div>
+  <div class="skill"><b>Engineering</b><span>:</span><span>React, Next.js, TypeScript, JavaScript, React Native, Expo, HTML/CSS, Tailwind CSS, REST API integration, Lighthouse audits, Git, GitHub</span></div>
+  <div class="skill"><b>Design</b><span>:</span><span>Figma, user flows, interaction design, design systems, responsive design, prototyping</span></div>
+  <div class="skill"><b>Data &amp; Cloud</b><span>:</span><span>SQL, PostgreSQL, GCP deployments, CI/CD (working knowledge, alongside backend engineers)</span></div>
+  <div class="skill"><b>Also used</b><span>:</span><span>Jotai, shadcn/ui, Framer Motion; AI-assisted development with Claude and Codex</span></div>
 </div>
 
 <h2>Experience</h2>
 <div class="job">
   <div class="row"><b>Chief Product Officer</b><span>Jul 2025 – Present</span></div>
-  <div class="row sub"><span>Gamersberg · Hands-on frontend and UX delivery</span><span>Remote</span></div>
+  <div class="row sub"><span>Gamersberg</span><span>Remote</span></div>
   <ul>
+    <li>Partner with leadership and engineering to scope platform capabilities, prioritise requirements and coordinate delivery across web and mobile. Helped broaden the product from trading into game communities, Rooms, content and rewards; registered users grew from about 200K to 1.5M during my tenure and the Android app passed 50K Google Play downloads.</li>
     <li>Implemented responsive community and messaging interfaces across web and React Native, covering channel navigation, replies, reactions, message actions, attachments and unread states.</li>
-    <li>Designed and built the CMS dashboard and reusable content templates for game pages, including the interface and content logic, and specified the backend APIs it required.</li>
-    <li>Translated product requirements into technical documentation for engineering: specified API endpoints and data needs and planned feature architecture for message search, content history and read-state synchronisation.</li>
-    <li>Ran Lighthouse and other performance audits on web interfaces and documented findings and recommendations in reports for the engineering team.</li>
-    <li>Led product and UX direction across game communities, Rooms, discussions and rewards. During my tenure, registered users grew from about 200K to 1.5M and the Android app passed 50K Google Play downloads.</li>
+    <li>Helped plan the content management system, designed its dashboard and built reusable page templates and parts of its content logic to standardise how game content is published, specifying the backend APIs it required.</li>
+    <li>Document feature behaviour, edge cases, testing feedback and backend dependencies for messaging, profiles, badges, activity and rewards, including API needs for message search, content history and read state.</li>
+    <li>Coordinate consistency and release readiness across Community Servers, Rooms, giveaways and rewards, tracking outstanding integration requirements.</li>
+    <li>Ran Lighthouse and other performance audits and documented recommendations for engineering.</li>
   </ul>
 </div>
 <div class="job">
@@ -77,14 +82,14 @@ li { font-size: 9.7pt; margin: 1px 0; }
   <div class="row"><b>Associate UI/UX Designer</b><span>Aug 2024 – Mar 2025</span></div>
   <div class="row sub"><span>Benepik Technologies</span><span>Gurugram</span></div>
   <ul>
-    <li>Redesigned legacy product screens and collaborated with developers on responsive components and application data integration.</li>
-    <li>Designed a spin-wheel interaction for a Hero FinCorp festive employee bonus event.</li>
+    <li>Analysed enterprise workflows and redesigned legacy screens with clearer information hierarchy, navigation and standardised components; worked with developers on implementation.</li>
+    <li>Designed and specified the interaction states for a Hero FinCorp employee rewards experience.</li>
   </ul>
 </div>
 <div class="job">
   <div class="row"><b>UI/UX Graphic Designer Intern</b><span>Feb 2024 – Apr 2024</span></div>
   <div class="row sub"><span>Jai Kisan</span><span>Bengaluru</span></div>
-  <ul><li>Created interface mockups and visual assets for fintech products.</li></ul>
+  <ul><li>Created interface mockups and visual assets for fintech products in line with established design and brand standards.</li></ul>
 </div>
 
 <h2>Education</h2>

@@ -14,9 +14,13 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return {};
+  const url = `/work/${project.slug}`;
   return {
     title: project.title,
     description: project.summary,
+    alternates: { canonical: url },
+    openGraph: { type: "article", title: project.title, description: project.summary, url },
+    twitter: { card: "summary_large_image", title: project.title, description: project.summary },
   };
 }
 

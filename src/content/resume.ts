@@ -1,9 +1,15 @@
 /**
  * Resume content for the /resume journey page.
  *
- * Source: Anshaj_Ahuja_Resume_BCG.tex (supplied 13 Oct 2026), which is also the
- * downloadable file in public/resume/. When the resume changes, replace the
- * PDF and update this file; the page rebuilds itself from this data.
+ * Sources: anshaj_product.pdf and Anshaj_Ahuja_Amex_GRC_Resume.tex (14 Oct
+ * 2026), the BCG resume (13 Oct 2026) and facts confirmed in chat:
+ * community messaging was implemented by Anshaj; the Mar to Jul 2025 title is
+ * "Product Designer & UI Engineer"; SQL, GCP and CI/CD are working knowledge
+ * gained alongside the backend engineers. Tailored resumes may change
+ * emphasis, never titles, dates or employers.
+ *
+ * Keep scripts/resume/resume.html (the downloadable PDF) in step with this
+ * file; the page rebuilds itself from this data.
  */
 
 export type JourneyStop = {
@@ -25,7 +31,7 @@ export type JourneyStop = {
 export const resume = {
   heading: "The journey so far.",
   summary:
-    "Frontend developer and UX engineer building responsive web and mobile applications with React, Next.js, React Native and TypeScript. I rebuilt Gamersberg’s trading frontend, implemented its community messaging interactions and built its CMS dashboard, turning product requirements into reusable components, API specifications and integrated interfaces with the backend team.",
+    "Product and UX engineer, currently Chief Product Officer at Gamersberg. I translate business needs into requirements and technical documentation, design the experience, and build responsive web and mobile interfaces in React, Next.js, React Native and TypeScript. I rebuilt Gamersberg’s trading frontend, implemented its community messaging and designed its CMS dashboard, coordinating delivery with the backend team.",
 
   journey: [
     {
@@ -59,10 +65,10 @@ export const resume = {
       org: "Benepik Technologies",
       place: "Gurugram",
       highlights: [
-        "Redesigned legacy product screens and worked with developers on responsive components and application data integration.",
-        "Designed a spin-wheel interaction for a Hero FinCorp festive employee bonus event.",
+        "Analysed enterprise workflows and redesigned legacy screens with clearer information hierarchy, navigation and standardised components, working with developers on implementation.",
+        "Designed and specified the interaction states for a Hero FinCorp employee rewards experience.",
       ],
-      tags: ["Legacy redesign", "Responsive components", "Interaction design"],
+      tags: ["Enterprise workflows", "Standardised components", "Interaction design"],
     },
     {
       id: "gb-ui",
@@ -89,33 +95,66 @@ export const resume = {
       place: "Remote",
       current: true,
       highlights: [
+        "Partner with leadership and engineering to scope platform capabilities, prioritise requirements and coordinate delivery across web and mobile.",
+        "Led product and UX direction as the product grew from trading into game communities, Rooms, content and rewards. Registered users grew from about 200K to 1.5M during my tenure, and the Android app passed 50K Google Play downloads.",
         "Implemented responsive community and messaging interfaces across web and React Native: channel navigation, replies, reactions, message actions, attachments and unread states.",
-        "Designed and built the CMS dashboard and reusable content templates for game pages, including the interface and content logic, and specified the backend APIs it required.",
-        "Translated product requirements into technical documentation for engineering, specifying API endpoints and data needs and planning feature architecture for message search, content history and read-state sync.",
+        "Helped plan the content management system, designed its dashboard and built reusable page templates and parts of its content logic to standardise how game content is published, specifying the backend APIs it required.",
+        "Document feature behaviour, edge cases, testing feedback and backend dependencies for messaging, profiles, badges, activity and rewards, including API endpoints and data needs for message search, content history and read-state sync.",
+        "Coordinate consistency and release readiness across Community Servers, Rooms, giveaways and rewards, tracking outstanding integration requirements.",
         "Ran Lighthouse and other performance audits on web interfaces and documented findings and recommendations for the engineering team.",
-        "Led product and UX direction across game communities, Rooms, discussions and rewards. Registered users grew from about 200K to 1.5M during my tenure, and the Android app passed 50K Google Play downloads.",
         "Created the Gamersberg logo and its mascot, Peak, around an iceberg and an infinity mask.",
       ],
-      tags: ["Frontend delivery", "Community & messaging", "CMS", "API specs", "Brand identity"],
+      tags: ["Product strategy", "Requirements & specs", "Frontend delivery", "CMS", "Release readiness"],
       links: [
         { label: "Communities", href: "/work/community-servers" },
+        { label: "CMS", href: "/work/cms-dashboard" },
         { label: "Brand identity", href: "/work/brand-identity" },
       ],
     },
   ] satisfies JourneyStop[],
 
+  /** Verified skills only; no levels or percentages. `note` qualifies a group. */
   skills: [
     {
-      group: "Frontend",
-      items: ["React", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3", "Tailwind CSS", "shadcn/ui", "Framer Motion"],
+      group: "Product & delivery",
+      items: [
+        "Requirements analysis",
+        "Technical documentation",
+        "API requirement specs",
+        "Prioritisation",
+        "Cross-functional coordination",
+        "Testing & release readiness",
+        "Process standardisation",
+      ],
     },
     {
-      group: "Mobile & engineering",
-      items: ["React Native", "Expo", "REST API integration", "Jotai", "API requirement specs", "Lighthouse audits", "Git", "GitHub"],
+      group: "Engineering",
+      items: [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "JavaScript",
+        "React Native",
+        "Expo",
+        "HTML & CSS",
+        "Tailwind CSS",
+        "REST API integration",
+        "Lighthouse audits",
+        "Git & GitHub",
+      ],
     },
     {
-      group: "Design & tools",
-      items: ["Figma", "User flows", "Interaction design", "Claude", "Codex"],
+      group: "Design",
+      items: ["Figma", "User flows", "Interaction design", "Design systems", "Responsive design", "Prototyping"],
     },
-  ],
+    {
+      group: "Data & cloud",
+      note: "Working knowledge, alongside backend engineers",
+      items: ["SQL", "PostgreSQL", "GCP deployments", "CI/CD"],
+    },
+    {
+      group: "Also used",
+      items: ["Jotai", "shadcn/ui", "Framer Motion", "Claude", "Codex"],
+    },
+  ] as { group: string; note?: string; items: string[] }[],
 };

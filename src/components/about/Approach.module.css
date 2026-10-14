@@ -1,0 +1,127 @@
+.approach {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5svh, 64px);
+  padding-top: clamp(80px, 14svh, 180px);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  max-width: 14ch;
+  font-size: var(--step-4);
+  line-height: 0.95;
+}
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px clamp(24px, 3vw, 48px);
+  list-style: none;
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--ink);
+}
+
+.num {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--accent-text);
+}
+
+.pillarTitle {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.body {
+  max-width: 42ch;
+  color: var(--ink-2);
+}
+
+.data {
+  max-width: 60ch;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  background: var(--paper-3);
+  font-size: var(--step--1);
+  color: var(--ink-2);
+}
+
+.roles {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 16px clamp(24px, 3vw, 48px);
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.rolesTitle {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.roleList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 32px;
+  list-style: none;
+}
+
+.role {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.roleTitle {
+  font-weight: 600;
+}
+
+.roleOrg {
+  font-size: var(--step--1);
+  color: var(--ink-2);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (max-width: 1099.98px) {
+  .roles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 899.98px) {
+  .pillars,
+  .roleList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

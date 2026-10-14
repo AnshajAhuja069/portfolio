@@ -34,7 +34,7 @@ export const guide = {
     onView: "Psst. Scroll down, I'll tag along in the corner.",
     clicks: [
       "Hi! Yes, I'm clickable. Everything here is.",
-      "I design it, then I build it. Both versions of me.",
+      "I spec it, design it, then build it. All three versions of me.",
       "Keep scrolling, the good stuff is right below.",
       "Careful, I'm load bearing for this headline.",
     ],
@@ -61,10 +61,12 @@ export const guide = {
 
   /** Section bubbles, keyed by the anchor they appear at. */
   sections: {
-    work: "Three projects, all shipped. Pick one, I'll wait.",
+    work: "Four projects, all shipped. Pick one, I'll wait.",
+    approach: "Product, design and code. I like owning the whole loop.",
     contact: "This is where I hand you over to the real me.",
     project: {
       "community-servers": "I drew 100+ of the decorations in this one. Yes, all of them.",
+      "cms-dashboard": "The tool behind the whole platform: pages, data, media, the shop.",
       "brand-identity": "Fun fact: Peak and I share a designer.",
       "trading-platform": "Rebuilt from zero. The old one is in a better place now.",
     } as Record<string, string>,
@@ -99,8 +101,8 @@ export const guide = {
 
   /** Homepage tour: each step scrolls to its target and says its line. */
   tour: [
-    { target: "#hero-title", line: "This is the short version of me: thoughtful design, carefully built." },
-    { target: "#work [aria-label='Jump to a case study']", line: "Three case studies. Start anywhere, they're all real, shipped work." },
+    { target: "#hero-title", line: "The short version: I lead product, design the experience and build the frontend." },
+    { target: "#work [aria-label='Jump to a case study']", line: "Four case studies. Start anywhere, they're all real, shipped work." },
     { target: "#project-community-servers", line: "Each one walks through the problem, the calls I made, how I built it and what shipped." },
     {
       target: "#project-community-servers",
@@ -108,6 +110,7 @@ export const guide = {
         ? `Scale check: ${users.value}${users.unit ?? ""} ${users.label.toLowerCase()} on the platform, 50K+ app downloads.`
         : "Every case study opens with its impact.",
     },
+    { target: "#approach-title", line: "How I work: scope it, design it, build it, then check it ships." },
     { target: "#contact", line: "And this is the real me. Email, phone, the lot." },
   ],
 

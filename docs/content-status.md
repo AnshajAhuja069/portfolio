@@ -1,7 +1,33 @@
 # Content status
 
 Private authoring record — **not** published on the site.
-Last updated 29 Sep 2026.
+Last updated 14 Oct 2026. The 14 Oct section below is current; older sections
+are kept as history and are superseded where they disagree.
+
+## Repositioning — 14 Oct 2026 (current)
+
+Sources: `anshaj_product.pdf` and `Anshaj_Ahuja_Amex_GRC_Resume.tex` (14 Oct),
+the BCG resume (13 Oct) and facts Anshaj confirmed in chat on 14 Oct.
+
+| Fact | Value on the site | Status |
+|---|---|---|
+| Positioning | Product Engineer & UX Engineer; hero cycles Product Engineer, UX Engineer, Product Designer | Confirmed (brief) |
+| Current title | Chief Product Officer, Gamersberg, Jul 2025 to present; now on the homepage (hero intro, How I work) | S |
+| Mar to Jul 2025 title | **Product Designer & UI Engineer** | Confirmed in chat. The product PDF ("UI Engineer") and Amex .tex ("Product Engineer") disagree and should be corrected |
+| Community messaging | Implemented by Anshaj on web and React Native | Confirmed in chat (the Amex resume omits it by design) |
+| CMS | Helped plan; designed the dashboard; built templates and content logic; specified backend APIs | S (both resumes) |
+| SQL, PostgreSQL, GCP deployments, CI/CD | Working knowledge, alongside backend engineers | Confirmed in chat: "not very hands on" |
+| Scripting / database automation | **Not on the site** | On both new resumes, not confirmed in chat |
+| 200K to 1.5M users, 50K+ downloads | Used, as growth during tenure | S |
+| Phone | Published (contact section and PDF) | S |
+| Benepik | Enterprise workflows, standardised components; Hero FinCorp rewards interaction states | S (new wording) |
+
+Open questions (block the next phase):
+1. CMS case study: **published 14 Oct** from six supplied screenshots (work email masked). Confirmed 14 Oct: a team effort. Anshaj planned it with leadership, designed the dashboard, built the reusable page templates and parts of the content logic, and specified the backend APIs; module front ends are marked "Designed" with "Front end built with the team".
+2. Community: are message search, content history and read-state sync live, or specified and awaiting backend? Any role, permission or settings screens beyond mute, notifications and pinning?
+3. Keep or drop "scripting/database automation" on the resumes.
+4. Brand identity as case study 4, or a smaller "Also" link once the CMS study exists.
+5. Rooms, giveaways and rewards coordination study: wanted?
 
 ## Content and imagery refresh — 29 Sep 2026
 
