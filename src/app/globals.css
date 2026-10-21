@@ -153,3 +153,12 @@ button {
 main:focus {
   outline: none;
 }
+
+/* ---------- Theme switch ----------
+   ThemeToggle reveals the new theme with a growing circle (View Transitions
+   API); turn off the default cross-fade so only the circle animates. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}

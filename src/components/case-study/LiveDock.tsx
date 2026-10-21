@@ -35,6 +35,7 @@ export function LiveDock({ href, label }: { href: string; label: string }) {
       target="_blank"
       rel="noopener noreferrer"
       className={`${m.dock} ${show ? m.dockShow : ""}`}
+      data-palette="fixed"
       aria-hidden={!show}
       tabIndex={show ? 0 : -1}
     >

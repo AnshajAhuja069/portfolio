@@ -1,10 +1,10 @@
 import { profile } from "@/content/profile";
-import { getProject, publishedProjects } from "@/content/projects";
+import { allCaseStudies, getProject } from "@/content/projects";
 import { ogCard, ogSize } from "@/lib/ogCard";
 
 // Pre-render one card per published case study at build time.
 export function generateStaticParams() {
-  return publishedProjects.map((p) => ({ slug: p.slug }));
+  return allCaseStudies.map((p) => ({ slug: p.slug }));
 }
 
 export const alt = "Case study by Anshaj Ahuja";

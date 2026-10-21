@@ -62,13 +62,22 @@ export const viewport: Viewport = {
   themeColor: "#f5f2eb",
 };
 
+/** Applies a saved dark theme before first paint, so there is no flash.
+    Keep the key in sync with THEME_KEY in ThemeToggle.tsx. */
+const themeScript = `try{if(localStorage.getItem("theme")==="dark"){document.documentElement.dataset.theme="dark";var m=document.querySelector("meta[name=theme-color]");if(m)m.content="#11151d"}}catch(e){}`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       data-scroll-behavior="smooth"
       className={`${archivo.variable} ${inter.variable}`}
+      // The theme script may set data-theme before React hydrates.
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <script
           type="application/ld+json"

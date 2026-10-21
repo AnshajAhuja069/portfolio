@@ -246,6 +246,7 @@ export function Guide() {
     if (pathname === "/") {
       targets.push(["#work-title", "work", sec.work]);
       publishedProjects.forEach((p) => targets.push([`#project-${p.slug}`, `project-${p.slug}`, sec.project[p.slug]]));
+      targets.push(["#explore-title", "explore", sec.explore]);
       targets.push(["#approach-title", "approach", sec.approach]);
     } else if (isCase && slug) {
       targets.push(["#impact-title", "impact", sec.impact]);
@@ -447,7 +448,7 @@ export function Guide() {
       )}
 
       {shown && visible && (
-        <div className={s.bubble} aria-hidden={shown.ambient || undefined} key={shown.text}>
+        <div className={s.bubble} aria-hidden={shown.ambient || undefined} key={shown.text} data-palette="fixed">
           {shown.step && <span className={s.step}>{shown.step}</span>}
           <p>
             {shown.text}

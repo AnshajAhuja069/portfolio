@@ -62,6 +62,7 @@ export const guide = {
   /** Section bubbles, keyed by the anchor they appear at. */
   sections: {
     work: "Four projects, all shipped. Pick one, I'll wait.",
+    explore: "Off duty, still designing. This one is all tiles and textures.",
     approach: "Product, design and code. I like owning the whole loop.",
     contact: "This is where I hand you over to the real me.",
     project: {
@@ -77,6 +78,7 @@ export const guide = {
       default: "More screens, fewer words. Enjoy.",
       "community-servers": "Try the reply demo down here, it's real code.",
       "brand-identity": "Meet Peak, my favourite colleague.",
+      "material-stories": "Five homes, every one of them on your phone too.",
     } as Record<string, string>,
     outcome: "Almost done. The next one is good too.",
   },

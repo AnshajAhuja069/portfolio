@@ -123,7 +123,7 @@ export function IcebergStory({ caption }: { caption: string }) {
   );
 
   return (
-    <section ref={root} className={s.story} aria-labelledby="story-title" data-surface="auto">
+    <section ref={root} className={s.story} aria-labelledby="story-title" data-surface="auto" data-palette="fixed">
       <div className={`container ${s.grid}`}>
         <header className={s.head}>
           <p className={`eyebrow ${s.eyebrow}`}>The idea</p>

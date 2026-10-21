@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { profile } from "@/content/profile";
 import { SurfaceWatcher } from "./SurfaceWatcher";
+import { ThemeToggle } from "./ThemeToggle";
 import styles from "./Nav.module.css";
 
 /**
@@ -9,12 +10,14 @@ import styles from "./Nav.module.css";
  * parent would isolate the blend). See Nav.module.css + SurfaceWatcher.
  */
 export function Nav() {
+  // The surname drops on the narrowest phones so both pills fit.
+  const [first, ...rest] = profile.name.split(" ");
   return (
     <header className={styles.nav}>
       <nav aria-label="Primary">
-        <Link href="/" id="nav-wordmark" className={styles.wordmark}>
+        <Link href="/" id="nav-wordmark" className={styles.wordmark} aria-label={profile.name}>
           <span className={styles.dot} aria-hidden="true" />
-          {profile.name}
+          {first} <span className={styles.surname}>{rest.join(" ")}</span>
         </Link>
         <ul className={styles.links} role="list">
           <li>
@@ -33,6 +36,9 @@ export function Nav() {
             <Link href="/#contact" className={styles.link}>
               Contact
             </Link>
+          </li>
+          <li>
+            <ThemeToggle />
           </li>
         </ul>
       </nav>

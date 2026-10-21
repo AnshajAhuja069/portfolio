@@ -134,6 +134,7 @@ export function TalkingMascot({ id, onView, onViewDelay = 2200, clicks, end, qui
         <span
           ref={bubble}
           className={`${s.bubble} ${s[variant]}`}
+          data-palette="fixed"
           aria-hidden="true"
           key={line}
           data-line={variant === "hero" ? line : undefined}

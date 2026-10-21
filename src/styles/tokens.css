@@ -78,3 +78,39 @@
     --nav-h: 60px;
   }
 }
+
+/* ---------- Dark theme ----------
+   A night palette: paper and ink trade places, so every component that
+   reads the tokens follows without its own dark rules. Set by ThemeToggle
+   (and the no-flash script in layout.tsx) as <html data-theme="dark">.
+
+   Contrast on --paper (#11151d), computed:
+     ink    ≈ 15.2:1   ink-2 ≈ 7.4:1   accent-text ≈ 9.1:1 */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #11151d;
+  --paper-2: #4a4744;
+  --paper-3: #1b212c;
+  --ink: #ede8de;
+  --ink-2: #a8a39a;
+  --ink-3: #d9d3c7;
+  --accent-text: #45c9d1;
+  --line: rgb(237 232 222 / 0.14);
+  --line-on-dark: rgb(17 21 29 / 0.16);
+}
+
+/* Sections that are already dark or teal by design (the work gallery, the
+   hero colour field, media bands, bubbles) keep their light-theme palette,
+   with ink deepened to sit with the night background. */
+html[data-theme="dark"] [data-palette="fixed"] {
+  color-scheme: light;
+  --paper: #f5f2eb;
+  --paper-2: #b9b4aa;
+  --paper-3: #ebe6db;
+  --ink: #0a0d13;
+  --ink-2: #4a4744;
+  --ink-3: #242322;
+  --accent-text: #0b7383;
+  --line: rgb(23 23 23 / 0.14);
+  --line-on-dark: rgb(245 242 235 / 0.16);
+}

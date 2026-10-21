@@ -155,6 +155,13 @@ export type Project = {
   slug: string;
   order: number;
   published: boolean;
+  /**
+   * "main" (default): the numbered gallery. "explore": side work shown in the
+   * smaller "Explore more" strip below it, with its own case-study page.
+   */
+  track?: "main" | "explore";
+  /** Explore cards: a short category line, e.g. "Retail · Visual storytelling". */
+  category?: string;
   title: string;
   /** Short name for quick links (e.g. the case-study index). */
   short: string;
@@ -189,6 +196,10 @@ export type Project = {
     constraints: string[];
     /** Labels for the two halves of each decision (default Interface / Behaviour). */
     decisionLabels?: [string, string];
+    /** Eyebrow + title for the gallery band (defaults depend on the project). */
+    galleryLabels?: [string, string];
+    /** Eyebrow + title for the showcase band (default "The product" / "See it in context"). */
+    showcaseLabels?: [string, string];
     decisions: Decision[];
     media: Media[];
     implemented: { mine: string[]; team: string[] };
@@ -222,6 +233,12 @@ const CMS_SHOTS = {
   rooms: { src: `${CMS}/rooms.webp`, width: 1913, height: 996 },
 };
 const CMS_URL = "dashboard.gamersberg.com";
+
+/** Screens of the live Material Stories site, captured 21 Oct 2026. */
+const MS = "/images/work/material-stories";
+const MS_DESK = (name: string) => ({ src: `${MS}/${name}.webp`, width: 2400, height: 1500 });
+const MS_PHONE = (name: string) => ({ src: `${MS}/${name}.webp`, width: 1080, height: 2337 });
+const MS_URL = "material-stories.vercel.app";
 
 export const projects: Project[] = [
   {
@@ -928,6 +945,183 @@ export const projects: Project[] = [
     next: "brand-identity",
   },
   {
+    // Explore: an independent concept, not client work. Shown below the main gallery.
+    slug: "material-stories",
+    order: 1,
+    published: true,
+    track: "explore",
+    category: "Retail · Visual storytelling",
+    title: "Material Stories: five homes, one design language",
+    short: "Material Stories",
+    summary:
+      "A digital exhibition of five whole-home material curations, built for a tiles brand’s visual designer brief: real products, three rooms per home, and a 4 × 8 ft showroom display concept.",
+    company: "Independent concept",
+    workstream: "Material curation & digital exhibition",
+    contribution: "Concept, curation, art direction, Figma boards and the full website build",
+    disciplines: ["Visual storytelling", "Art direction", "Retail display", "Front-end"],
+    platforms: ["Web", "Print boards", "Showroom display"],
+    band: "Retail · Material curation",
+    live: { href: "https://material-stories.vercel.app", label: MS_URL },
+    cover: {
+      kind: "dashboard",
+      back: MS_DESK("home-hero"),
+      front: MS_DESK("monaco-hero"),
+      plate: "#B5643F",
+      alt: "Material Stories: the exhibition homepage with five interior stories and their material strips, and in front, the dark Monaco After Dark story with a black marble living room.",
+    },
+    caseStudy: {
+      overview:
+        "Material Depot’s Visual Designer (Tiles) brief asked how tiles could be shown in a way customers remember. I answered with Material Stories: five homes, each with its own story, palette and mood, and each curated from six or seven materials applied across three rooms. It started as five 1200 × 1800 Figma boards and became a website where every room, material and pairing can be explored, plus a 4 × 8 ft showroom display that carries the same system onto the shop floor. It is an independent concept for a hiring process, not an official Material Depot site or a commissioned project.",
+      role: {
+        contribution:
+          "Everything: the concept and narratives, material curation, art direction, the Figma boards, the display concept, and the design and build of the website.",
+        collaborators:
+          "A solo project. Product specifications and photos come from Material Depot’s public catalogue; interior visuals are concept imagery, labelled on the site.",
+        status: "Designed & built, live",
+      },
+      scope: [
+        { label: "Five home narratives: Tidal Ritual, Nordic Daylight, Casa Terracotta, Monaco After Dark, Botanical Sanctuary", status: "built" },
+        { label: "Whole-home curation: 6–7 materials per home across floors, walls, joinery, counters and accents", status: "built" },
+        { label: "Five 1200 × 1800 Figma boards with a shared editorial grid", status: "designed" },
+        { label: "Room explorer, material flat-lay and material matrix", status: "built" },
+        { label: "A palette, theme and motion style for every story", status: "built" },
+        { label: "4 × 8 ft showroom display concept with a sample shelf", status: "proposal" },
+        { label: "Asset pipeline: crops, WebP and an image manifest with provenance", status: "built" },
+      ],
+      problem:
+        "Tiles are usually sold one at a time, but nobody lives with one tile. Customers choose a floor, then a wall, then cabinets and counters, and only find out at the end whether any of it works together. The brief was to show tiles memorably. The real question was how to show a combination of materials as one design language that holds from the living room to the kitchen to the bath.",
+      constraints: [
+        "Every product had to be real: codes, finishes, sizes and listed uses checked against materialdepot.com (on 20 Oct 2026), with conceptual finishes clearly labelled.",
+        "One editorial system had to work as a printed 2:3 board, a responsive website and a 1:2 showroom panel.",
+        "Interior images are concept visuals, so the site says so wherever an image and a specification could differ.",
+      ],
+      decisionLabels: ["What you see", "Why it works"],
+      galleryLabels: ["Across every screen", "The whole exhibition"],
+      showcaseLabels: ["The exhibition", "Five homes, one entrance"],
+      decisions: [
+        {
+          title: "Curate a home, not a tile",
+          interface:
+            "Each story opens on a flat-lay of six or seven samples at their real proportions: long planks, 1200 × 600 tiles, laminate chips and a quartz slab. Select one to see its code, finish, size and the rooms it is used in.",
+          behaviour:
+            "The unit of choice becomes the family. A customer sees why the floor, the joinery and the one glossy wall belong together before looking at any single product.",
+          shot: { ...MS_DESK("tidal-flatlay"), frame: "browser", url: `${MS_URL}/stories/tidal-ritual`, alt: "Tidal Ritual’s material flat-lay: six samples including a pale stone floor tile, aqua kitkat tiles, mint laminate, honey oak and seafoam onyx, beside the details of Antania Latte TL 04445." },
+        },
+        {
+          title: "Show the same family in every room",
+          interface:
+            "A room explorer switches between three rooms. Numbered hotspots on each image link to the materials used there, with where else each one appears in the home.",
+          behaviour:
+            "The point of a whole-home language is visible: the same floor and flute carry through, while each room gets its own combination. Hotspots work by hover, tap and keyboard.",
+          shot: { ...MS_DESK("tidal-rooms"), frame: "browser", url: `${MS_URL}/stories/tidal-ritual`, alt: "The room explorer on the Tidal Ritual living room, with numbered hotspots on the floor, the fluted oak wall and the onyx table, and a list of the three materials used in the room." },
+        },
+        {
+          title: "Map every surface",
+          interface:
+            "A material matrix lays out rooms against surfaces: flooring, feature, joinery, countertop and accent. Pick a material to see every room it belongs to, or a room to see its full palette.",
+          behaviour:
+            "Restraint becomes checkable. Empty cells show where a material was deliberately left out, which is as much a design decision as where it goes.",
+          shot: { ...MS_DESK("tidal-matrix"), frame: "browser", url: `${MS_URL}/stories/tidal-ritual`, alt: "The material matrix for Tidal Ritual: rows for living room, kitchen and bathroom, columns for flooring, feature surface, joinery, countertop and accent, with material codes in each cell." },
+        },
+        {
+          title: "Give each story its own world",
+          interface:
+            "Every story has its own palette, theme and hero layout. Monaco After Dark turns the whole page dark around a black marble living room; Tidal Ritual stays pale and coastal.",
+          behaviour:
+            "Motion has a character too: Tidal rises like water, Nordic slides like a plank, Casa opens from the centre of a tile, Monaco drops like a curtain and Botanical unfurls from a corner.",
+          shot: { ...MS_DESK("monaco-hero"), frame: "browser", url: `${MS_URL}/stories/monaco-after-dark`, alt: "The Monaco After Dark story page: a dark theme with a framed photo of a living room with a black and gold marble feature wall, under a large serif title." },
+        },
+        {
+          title: "Design for the showroom floor",
+          interface:
+            "The brief called for a 4 × 8 ft display. Five colour-coded panels share one editorial layout: a hero room, two supporting rooms and a shelf of real samples to handle.",
+          behaviour:
+            "Colour coding makes each collection recognisable from across the floor, and the shared layout lets customers compare several displays in seconds.",
+          shot: { ...MS_DESK("home-display"), frame: "browser", url: MS_URL, alt: "The physical display concept: five tall panels, one per story, each with a colour strip, a hero room, two smaller rooms and a sample shelf, next to a human figure for scale." },
+        },
+      ],
+      media: [
+        {
+          kind: "shot",
+          placement: "showcase",
+          shot: {
+            ...MS_DESK("home-hero"),
+            frame: "browser",
+            url: MS_URL,
+            alt: "The Material Stories homepage: a large serif title, the line ‘Five Stories. Five Homes. One Language of Design.’ and five story cards, each a room image over a strip of its materials.",
+          },
+          caption:
+            "The entrance to the exhibition. Each story is a room and a strip of the materials that make it, so the five homes can be compared before you step inside one.",
+        },
+        {
+          kind: "shot",
+          placement: "gallery",
+          shot: { ...MS_PHONE("m-nordic-hero"), frame: "phone", alt: "Nordic Daylight on a phone: its palette, the title, the line ‘The luxury of less.’, six material swatches and a sunlit living room." },
+          caption: "Nordic Daylight on a phone. The palette and the material count lead before the imagery.",
+        },
+        {
+          kind: "shot",
+          placement: "gallery",
+          shot: { ...MS_PHONE("m-tidal-rooms"), frame: "phone", alt: "The room explorer on a phone, with room tabs above the living room image and three numbered hotspots." },
+          caption: "The room explorer works by touch: room tabs wrap to fit, and the numbered hotspots stay easy to tap.",
+        },
+        {
+          kind: "shot",
+          placement: "gallery",
+          shot: { ...MS_PHONE("m-botanical-hero"), frame: "phone", alt: "Botanical Sanctuary on a phone, with its green palette and leaf-print tile story." },
+          caption: "Botanical Sanctuary. Each story keeps its own layout on small screens.",
+        },
+        {
+          kind: "shot",
+          placement: "gallery",
+          shot: { ...MS_DESK("home-boards"), frame: "browser", url: MS_URL, alt: "The original Figma boards section, showing the five 2:3 story boards side by side." },
+          caption: "Where the stories began: the five original Figma boards, each viewable at full resolution.",
+        },
+      ],
+      implemented: {
+        mine: [
+          "The concept, the five home narratives and their copy.",
+          "Curating each home’s materials from the Material Depot catalogue, and the room-by-room rationale for every pairing.",
+          "Art direction and the five Figma boards, plus the 4 × 8 ft display concept.",
+          "Design and build of the website: the exhibition, the story pages, interactions, motion and the asset pipeline.",
+        ],
+        team: [],
+      },
+      engineering: {
+        stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion", "Lenis", "sharp"],
+        points: [
+          {
+            title: "Data as the single source",
+            body: "Materials, homes and stories live in typed data files: codes, finishes, sizes, rooms and the reason for every pairing. The flat-lay, room explorer, matrix and a live draft of each board are all generated from them, so they can’t disagree.",
+          },
+          {
+            title: "A theme and a motion style per story",
+            body: "Each story carries its own colour tokens, contrast-checked for text, and one of five motion styles that set the easing, duration, parallax and how images are revealed.",
+          },
+          {
+            title: "An honest asset pipeline",
+            body: "A script crops the board exports, converts everything to WebP and writes a manifest with each image’s size and where it came from, so concept imagery is always labelled as such.",
+          },
+          {
+            title: "Accessible by default",
+            body: "Reduced motion turns off smooth scrolling, parallax and long reveals. Dialogs trap focus and close on Esc, and hotspots, swatches and inspectors work by hover, tap and keyboard.",
+          },
+        ],
+        validation:
+          "Product data checked against materialdepot.com on 20 Oct 2026, plus lint and type checks. With reduced motion on, every section renders in its final state.",
+      },
+      outcome: [
+        "Five complete homes, each with six or seven curated materials applied across three rooms.",
+        "One editorial system that works as a printed board, a website and a showroom panel.",
+        "Every room and every material traceable, from the hotspot on an image to its product code.",
+        "A display concept that sells the combination, not just a single tile.",
+      ],
+      reflection:
+        "Next, I’d rebuild the five boards in Figma from the whole-home specification the site already holds, and test the display panels at full size, to see what customers notice first from across the showroom floor.",
+    },
+    next: "community-servers",
+  },
+  {
     // Draft: not published until contribution per area is confirmed.
     slug: "participation-progression",
     order: 4,
@@ -957,14 +1151,26 @@ export const projects: Project[] = [
   },
 ];
 
+const byOrder = (a: Project, b: Project) => a.order - b.order;
+
+/** The numbered gallery on the homepage. */
 export const publishedProjects = projects
-  .filter((p) => p.published)
-  .sort((a, b) => a.order - b.order);
+  .filter((p) => p.published && (p.track ?? "main") === "main")
+  .sort(byOrder);
+
+/** Side work for the "Explore more" strip below the gallery. */
+export const exploreProjects = projects.filter((p) => p.published && p.track === "explore").sort(byOrder);
+
+/** Every page under /work. */
+export const allCaseStudies = [...publishedProjects, ...exploreProjects];
 
 export function getProject(slug: string) {
-  return publishedProjects.find((p) => p.slug === slug);
+  return allCaseStudies.find((p) => p.slug === slug);
 }
 
+/** Position within its own track (gallery or explore). */
 export function getProjectIndex(slug: string) {
-  return publishedProjects.findIndex((p) => p.slug === slug);
+  const p = getProject(slug);
+  const list = p?.track === "explore" ? exploreProjects : publishedProjects;
+  return list.findIndex((x) => x.slug === slug);
 }

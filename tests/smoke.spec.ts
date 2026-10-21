@@ -342,3 +342,51 @@ test.describe("cms case study", () => {
     await expect(page.locator('img[src*="/images/work/cms/"], img[srcset*="cms"]').first()).toBeAttached();
   });
 });
+
+test.describe("explore more", () => {
+  test("material stories sits below the gallery, not in it", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator("[id^='project-']")).toHaveCount(4);
+    const explore = page.locator("#explore");
+    await expect(explore.getByRole("heading", { level: 2 })).toHaveText("Beyond product work");
+    await expect(explore.getByRole("link", { name: /Explore: Material Stories/ })).toHaveAttribute(
+      "href",
+      "/work/material-stories",
+    );
+    await page.goto("/work/material-stories");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Material Stories: five homes, one design language");
+    await expect(page.getByRole("link", { name: /All work/ })).toHaveAttribute("href", "/#explore");
+    await expect(page.getByRole("link", { name: /See it live/ }).first()).toHaveAttribute(
+      "href",
+      "https://material-stories.vercel.app",
+    );
+  });
+});
+
+test.describe("dark theme", () => {
+  test("the moon switches the theme, persists it and puts the party hat on", async ({ page }) => {
+    await page.goto("/");
+    const html = page.locator("html");
+    const toggle = page.getByRole("button", { name: "Dark theme" });
+    const hat = page.locator("[data-part='party-hat']").first();
+    await expect(toggle).toHaveAttribute("aria-pressed", "false");
+    await expect(hat).toHaveCSS("opacity", "0");
+
+    await toggle.click();
+    await expect(html).toHaveAttribute("data-theme", "dark");
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator("body")).toHaveCSS("background-color", "rgb(17, 21, 29)");
+    await expect(hat).toHaveCSS("opacity", "1");
+
+    // Saved, and applied before hydration on the next visit.
+    await page.reload();
+    await expect(html).toHaveAttribute("data-theme", "dark");
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    // The gallery keeps its own dark palette rather than inverting.
+    await expect(page.locator("#work")).toHaveCSS("background-color", "rgb(10, 13, 19)");
+
+    await toggle.click();
+    await expect(html).not.toHaveAttribute("data-theme", "dark");
+    await expect(page.locator("body")).toHaveCSS("background-color", "rgb(245, 242, 235)");
+  });
+});

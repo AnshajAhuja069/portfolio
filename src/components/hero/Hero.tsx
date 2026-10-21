@@ -159,6 +159,7 @@ function HeroLayer({ variant }: { variant: "base" | "overlay" }) {
       data-hero-overlay={isBase ? undefined : ""}
       data-hero-base={isBase ? "" : undefined}
       data-surface={isBase ? "paper" : undefined}
+      data-palette={isBase ? undefined : "fixed"}
       aria-hidden={isBase ? undefined : true}
       inert={!isBase}
     >

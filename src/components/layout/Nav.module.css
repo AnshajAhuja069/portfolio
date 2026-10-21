@@ -115,7 +115,9 @@
   outline-offset: 2px;
 }
 
-@media (max-width: 400px) {
+/* Phones: tighter pills so the name and the links (plus the theme toggle)
+   never meet. Checked from 320px up. */
+@media (max-width: 440px) {
   .wordmark {
     padding: 0 12px 0 11px;
     font-size: 0.875rem;
@@ -125,8 +127,49 @@
     width: 8px;
     height: 8px;
   }
+  .links {
+    gap: 0;
+    padding: 0 3px;
+  }
   .link {
-    padding: 0 9px;
+    padding: 0 8px;
     font-size: 0.875rem;
   }
+}
+
+@media (max-width: 380px) {
+  .surname {
+    display: none;
+  }
+  .link {
+    padding: 0 7px;
+  }
+}
+
+@media (max-width: 340px) {
+  .dot {
+    display: none;
+  }
+}
+
+/* ---------- Dark theme ---------- */
+
+:global(html[data-theme="dark"]) .wordmark,
+:global(html[data-theme="dark"]) .links {
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+/* Over the (now dark) paper sections the wordmark becomes a light pill. */
+:global(html[data-theme="dark"][data-nav-surface="paper"]) .wordmark,
+:global(html[data-theme="dark"][data-nav-surface="accent"]) .wordmark {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+:global(html[data-theme="dark"][data-nav-surface="accent"]) .dot {
+  background: var(--accent);
+}
+
+:global(html[data-theme="dark"][data-nav-surface="paper"]) .wordmark:focus-visible {
+  outline-color: var(--ink);
 }

@@ -20,6 +20,10 @@ export function CaseStudy({ project, index }: { project: Project; index: number 
   const cs = project.caseStudy;
   const next = project.next ? getProject(project.next) : undefined;
   const num = String(index + 1).padStart(2, "0");
+  const explore = project.track === "explore";
+  const [showcaseLabel, showcaseTitle] = cs.showcaseLabels ?? ["The product", "See it in context"];
+  const [galleryLabel, galleryTitle] =
+    cs.galleryLabels ?? (cs.decisionLabels ? ["The character", "Meet Peak, in full"] : ["More from the product", "Beyond the chat"]);
   const labels = cs.decisionLabels ?? (["Interface", "Behaviour"] as [string, string]);
   const story = cs.media.find((x) => x.kind === "story");
   const showcase = cs.media.find((x): x is ShotMedia => x.kind === "shot" && x.placement === "showcase");
@@ -32,11 +36,11 @@ export function CaseStudy({ project, index }: { project: Project; index: number 
       <article className={s.case} aria-labelledby="case-title" data-surface="paper">
         {/* Header */}
         <header className={`container ${s.head}`}>
-          <Link href="/#work" className={s.back}>
+          <Link href={explore ? "/#explore" : "/#work"} className={s.back}>
             <span aria-hidden="true">←</span> All work
           </Link>
           <p className={`eyebrow ${s.kicker}`}>
-            Case study {num} · {project.company} · {project.workstream}
+            {explore ? "Explore more" : `Case study ${num}`} · {project.company} · {project.workstream}
           </p>
           <h1 id="case-title" className={`display ${s.title}`} data-split>
             {project.title}
@@ -106,13 +110,13 @@ export function CaseStudy({ project, index }: { project: Project; index: number 
 
       {/* The product: one large, framed screen */}
       {showcase && (
-        <section className={m.band} aria-labelledby="showcase-title" data-surface="auto">
+        <section className={m.band} aria-labelledby="showcase-title" data-surface="auto" data-palette="fixed">
           <div className={`container ${m.bandInner}`}>
             <div className={m.bandHead}>
               <div>
-                <p className={`eyebrow ${m.bandLabel}`}>The product</p>
+                <p className={`eyebrow ${m.bandLabel}`}>{showcaseLabel}</p>
                 <h2 id="showcase-title" className={`display ${m.bandTitle}`} data-split>
-                  See it in context
+                  {showcaseTitle}
                 </h2>
               </div>
               <p className={m.bandCaption}>{showcase.caption}</p>
@@ -149,13 +153,13 @@ export function CaseStudy({ project, index }: { project: Project; index: number 
 
       {/* More from the product */}
       {gallery.length > 0 && (
-        <section className={m.band} aria-labelledby="gallery-title" data-surface="auto">
+        <section className={m.band} aria-labelledby="gallery-title" data-surface="auto" data-palette="fixed">
           <div className={`container ${m.bandInner}`}>
             <div className={m.bandHead}>
               <div>
-                <p className={`eyebrow ${m.bandLabel}`}>{cs.decisionLabels ? "The character" : "More from the product"}</p>
+                <p className={`eyebrow ${m.bandLabel}`}>{galleryLabel}</p>
                 <h2 id="gallery-title" className={`display ${m.bandTitle}`} data-split>
-                  {cs.decisionLabels ? "Meet Peak, in full" : "Beyond the chat"}
+                  {galleryTitle}
                 </h2>
               </div>
             </div>
@@ -240,14 +244,16 @@ export function CaseStudy({ project, index }: { project: Project; index: number 
                 ))}
               </ul>
             </div>
-            <div>
-              <h3 className={s.splitTitle}>The wider team</h3>
-              <ul className={s.bullets}>
-                {cs.implemented.team.map((x) => (
-                  <li key={x}>{x}</li>
-                ))}
-              </ul>
-            </div>
+            {cs.implemented.team.length > 0 && (
+              <div>
+                <h3 className={s.splitTitle}>The wider team</h3>
+                <ul className={s.bullets}>
+                  {cs.implemented.team.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </Section>
 
@@ -266,7 +272,7 @@ export function CaseStudy({ project, index }: { project: Project; index: number 
       </div>
 
       {/* Next project + contact */}
-      <aside className={s.next} aria-labelledby="next-label" data-live-stop>
+      <aside className={s.next} aria-labelledby="next-label" data-live-stop data-palette="fixed">
         <div className={`container ${s.nextInner}`}>
           {next && (
             <>

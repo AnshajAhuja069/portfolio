@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useImperativeHandle, useRef, type Ref } from "react";
+import { useEffect, useId, useImperativeHandle, useRef, type Ref } from "react";
 import { gsap, useGSAP, MQ } from "@/lib/gsap";
 import styles from "./Mascot.module.css";
 
@@ -73,6 +73,13 @@ export function Mascot({
     }),
     [],
   );
+
+  // Lights off: a delighted "whoa" as the party hat lands. Lights on: a wink.
+  useEffect(() => {
+    const onTheme = (e: Event) => api.current.react((e as CustomEvent<string>).detail === "dark" ? "whoa" : "wink");
+    window.addEventListener("themechange", onTheme);
+    return () => window.removeEventListener("themechange", onTheme);
+  }, []);
 
   useGSAP(
     () => {
@@ -426,6 +433,17 @@ export function Mascot({
           </radialGradient>
         </defs>
 
+        {/* Night sky, shown in the dark theme (Mascot.module.css) */}
+        <g data-part="stars" className={styles.stars} fill="#fff4d6">
+          <circle cx="28" cy="48" r="1.7" />
+          <circle cx="42" cy="24" r="1.1" />
+          <circle cx="172" cy="44" r="1.5" />
+          <circle cx="182" cy="84" r="1" />
+          <circle cx="20" cy="92" r="1.1" />
+          <path d="M160 14 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6 Z" />
+          <path d="M36 66 l1.1 3 3 1.1 -3 1.1 -1.1 3 -1.1 -3 -3 -1.1 3 -1.1 Z" />
+        </g>
+
         <g data-part="follow">
           {/* Shoulders + crew-neck sweater */}
           <g data-part="shoulders">
@@ -494,6 +512,18 @@ export function Mascot({
               <path d="M118 46 C128 48 136 56 138 64" />
               <path d="M66 62 C72 54 80 51 88 52" />
               <path d="M96 26 C104 22 114 24 118 30" />
+            </g>
+            {/* Party hat, worn in the dark theme (Mascot.module.css) */}
+            <g data-part="party-hat" className={styles.hat}>
+              <g transform="translate(112 36) rotate(18) scale(1.3)">
+                <path d="M-20 0 L0 -25 L20 0 Z" fill="#f2677f" />
+                <path d="M-20 0 L0 -25 L-3 0 Z" fill="#000" opacity="0.12" />
+                <path d="M-15 -6 L15 -6 L11.7 -10 L-11.7 -10 Z" fill="#ffd166" />
+                <path d="M-8.3 -14 L8.3 -14 L5.8 -17.5 L-5.8 -17.5 Z" fill="#3fd0d6" />
+                <ellipse cx="0" cy="0" rx="21.5" ry="4.2" fill="#f5f2eb" />
+                <circle cx="0" cy="-25" r="4.6" fill="#ffd166" />
+                <circle cx="-1.4" cy="-26.4" r="1.4" fill="#fff" opacity="0.7" />
+              </g>
             </g>
             {/* Brows */}
             <g data-part="brows" fill="none" stroke="#1a1411" strokeWidth="5.4" strokeLinecap="round">

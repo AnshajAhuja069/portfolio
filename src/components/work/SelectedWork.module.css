@@ -360,3 +360,122 @@
   font-weight: 700;
 }
 
+
+/* ---------- Explore more: side work, below the main gallery ---------- */
+
+.explore {
+  position: relative;
+  z-index: 1;
+  padding-bottom: clamp(96px, 16svh, 200px);
+}
+
+.exploreHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 34ch);
+  align-items: end;
+  gap: 12px 48px;
+  padding-top: clamp(40px, 7svh, 88px);
+  border-top: 1px solid var(--line-on-dark);
+}
+
+.exploreKicker {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-bright);
+}
+
+.exploreDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 4px rgb(63 208 214 / 0.18);
+}
+
+.exploreTitle {
+  font-size: clamp(2.5rem, 6.4vw, 6.5rem);
+}
+
+.exploreLead {
+  color: var(--paper-2);
+  text-wrap: pretty;
+  padding-bottom: 0.4em;
+}
+
+.exploreList {
+  display: grid;
+  gap: clamp(40px, 6svh, 72px);
+  margin-top: clamp(32px, 6svh, 64px);
+  list-style: none;
+}
+
+/* Smaller and calmer than the gallery features: one card, cover + notes. */
+.exploreCard {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(24px, 3.4vw, 56px);
+  padding: clamp(16px, 1.8vw, 28px);
+  border: 1px solid var(--line-on-dark);
+  border-radius: calc(var(--radius-lg) + 8px);
+  background: rgb(245 242 235 / 0.03);
+}
+
+.exploreCover {
+  display: block;
+  cursor: pointer;
+}
+
+.exploreMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.exploreCategory {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--paper-2);
+}
+
+.exploreCategory span {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--accent-bright);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.exploreCardTitle {
+  font-size: var(--step-3);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.exploreTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+  list-style: none;
+  font-size: var(--step--1);
+}
+
+.exploreTags li {
+  padding: 5px 11px;
+  border: 1px solid var(--line-on-dark);
+  border-radius: 999px;
+  color: var(--paper-2);
+}
+
+@media (max-width: 899.98px) {
+  .exploreHead,
+  .exploreCard {
+    grid-template-columns: 1fr;
+  }
+}

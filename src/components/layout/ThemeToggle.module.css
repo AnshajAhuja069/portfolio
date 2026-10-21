@@ -1,0 +1,104 @@
+/* Moon in the light theme; it turns into a sun in the dark one. The icon
+   state follows <html data-theme> in CSS, so it's right before hydration. */
+.toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.toggle:hover {
+  background: var(--paper-3);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+}
+
+.core,
+.bite,
+.rays {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  transition:
+    transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 300ms var(--ease-out);
+}
+
+.rays {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+
+.toggle:hover .core {
+  transform: rotate(-14deg);
+}
+
+:global(html[data-theme="dark"]) .bite {
+  transform: translate(9px, -9px);
+}
+
+:global(html[data-theme="dark"]) .core {
+  transform: scale(0.62);
+}
+
+:global(html[data-theme="dark"]) .rays {
+  opacity: 1;
+  transform: none;
+}
+
+:global(html[data-theme="dark"]) .toggle:hover .rays {
+  transform: rotate(45deg);
+}
+
+/* Confetti layer (created on demand, removed after the burst). */
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti i {
+  position: absolute;
+  top: -4px;
+  left: -3px;
+  width: 6px;
+  height: 9px;
+  border-radius: 1.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .core,
+  .bite,
+  .rays {
+    transition: none;
+  }
+}
+
+@media (max-width: 440px) {
+  .toggle {
+    width: 38px;
+  }
+}
+
+@media (max-width: 380px) {
+  .toggle {
+    width: 34px;
+  }
+}

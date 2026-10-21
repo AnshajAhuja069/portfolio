@@ -39,7 +39,7 @@ export function ResumePage() {
       </header>
 
       {/* ---------- Journey map ---------- */}
-      <section className={s.journey} aria-labelledby="journey-title">
+      <section className={s.journey} aria-labelledby="journey-title" data-palette="fixed">
         <DepthField crystals={JOURNEY_CRYSTALS} contours={JOURNEY_CONTOURS} />
         <div className={`container ${s.journeyInner}`}>
           <div className={s.journeyHead}>
@@ -108,7 +108,7 @@ export function ResumePage() {
 
       {/* ---------- Take the PDF ---------- */}
       {pdf && (
-        <section className={s.end} data-surface="accent" aria-labelledby="pdf-title">
+        <section className={s.end} data-surface="accent" aria-labelledby="pdf-title" data-palette="fixed">
           <div className={`container ${s.endInner}`}>
             <h2 id="pdf-title" className={`display ${s.endTitle}`}>
               Take the one-pager with you.

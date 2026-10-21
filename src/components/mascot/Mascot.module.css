@@ -14,3 +14,57 @@
   height: 100%;
   overflow: visible;
 }
+
+/* ---------- Dark theme: night sky + party hat ---------- */
+
+.stars,
+.hat {
+  opacity: 0;
+  transform-box: fill-box;
+  transition:
+    opacity 260ms var(--ease-out),
+    transform 620ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* The hat drops in from above with a little spin. */
+.hat {
+  transform-origin: 50% 100%;
+  transform: translateY(-46px) rotate(-28deg) scale(0.5);
+}
+
+:global(html[data-theme="dark"]) .mascot {
+  background: radial-gradient(120% 95% at 50% 0%, #1b5d69 0%, #0f2f3b 52%, #0a1822 100%);
+  box-shadow: inset 0 0 0 1px rgb(63 208 214 / 0.28);
+}
+
+:global(html[data-theme="dark"]) .stars {
+  opacity: 1;
+}
+
+:global(html[data-theme="dark"]) .hat {
+  opacity: 1;
+  transform: none;
+  transition-delay: 120ms;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html[data-theme="dark"]) .stars {
+    animation: twinkle 3.2s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars,
+  .hat {
+    transition: none;
+  }
+}
